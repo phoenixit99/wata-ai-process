@@ -1,6 +1,6 @@
 ---
 name: status-report
-description: Báo cáo tiến độ cho PM theo quy trình WATA. Tổng hợp từ label status:*, timeline và comment heading: issue theo trạng thái, issue kẹt và quá SLA, thời gian chờ con người, lead time, tỉ lệ fail-to-dev, đạt review vòng 1, needs-human, UAT rejected, rủi ro. Xuất bản nội bộ và bản gửi khách hàng. Dùng khi "báo cáo tuần", "status report", "tiến độ dự án".
+description: "Báo cáo tiến độ cho PM theo quy trình WATA. Tổng hợp từ label status:*, timeline và comment heading: issue theo trạng thái, issue kẹt và quá SLA, thời gian chờ con người, lead time, tỉ lệ fail-to-dev, đạt review vòng 1, needs-human, UAT rejected, rủi ro. Xuất bản nội bộ và bản gửi khách hàng. Dùng khi \"báo cáo tuần\", \"status report\", \"tiến độ dự án\"."
 ---
 
 # status-report — báo cáo cho PM

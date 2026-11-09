@@ -146,7 +146,7 @@ export default defineConfig({
         docFooter: { prev: 'Trang trước', next: 'Trang sau' },
         lastUpdated: { text: 'Cập nhật' },
         editLink: { pattern: `${REPO}/edit/main/docs/:path`, text: 'Sửa trang này trên GitHub' },
-        footer: { message: 'WATA Software · Tài liệu nội bộ', copyright: 'Phiên bản 1.4.0' },
+        footer: { message: 'WATA Software · Tài liệu nội bộ', copyright: 'Phiên bản 1.4.1' },
         darkModeSwitchLabel: 'Giao diện',
         sidebarMenuLabel: 'Mục lục',
         returnToTopLabel: 'Lên đầu trang',
@@ -169,7 +169,7 @@ export default defineConfig({
         sidebar: sidebarEn(),
         outline: { level: [2, 3] },
         editLink: { pattern: `${REPO}/edit/main/docs/:path`, text: 'Edit this page on GitHub' },
-        footer: { message: 'WATA Software · Internal document', copyright: 'Version 1.4.0' }
+        footer: { message: 'WATA Software · Internal document', copyright: 'Version 1.4.1' }
       }
     }
   }

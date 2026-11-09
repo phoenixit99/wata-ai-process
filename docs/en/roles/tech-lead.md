@@ -45,6 +45,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 | Refinement | Assess technical risk, decide size and the `human-code` flag (`backlog-refinement`) |
 | Planning | Identify stories a person must code; check review capacity |
 | During the sprint | Architecture, G2, G3, G4; keep the fixed review slots |
+| As AI Enablement | Skills, coding standards, MCP, agent workflow, AI cost; repeated technical AI errors (`sprint-retro`); see [AI Enablement](/en/roles/ai-enablement) |
 
 <!-- role-skills:start -->
 ## Your skills

@@ -1,6 +1,6 @@
 ---
 name: hotfix
-description: Luồng hotfix của quy trình WATA cho lỗi production nghiêm trọng (type:hotfix). Tech Lead chạy tương tác. Rút gọn chờ đợi nhưng không bỏ: test tái hiện (đỏ trước, xanh sau), review ở session riêng, CI xanh, con người merge. Đăng "## Hotfix plan", mở PR, và tạo issue theo dõi nguyên nhân gốc sau release. Dùng khi "hotfix", "lỗi production khẩn".
+description: "Luồng hotfix của quy trình WATA cho lỗi production nghiêm trọng (type:hotfix). Tech Lead chạy tương tác. Rút gọn chờ đợi nhưng không bỏ: test tái hiện (đỏ trước, xanh sau), review ở session riêng, CI xanh, con người merge. Đăng \"## Hotfix plan\", mở PR, và tạo issue theo dõi nguyên nhân gốc sau release. Dùng khi \"hotfix\", \"lỗi production khẩn\"."
 ---
 
 # hotfix — sửa khẩn cấp production

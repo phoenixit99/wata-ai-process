@@ -1,6 +1,6 @@
 ---
 name: dev-pipeline
-description: Điểm vào chung của quy trình WATA cho mọi vai trò (PO, BA, PM, Designer, Dev, Tech Lead, QA). Không tham số: bảng việc hôm nay theo vai trò của người chạy. Có số issue: đọc label status:* và chạy đúng skill của bước đó cho vai trò đó. Dùng khi "/dev-pipeline", "hôm nay tôi làm gì", "issue này đang ở đâu", "walk the board".
+description: "Điểm vào chung của quy trình WATA cho mọi vai trò (PO, BA, PM, Designer, Dev, Tech Lead, QA). Không tham số: bảng việc hôm nay theo vai trò của người chạy. Có số issue: đọc label status:* và chạy đúng skill của bước đó cho vai trò đó. Dùng khi \"/dev-pipeline\", \"hôm nay tôi làm gì\", \"issue này đang ở đâu\", \"walk the board\"."
 ---
 
 # dev-pipeline — điểm vào chung, định tuyến theo trạng thái và vai trò

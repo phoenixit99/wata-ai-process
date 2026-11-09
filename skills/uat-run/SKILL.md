@@ -1,6 +1,6 @@
 ---
 name: uat-run
-description: Skill của PO ở Bước 9 (cổng G5) quy trình WATA. Đi cùng PO qua từng mục của "## UAT checklist" trên staging, ghi đạt/chưa đạt, tách lỗi với yêu cầu mới, rồi soạn sẵn comment "## UAT: ACCEPTED" hoặc "## UAT: REJECTED" để PO đăng. PO tự gắn status:done hoặc status:uat-failed. Dùng khi "nghiệm thu", "làm UAT", "UAT issue này".
+description: "Skill của PO ở Bước 9 (cổng G5) quy trình WATA. Đi cùng PO qua từng mục của \"## UAT checklist\" trên staging, ghi đạt/chưa đạt, tách lỗi với yêu cầu mới, rồi soạn sẵn comment \"## UAT: ACCEPTED\" hoặc \"## UAT: REJECTED\" để PO đăng. PO tự gắn status:done hoặc status:uat-failed. Dùng khi \"nghiệm thu\", \"làm UAT\", \"UAT issue này\"."
 ---
 
 # uat-run — PO nghiệm thu

@@ -1,8 +1,22 @@
 # Guide for AI Enablement
 
 You keep the AI working well: skills, coding standards, MCP configuration, and analysis of repeated AI errors. At
-project level you are the **process owner**; the Tech Lead may hold this role. At company level, AI Enablement owns
-the central `wata-ai-process` repository.
+project level you are the **process owner**. At company level, AI Enablement owns the central `wata-ai-process`
+repository.
+
+## Who holds it
+
+In each project this role is **held jointly by the Tech Lead and the PO**, split by where errors come from. The
+Tech Lead is accountable (A) for the AI platform; the PO owns the requirements side.
+
+| | Tech Lead (technical side) | PO (requirements side) |
+|---|---|---|
+| Owns | Skills, coding standards, `CLAUDE.md`, MCP, the agent workflow, AI cost, process upgrades | DoR, issue and AC templates, requirement-writing guidance; keeps the design system usable for the AI with the Designer |
+| Repeated AI errors caused by | The AI doing a step wrong, code off-standard, broken configuration | Vague requirements, missing AC, repeated `fail-to-dev`, UAT rejections because the AC missed the intent |
+| Fixes in | Skills (proposed to the central repo), coding standards, "Known pitfalls" in `CLAUDE.md` | DoR, issue templates, `docs/writing-acceptance-criteria.md` (proposed), design system (with the Designer) |
+
+List both in `people.ai_enablement` in `.claude/project.yml`. Watch the load: the PO's effort already rises in
+requirements and refinement ([Scrum section 7](/en/scrum)); the PM makes sure the PO is not overloaded.
 
 ## Your work in the process
 
@@ -14,6 +28,17 @@ the central `wata-ai-process` repository.
 | A skill needs fixing | Open an issue/PR on the central repo; skills are core, never edited directly in the project's `.claude/skills/` | Central repo |
 | Upgrading the process | Read the CHANGELOG, run `install.sh --upgrade`, update `process_version` | `scripts/install.sh` |
 | AI cost | Track token cost with the PM, adjust `max_turns_per_run` | `project.yml` |
+
+## Metrics
+
+| Metric | Reference target | Mainly owned by |
+|---|---|---|
+| `needs-human` rate | Falling sprint over sprint | Tech Lead |
+| First-round review pass rate | ≥ 60% | Tech Lead |
+| Fail-to-dev rate | < 20% and falling | PO |
+| UAT rejection rate | Falling | PO |
+| Repeats after the retro | Errors with an action do not recur | Both |
+| AI cost per story | Stable or falling | Tech Lead |
 
 ## Principles
 

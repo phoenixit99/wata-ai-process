@@ -58,7 +58,7 @@ the requirement rather than the code the AI just wrote; QA in step 7 reviews res
 | Developer | Write code, unit tests, fix bugs | Design solutions, assign work to the AI, check and own the code | Down |
 | QA | Write test cases, manual testing, automation | Review AI-generated test cases, exploratory/UX testing, real devices | Down |
 | Designer | Design every screen, hand over | Build and describe the design system, write UI briefs, review and refine AI-made Figma, own UX | Down (up in Sprint 0) |
-| AI Enablement (new) | — | Maintains skills, coding standards, MCP configuration; analyses repeated AI errors. May be the Tech Lead. The project-level *process owner* | New |
+| AI Enablement (new) | — | Maintains skills, coding standards, MCP configuration; analyses repeated AI errors. **Held jointly by the Tech Lead and the PO**: the Tech Lead on the technical side (accountable), the PO on the requirements side. The project-level *process owner* | New |
 | Security (new) | — | Approves data policy, tokens and the AI's permissions in Sprint 0 and on change | New |
 | Customer | Acceptance | Chooses UI options, accepts against AC, agrees response SLAs | Up |
 

@@ -1,6 +1,6 @@
 ---
 name: sprint-review
-description: Sprint Review trong quy trình Scrum WATA, cho PO/PM. Soạn tài liệu demo (story đã nghiệm thu, thay đổi theo sprint, kịch bản demo theo AC, những gì chưa xong và vì sao), sau buổi review chuyển phản hồi của khách hàng thành story mới qua github-issue-create. Dùng khi "sprint review", "chuẩn bị demo", "phản hồi khách hàng".
+description: "Sprint Review trong quy trình Scrum WATA, cho PO/PM. Soạn tài liệu demo (story đã nghiệm thu, thay đổi theo sprint, kịch bản demo theo AC, những gì chưa xong và vì sao), sau buổi review chuyển phản hồi của khách hàng thành story mới qua github-issue-create. Dùng khi \"sprint review\", \"chuẩn bị demo\", \"phản hồi khách hàng\"."
 ---
 
 # sprint-review — demo và phản hồi

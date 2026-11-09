@@ -46,6 +46,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 | Planning | Bring priorities, agree the Sprint Goal with the team |
 | Design approval | Choose the UI option with the Designer and customer in the first 1–2 sprint days |
 | Sprint Review | Demo with the customer, turn feedback into stories (`sprint-review`) |
+| Retro (as AI Enablement) | Repeated AI errors caused by requirements: fix the DoR, issue templates, AC guidance (`sprint-retro`); see [AI Enablement](/en/roles/ai-enablement) |
 
 <!-- role-skills:start -->
 ## Your skills
@@ -60,4 +61,5 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | `sprint-planning` | Proposes sprint scope from review/QA capacity | `/sprint-planning <#>` | `@claude read .claude/skills/sprint-planning/SKILL.md and follow it for issue #<number>` |
 | `uat-run` | PO runs UAT, drafts the verdict | `/uat-run <#>` | `@claude read .claude/skills/uat-run/SKILL.md and follow it for issue #<number>` |
 | `sprint-review` | Sprint demo notes, feedback into new stories | `/sprint-review <#>` | `@claude read .claude/skills/sprint-review/SKILL.md and follow it for issue #<number>` |
+| `sprint-retro` | Sprint metrics; repeated AI errors into skill fixes | `/sprint-retro <#>` | `@claude read .claude/skills/sprint-retro/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

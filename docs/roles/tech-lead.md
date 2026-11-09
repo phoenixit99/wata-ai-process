@@ -44,6 +44,7 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 | Refinement | Đánh giá rủi ro kỹ thuật, chốt size và cờ `human-code` (`backlog-refinement`) |
 | Planning | Xác định story cần người code; kiểm năng lực review |
 | Trong sprint | Kiến trúc, G2, G3, G4; giữ khung giờ review cố định |
+| Kiêm AI Enablement | Skill, coding standard, MCP, workflow agent, chi phí AI; lỗi AI lặp lại phía kỹ thuật (`sprint-retro`); xem [AI Enablement](ai-enablement.md) |
 
 <!-- role-skills:start -->
 ## Skill của bạn

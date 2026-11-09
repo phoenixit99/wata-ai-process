@@ -103,7 +103,7 @@ Bảng dưới sinh tự động từ [`skills/catalog.json`](skills/catalog.jso
 | - | [`release-plan`](skills/release-plan/SKILL.md) | Kế hoạch release cho PM | PM, Tech Lead | người gọi |
 | daily | [`daily-scrum`](skills/daily-scrum/SKILL.md) | Bảng việc bị chặn và hàng chờ cho Daily Scrum | PM | người gọi |
 | review | [`sprint-review`](skills/sprint-review/SKILL.md) | Tài liệu demo sprint, phản hồi thành story mới | PO, PM | người gọi |
-| retro | [`sprint-retro`](skills/sprint-retro/SKILL.md) | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | AI Enablement, PM, Tech Lead | người gọi |
+| retro | [`sprint-retro`](skills/sprint-retro/SKILL.md) | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | AI Enablement, PO, PM, Tech Lead | người gọi |
 <!-- skills:end -->
 
 ## Cài vào một project

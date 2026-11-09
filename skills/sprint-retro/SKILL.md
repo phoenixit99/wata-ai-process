@@ -1,11 +1,11 @@
 ---
 name: sprint-retro
-description: Sprint Retrospective trong quy trình Scrum WATA, cho AI Enablement, PM và Tech Lead. Tổng hợp số liệu sprint và các lỗi AI lặp lại từ comment review/QA/UAT/Needs human; lỗi lặp lại từ 2 lần phải có hành động sửa skill, coding standard hoặc DoR, kèm bản nháp thay đổi và issue đề xuất cho repo quy trình trung tâm. Dùng khi "retro", "retrospective", "cải tiến skill".
+description: "Sprint Retrospective trong quy trình Scrum WATA, cho AI Enablement, PM và Tech Lead. Tổng hợp số liệu sprint và các lỗi AI lặp lại từ comment review/QA/UAT/Needs human; lỗi lặp lại từ 2 lần phải có hành động sửa skill, coding standard hoặc DoR, kèm bản nháp thay đổi và issue đề xuất cho repo quy trình trung tâm. Dùng khi \"retro\", \"retrospective\", \"cải tiến skill\"."
 ---
 
 # sprint-retro — cải tiến người và AI
 
-> **Vai trò:** AI Enablement, PM, Tech Lead · **Bước:** retro · **Chế độ:** tương tác · **Kích hoạt:** người gọi · **Đọc:** `## Needs human`, `## Code review: FAIL`, `## QA report: FAIL`, `## UAT: REJECTED` · **Ghi:** không ghi lên issue
+> **Vai trò:** AI Enablement, PO, PM, Tech Lead · **Bước:** retro · **Chế độ:** tương tác · **Kích hoạt:** người gọi · **Đọc:** `## Needs human`, `## Code review: FAIL`, `## QA report: FAIL`, `## UAT: REJECTED` · **Ghi:** không ghi lên issue
 
 `$ARGUMENTS`: `[tên milestone sprint]`.
 

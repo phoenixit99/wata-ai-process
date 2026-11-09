@@ -13,6 +13,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Skills, catalog, contract, bilingual docs in sync
         run: python3 -I scripts/check-consistency.py
+      - name: YAML parses (skill frontmatter, workflows, issue forms)
+        run: |
+          ruby -ryaml -e '
+            Dir["skills/*/SKILL.md"].each { |f| y = YAML.safe_load(File.read(f)[/\A---\n(.*?)\n---\n/m, 1]); abort("bad #{f}") unless y["name"] && y["description"].is_a?(String) }
+            (Dir["template/**/*.yml"] + Dir[".github/**/*.yml"]).each { |f| YAML.load_file(f) }
+            puts "yaml ok"'
       - name: Shell syntax
         run: bash -n scripts/install.sh && bash -n scripts/setup-labels.sh
       - name: Install into an empty repo

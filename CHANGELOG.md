@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.1 — 2026-11-09
+
+- Vai trò AI Enablement ở mỗi project do **Tech Lead và PO cùng kiêm nhiệm**: Tech Lead phía kỹ thuật (skill,
+  coding standard, MCP, workflow, chi phí AI; chịu trách nhiệm chính), PO phía yêu cầu (DoR, mẫu issue/AC,
+  design system cùng Designer). Thêm bảng phân công và chỉ số đánh giá vào trang AI Enablement.
+- `sprint-retro` thêm vai trò PO.
+- **Sửa lỗi:** `description` trong frontmatter của 16/27 skill không đặt trong ngoặc kép và chứa ": ", làm YAML
+  không hợp lệ (GitHub báo lỗi, Claude Code có thể không nạp skill). Mọi description giờ trong ngoặc kép;
+  `check-consistency.py` bắt buộc định dạng này và CI đọc thử toàn bộ YAML bằng trình đọc thật.
+
 ## 1.4.0 — 2026-11-09
 
 Gộp Quy trình Scrum ứng dụng AI Agent vào cùng repo và website.

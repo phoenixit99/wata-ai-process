@@ -8,7 +8,7 @@ Generated from `skills/catalog.json`, the single source for skills, roles and tr
 
 | Role | Skills |
 |---|---|
-| PO | `dev-pipeline`, `github-issue-create`, `backlog-refinement`, `sprint-planning`, `uat-run`, `sprint-review` |
+| PO | `dev-pipeline`, `github-issue-create`, `backlog-refinement`, `sprint-planning`, `uat-run`, `sprint-review`, `sprint-retro` |
 | BA | `dev-pipeline`, `feature-analysis`, `github-issue-create`, `backlog-refinement` |
 | PM | `dev-pipeline`, `sprint0-setup`, `sprint-planning`, `status-report`, `release-plan`, `daily-scrum`, `sprint-review`, `sprint-retro` |
 | Designer | `dev-pipeline`, `ui-design-brief`, `design-review` |
@@ -48,4 +48,4 @@ Generated from `skills/catalog.json`, the single source for skills, roles and tr
 | - | [`release-plan`](https://github.com/phoenixit99/wata-ai-process/blob/main/skills/release-plan/SKILL.md) | Release plan for the PM | PM, Tech Lead | on demand |
 | daily | [`daily-scrum`](https://github.com/phoenixit99/wata-ai-process/blob/main/skills/daily-scrum/SKILL.md) | Blocked work and queues for the Daily Scrum | PM | on demand |
 | review | [`sprint-review`](https://github.com/phoenixit99/wata-ai-process/blob/main/skills/sprint-review/SKILL.md) | Sprint demo notes, feedback into new stories | PO, PM | on demand |
-| retro | [`sprint-retro`](https://github.com/phoenixit99/wata-ai-process/blob/main/skills/sprint-retro/SKILL.md) | Sprint metrics; repeated AI errors into skill fixes | AI Enablement, PM, Tech Lead | on demand |
+| retro | [`sprint-retro`](https://github.com/phoenixit99/wata-ai-process/blob/main/skills/sprint-retro/SKILL.md) | Sprint metrics; repeated AI errors into skill fixes | AI Enablement, PO, PM, Tech Lead | on demand |

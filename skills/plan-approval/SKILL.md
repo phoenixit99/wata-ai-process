@@ -1,6 +1,6 @@
 ---
 name: plan-approval
-description: Skill cho người ký cổng G2 (Tech Lead/Dev duyệt plan, QA duyệt test case) trong quy trình WATA. Tóm tắt "## Test design: PASS" thành 5–10 điểm cần quyết định, ghi phán quyết của người duyệt, soạn "## Plan approval". Khi đủ người duyệt, nhắc người đó tự gắn status:ready-to-dev. Không bao giờ tự gắn. Dùng khi "duyệt plan", "review test case", "G2".
+description: "Skill cho người ký cổng G2 (Tech Lead/Dev duyệt plan, QA duyệt test case) trong quy trình WATA. Tóm tắt \"## Test design: PASS\" thành 5–10 điểm cần quyết định, ghi phán quyết của người duyệt, soạn \"## Plan approval\". Khi đủ người duyệt, nhắc người đó tự gắn status:ready-to-dev. Không bao giờ tự gắn. Dùng khi \"duyệt plan\", \"review test case\", \"G2\"."
 ---
 
 # plan-approval — hỗ trợ cổng G2

@@ -1,6 +1,6 @@
 ---
 name: qa-failed-fix
-description: Bước 6b của quy trình WATA, dev chạy tương tác. Sửa đúng phần lỗi mà QA (status:qa-failed) hoặc PO khi UAT (status:uat-failed) đã nêu: tái hiện trước, test đỏ trước khi sửa, đăng "## QA fix" và chuyển về status:in-review để review lại ở session mới. Dùng khi "sửa lỗi QA", "QA failed", "UAT rejected".
+description: "Bước 6b của quy trình WATA, dev chạy tương tác. Sửa đúng phần lỗi mà QA (status:qa-failed) hoặc PO khi UAT (status:uat-failed) đã nêu: tái hiện trước, test đỏ trước khi sửa, đăng \"## QA fix\" và chuyển về status:in-review để review lại ở session mới. Dùng khi \"sửa lỗi QA\", \"QA failed\", \"UAT rejected\"."
 ---
 
 # qa-failed-fix — Bước 6b: sửa sau QA hoặc UAT

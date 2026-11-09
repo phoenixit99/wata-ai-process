@@ -46,6 +46,7 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 | Planning | Đưa ưu tiên, cùng team chốt Sprint Goal |
 | Duyệt thiết kế | Cùng Designer và khách chọn phương án UI trong 1–2 ngày đầu sprint |
 | Sprint Review | Demo với khách, chuyển phản hồi thành story (`sprint-review`) |
+| Retro (kiêm AI Enablement) | Lỗi AI lặp lại do yêu cầu đầu vào: sửa DoR, template issue, hướng dẫn viết AC (`sprint-retro`); xem [AI Enablement](ai-enablement.md) |
 
 <!-- role-skills:start -->
 ## Skill của bạn
@@ -60,4 +61,5 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | `sprint-planning` | Đề xuất phạm vi sprint theo năng lực review/QA | `/sprint-planning <#>` | `@claude đọc .claude/skills/sprint-planning/SKILL.md và làm theo cho issue #<số>` |
 | `uat-run` | PO nghiệm thu, soạn kết luận UAT | `/uat-run <#>` | `@claude đọc .claude/skills/uat-run/SKILL.md và làm theo cho issue #<số>` |
 | `sprint-review` | Tài liệu demo sprint, phản hồi thành story mới | `/sprint-review <#>` | `@claude đọc .claude/skills/sprint-review/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-retro` | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | `/sprint-retro <#>` | `@claude đọc .claude/skills/sprint-retro/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

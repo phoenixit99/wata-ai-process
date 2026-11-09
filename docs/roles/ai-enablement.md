@@ -1,8 +1,21 @@
 # Hướng dẫn cho AI Enablement
 
 Bạn giữ cho AI làm việc tốt: skill, coding standard, cấu hình MCP, và phân tích lỗi AI lặp lại. Ở cấp project
-bạn là **process owner**; có thể kiêm nhiệm bởi Tech Lead. Ở cấp công ty, AI Enablement sở hữu repo trung tâm
-`wata-ai-process`.
+bạn là **process owner**. Ở cấp công ty, AI Enablement sở hữu repo trung tâm `wata-ai-process`.
+
+## Ai đảm nhận
+
+Ở mỗi project, vai trò này do **Tech Lead và PO cùng kiêm nhiệm**, chia theo nguồn gốc của lỗi. Tech Lead chịu
+trách nhiệm chính (A) về nền tảng AI; PO chịu trách nhiệm phía yêu cầu đầu vào.
+
+| | Tech Lead (phía kỹ thuật) | PO (phía yêu cầu) |
+|---|---|---|
+| Phụ trách | Skill, coding standard, `CLAUDE.md`, MCP, workflow agent, chi phí AI, nâng phiên bản quy trình | DoR, mẫu issue và AC, hướng dẫn viết yêu cầu; cùng Designer giữ design system đủ cho AI dùng |
+| Lỗi AI lặp lại do | AI làm sai một bước, code lệch chuẩn, cấu hình hỏng | Yêu cầu mơ hồ, AC thiếu, story `fail-to-dev` lặp lại, UAT rejected vì AC không đúng ý |
+| Sửa ở | Skill (đề xuất lên repo trung tâm), coding standard, "Bẫy đã biết" trong `CLAUDE.md` | DoR, template issue, `docs/writing-acceptance-criteria.md` (đề xuất), design system (cùng Designer) |
+
+Khai báo cả hai trong `people.ai_enablement` của `.claude/project.yml`. Lưu ý khối lượng: effort của PO đã tăng ở
+khâu yêu cầu và refinement ([Scrum mục 7](../scrum.md)); PM theo dõi để PO không quá tải.
 
 ## Việc của bạn trong quy trình
 
@@ -14,6 +27,17 @@ bạn là **process owner**; có thể kiêm nhiệm bởi Tech Lead. Ở cấp 
 | Khi cần sửa skill | Mở issue/PR trên repo trung tâm; skill thuộc lõi, không sửa thẳng trong `.claude/skills/` của project | Repo trung tâm |
 | Nâng phiên bản quy trình | Đọc CHANGELOG, chạy `install.sh --upgrade`, cập nhật `process_version` | `scripts/install.sh` |
 | Chi phí AI | Cùng PM theo dõi chi phí token, điều chỉnh `max_turns_per_run` | `project.yml` |
+
+## Chỉ số đánh giá
+
+| Chỉ số | Mục tiêu tham khảo | Chủ yếu của |
+|---|---|---|
+| Tỉ lệ `needs-human` | Giảm dần qua các sprint | Tech Lead |
+| Tỉ lệ đạt review vòng 1 | ≥ 60% | Tech Lead |
+| Tỉ lệ fail-to-dev | < 20% và giảm dần | PO |
+| Tỉ lệ UAT rejected | Giảm dần | PO |
+| Lỗi lặp lại sau retro | Không lặp lại lỗi đã có hành động sửa | Cả hai |
+| Chi phí AI mỗi story | Ổn định hoặc giảm | Tech Lead |
 
 ## Nguyên tắc
 

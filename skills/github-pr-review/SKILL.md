@@ -1,6 +1,6 @@
 ---
 name: github-pr-review
-description: Bước 5 của quy trình WATA. Review PR của issue ở status:in-review trong một session MỚI (không phải session đã viết code), hai lượt: đọc diff theo 9 tiêu chí, rồi cố bác bỏ build write-up. Đăng "## Code review: PASS/FAIL/HOLD", comment theo dòng trên PR, chuyển sang status:qa hoặc trả về status:in-progress (tối đa 3 vòng, sau đó status:needs-human). Dùng khi "review PR", "code review issue này".
+description: "Bước 5 của quy trình WATA. Review PR của issue ở status:in-review trong một session MỚI (không phải session đã viết code), hai lượt: đọc diff theo 9 tiêu chí, rồi cố bác bỏ build write-up. Đăng \"## Code review: PASS/FAIL/HOLD\", comment theo dòng trên PR, chuyển sang status:qa hoặc trả về status:in-progress (tối đa 3 vòng, sau đó status:needs-human). Dùng khi \"review PR\", \"code review issue này\"."
 ---
 
 # github-pr-review — Bước 5: review ở session riêng

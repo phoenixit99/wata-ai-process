@@ -1,6 +1,6 @@
 ---
 name: qa-manual-session
-description: Skill của QA ở Bước 6 quy trình WATA. Dẫn QA đi qua từng test case manual/mobile của một issue ở status:qa, ghi kết quả và bằng chứng vào "## QA manual results", rồi gộp với kết quả automation để kết luận "## QA report: PASS/FAIL" và chuyển trạng thái, để issue không bị kẹt chờ. Dùng khi "test manual", "ghi kết quả QA", "test mobile cho issue này".
+description: "Skill của QA ở Bước 6 quy trình WATA. Dẫn QA đi qua từng test case manual/mobile của một issue ở status:qa, ghi kết quả và bằng chứng vào \"## QA manual results\", rồi gộp với kết quả automation để kết luận \"## QA report: PASS/FAIL\" và chuyển trạng thái, để issue không bị kẹt chờ. Dùng khi \"test manual\", \"ghi kết quả QA\", \"test mobile cho issue này\"."
 ---
 
 # qa-manual-session — QA test manual/mobile

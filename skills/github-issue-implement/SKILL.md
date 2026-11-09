@@ -1,6 +1,6 @@
 ---
 name: github-issue-implement
-description: Bước 4 của quy trình WATA. Code issue ở status:ready-to-dev theo plan đã duyệt ở G2, viết test trước, chạy lint/typecheck/test/build, mở PR "Refs #<số>", đăng "## Build write-up" và chuyển sang status:in-review. Cũng chạy ở chế độ sửa khi review hoặc QA trả về (status:in-progress sau "## Code review: FAIL" hoặc "## QA report: FAIL"). Dùng khi "code issue này", "implement", "sửa theo review".
+description: "Bước 4 của quy trình WATA. Code issue ở status:ready-to-dev theo plan đã duyệt ở G2, viết test trước, chạy lint/typecheck/test/build, mở PR \"Refs #<số>\", đăng \"## Build write-up\" và chuyển sang status:in-review. Cũng chạy ở chế độ sửa khi review hoặc QA trả về (status:in-progress sau \"## Code review: FAIL\" hoặc \"## QA report: FAIL\"). Dùng khi \"code issue này\", \"implement\", \"sửa theo review\"."
 ---
 
 # github-issue-implement — Bước 4: code và mở PR

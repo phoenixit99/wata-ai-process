@@ -59,7 +59,7 @@ yêu cầu thay vì bám theo code AI vừa viết; QA ở bước 7 duyệt k�
 | Developer | Viết code, unit test, sửa lỗi | Thiết kế giải pháp, giao việc cho AI, kiểm tra và chịu trách nhiệm code | Giảm |
 | QA | Viết test case, test thủ công, automation | Duyệt test case AI sinh, test khám phá/UX, test thiết bị thật | Giảm |
 | Designer | Thiết kế từng màn hình, bàn giao | Xây dựng và mô tả design system, viết brief UI, duyệt và tinh chỉnh Figma, chịu trách nhiệm UX | Giảm (tăng ở Sprint 0) |
-| AI Enablement (mới) | — | Bảo trì skill, coding standard, cấu hình MCP; phân tích lỗi AI lặp lại. Có thể kiêm nhiệm bởi Tech Lead. Là *process owner* ở cấp project | Mới |
+| AI Enablement (mới) | — | Bảo trì skill, coding standard, cấu hình MCP; phân tích lỗi AI lặp lại. **Tech Lead và PO cùng kiêm nhiệm**: Tech Lead phía kỹ thuật (chịu trách nhiệm chính), PO phía yêu cầu. Là *process owner* ở cấp project | Mới |
 | Security (mới) | — | Duyệt chính sách dữ liệu, token, phạm vi quyền của AI ở Sprint 0 và khi thay đổi | Mới |
 | Khách hàng | Nghiệm thu | Chọn phương án giao diện, nghiệm thu theo AC, thống nhất SLA phản hồi | Tăng |
 

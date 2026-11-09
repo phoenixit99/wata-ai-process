@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: Skill của Designer trong quy trình WATA. So giao diện đã code (staging/preview, localhost, hoặc ảnh trong build write-up) với frame Figma của issue, liệt kê chỗ lệch theo mức (phải sửa / nên sửa / chấp nhận), Designer xác nhận từng mục, rồi đăng "## Design review: OK" hoặc "## Design review: CHANGES" để bước review/QA dùng. Dùng khi "review UI", "so với Figma", "design QA".
+description: "Skill của Designer trong quy trình WATA. So giao diện đã code (staging/preview, localhost, hoặc ảnh trong build write-up) với frame Figma của issue, liệt kê chỗ lệch theo mức (phải sửa / nên sửa / chấp nhận), Designer xác nhận từng mục, rồi đăng \"## Design review: OK\" hoặc \"## Design review: CHANGES\" để bước review/QA dùng. Dùng khi \"review UI\", \"so với Figma\", \"design QA\"."
 ---
 
 # design-review — Designer duyệt giao diện

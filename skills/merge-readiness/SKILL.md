@@ -1,6 +1,6 @@
 ---
 name: merge-readiness
-description: Kiểm tra trước cổng G4 (Bước 8) của quy trình WATA, do Tech Lead gọi. Xác nhận CI xanh trên commit cuối, đủ approval CODEOWNERS, PR không conflict, đủ chuỗi heading PASS, G3 đã có (trừ risk:low), PR dùng "Refs #". Đăng "## Merge readiness: READY/NOT READY". AI không bao giờ merge. Dùng khi "merge được chưa", "kiểm tra trước khi merge".
+description: "Kiểm tra trước cổng G4 (Bước 8) của quy trình WATA, do Tech Lead gọi. Xác nhận CI xanh trên commit cuối, đủ approval CODEOWNERS, PR không conflict, đủ chuỗi heading PASS, G3 đã có (trừ risk:low), PR dùng \"Refs #\". Đăng \"## Merge readiness: READY/NOT READY\". AI không bao giờ merge. Dùng khi \"merge được chưa\", \"kiểm tra trước khi merge\"."
 ---
 
 # merge-readiness — kiểm tra trước cổng G4

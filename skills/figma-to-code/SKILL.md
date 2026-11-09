@@ -1,6 +1,6 @@
 ---
 name: figma-to-code
-description: Kỹ năng hỗ trợ trong Bước 4 của quy trình WATA. Lấy thiết kế từ link frame Figma qua Figma MCP (layout, màu, font, khoảng cách, ảnh frame), map sang component và theme có sẵn của app theo coding standard, code UI, rồi đối chiếu ảnh chụp với frame. Được github-issue-implement gọi khi issue có link Figma; cũng dùng riêng khi "code theo Figma", "so UI với thiết kế".
+description: "Kỹ năng hỗ trợ trong Bước 4 của quy trình WATA. Lấy thiết kế từ link frame Figma qua Figma MCP (layout, màu, font, khoảng cách, ảnh frame), map sang component và theme có sẵn của app theo coding standard, code UI, rồi đối chiếu ảnh chụp với frame. Được github-issue-implement gọi khi issue có link Figma; cũng dùng riêng khi \"code theo Figma\", \"so UI với thiết kế\"."
 ---
 
 # figma-to-code — từ frame Figma ra UI

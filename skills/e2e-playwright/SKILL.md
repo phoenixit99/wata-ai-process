@@ -1,6 +1,6 @@
 ---
 name: e2e-playwright
-description: Bước 6 của quy trình WATA. Với issue ở status:qa, viết và chạy test Playwright cho các test case loại auto đã thiết kế ở Bước 3, phân loại lỗi (test / sản phẩm / môi trường), gom kết quả case manual/mobile do QA ghi, đăng "## QA report: PASS/FAIL" lên issue và PR, chuyển sang status:qa-passed, trả về status:in-progress, hoặc status:qa-failed sau 3 vòng. Dùng khi "chạy QA", "viết e2e", "automation test issue này".
+description: "Bước 6 của quy trình WATA. Với issue ở status:qa, viết và chạy test Playwright cho các test case loại auto đã thiết kế ở Bước 3, phân loại lỗi (test / sản phẩm / môi trường), gom kết quả case manual/mobile do QA ghi, đăng \"## QA report: PASS/FAIL\" lên issue và PR, chuyển sang status:qa-passed, trả về status:in-progress, hoặc status:qa-failed sau 3 vòng. Dùng khi \"chạy QA\", \"viết e2e\", \"automation test issue này\"."
 ---
 
 # e2e-playwright — Bước 6: QA

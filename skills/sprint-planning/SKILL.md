@@ -1,6 +1,6 @@
 ---
 name: sprint-planning
-description: Sprint Planning trong quy trình Scrum WATA. Tính năng lực sprint theo năng lực review và QA/nghiệm thu của team (không theo năng lực code), đưa số liệu các sprint trước (lead time, số PR mỗi người review được, tỉ lệ fail-to-dev), đề xuất danh sách story vừa sức theo priority và size, gợi ý tách/gom, nhận diện story cần người code. Gắn milestone khi team chốt. Dùng khi "lập kế hoạch sprint", "sprint planning", "sprint này nhận bao nhiêu".
+description: "Sprint Planning trong quy trình Scrum WATA. Tính năng lực sprint theo năng lực review và QA/nghiệm thu của team (không theo năng lực code), đưa số liệu các sprint trước (lead time, số PR mỗi người review được, tỉ lệ fail-to-dev), đề xuất danh sách story vừa sức theo priority và size, gợi ý tách/gom, nhận diện story cần người code. Gắn milestone khi team chốt. Dùng khi \"lập kế hoạch sprint\", \"sprint planning\", \"sprint này nhận bao nhiêu\"."
 ---
 
 # sprint-planning — lập kế hoạch sprint theo năng lực review/QA

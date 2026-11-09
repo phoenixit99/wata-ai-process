@@ -1,6 +1,6 @@
 ---
 name: uat-checklist
-description: Chuẩn bị cổng G5 (Bước 9, UAT) của quy trình WATA. Với issue ở status:uat (đã merge), soạn "## UAT checklist" bằng ngôn ngữ người dùng từ Acceptance Criteria để PO nghiệm thu trên staging, kèm hướng dẫn trả lời ACCEPTED/REJECTED. PO là người ký. Dùng khi "chuẩn bị UAT", "PO nghiệm thu".
+description: "Chuẩn bị cổng G5 (Bước 9, UAT) của quy trình WATA. Với issue ở status:uat (đã merge), soạn \"## UAT checklist\" bằng ngôn ngữ người dùng từ Acceptance Criteria để PO nghiệm thu trên staging, kèm hướng dẫn trả lời ACCEPTED/REJECTED. PO là người ký. Dùng khi \"chuẩn bị UAT\", \"PO nghiệm thu\"."
 ---
 
 # uat-checklist — chuẩn bị nghiệm thu (G5)

@@ -28,7 +28,7 @@ SLA là **đề xuất**; team chốt trong `.claude/project.yml` → `sla_hours
 | Báo cáo tiến độ (`status-report`) | R (soạn) | I | — | A | — | — | I | — | hằng tuần |
 | Thay đổi quy trình | — | C | C | C | C | C | C | C | Process owner: A |
 
-**AI Enablement** chịu trách nhiệm (A) cho skill, cấu hình MCP và hành động sửa lỗi AI lặp lại sau retro. **Security** được hỏi ý kiến (C) ở G2/G3 cho story `risk:high` và ký duyệt quyền truy cập ở Sprint 0. **Khách hàng** chọn phương án UI và cùng PO nghiệm thu. RACI theo giai đoạn sprint ở [Quy trình Scrum mục 3.1](scrum.md).
+**AI Enablement** (Tech Lead và PO cùng kiêm nhiệm) chịu trách nhiệm (A) cho skill, cấu hình MCP và hành động sửa lỗi AI lặp lại sau retro. **Security** được hỏi ý kiến (C) ở G2/G3 cho story `risk:high` và ký duyệt quyền truy cập ở Sprint 0. **Khách hàng** chọn phương án UI và cùng PO nghiệm thu. RACI theo giai đoạn sprint ở [Quy trình Scrum mục 3.1](scrum.md).
 
 ## Kiêm nhiệm
 

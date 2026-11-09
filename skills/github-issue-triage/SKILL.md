@@ -1,6 +1,6 @@
 ---
 name: github-issue-triage
-description: Bước 2 của quy trình WATA. Kiểm tra issue ở status:backlog theo Definition of Ready R1–R11 (gồm tìm issue trùng), đề xuất mức rủi ro, đăng "## Triage: PASS/FAIL/BLOCKED" và chuyển sang status:test-design, status:fail-to-dev hoặc status:blocked. Dùng khi "triage issue", "issue này đủ để làm chưa".
+description: "Bước 2 của quy trình WATA. Kiểm tra issue ở status:backlog theo Definition of Ready R1–R11 (gồm tìm issue trùng), đề xuất mức rủi ro, đăng \"## Triage: PASS/FAIL/BLOCKED\" và chuyển sang status:test-design, status:fail-to-dev hoặc status:blocked. Dùng khi \"triage issue\", \"issue này đủ để làm chưa\"."
 ---
 
 # github-issue-triage — Bước 2: Definition of Ready

@@ -1,6 +1,6 @@
 ---
 name: refutation-brief
-description: Chuẩn bị cho cổng G3 (Bước 7) của quy trình WATA. Với issue ở status:qa-passed, một session mới liệt kê từng claim của write-up/review/QA kèm bằng chứng, các đoạn diff rủi ro cao và những gì chưa được kiểm, đăng "## Refutation brief" để reviewer (con người) đọc nhanh và cố tìm điểm sai. AI chỉ chuẩn bị, không ký. Dùng khi "chuẩn bị refutation", "tóm tắt PR cho reviewer".
+description: "Chuẩn bị cho cổng G3 (Bước 7) của quy trình WATA. Với issue ở status:qa-passed, một session mới liệt kê từng claim của write-up/review/QA kèm bằng chứng, các đoạn diff rủi ro cao và những gì chưa được kiểm, đăng \"## Refutation brief\" để reviewer (con người) đọc nhanh và cố tìm điểm sai. AI chỉ chuẩn bị, không ký. Dùng khi \"chuẩn bị refutation\", \"tóm tắt PR cho reviewer\"."
 ---
 
 # refutation-brief — chuẩn bị cổng G3

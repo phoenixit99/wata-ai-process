@@ -28,7 +28,7 @@ SLAs are **proposals**; the team sets them in `.claude/project.yml` → `sla_hou
 | Progress report (`status-report`) | R (drafts) | I | — | A | — | — | I | — | weekly |
 | Process change | — | C | C | C | C | C | C | C | Process owner: A |
 
-**AI Enablement** is accountable (A) for skills, MCP configuration and fixing repeated AI errors after the retro. **Security** is consulted (C) at G2/G3 for `risk:high` stories and signs off access in Sprint 0. **The customer** chooses UI options and accepts together with the PO. The RACI by sprint stage is in [Scrum process section 3.1](/en/scrum).
+**AI Enablement** (held jointly by the Tech Lead and the PO) is accountable (A) for skills, MCP configuration and fixing repeated AI errors after the retro. **Security** is consulted (C) at G2/G3 for `risk:high` stories and signs off access in Sprint 0. **The customer** chooses UI options and accepts together with the PO. The RACI by sprint stage is in [Scrum process section 3.1](/en/scrum).
 
 ## Holding several roles
 

@@ -1,6 +1,6 @@
 ---
 name: github-issue-create
-description: Bước 1 của quy trình WATA. Biến yêu cầu bằng ngôn ngữ tự nhiên của PO/BA thành issue GitHub đúng mẫu (Description, Acceptance Criteria kiểm thử được, Affected apps, Design, Technical notes), đánh dấu giả định. Cũng dùng để giúp PO sửa issue đang ở status:fail-to-dev. Dùng khi "tạo issue", "viết ticket", "soạn lại issue theo mẫu".
+description: "Bước 1 của quy trình WATA. Biến yêu cầu bằng ngôn ngữ tự nhiên của PO/BA thành issue GitHub đúng mẫu (Description, Acceptance Criteria kiểm thử được, Affected apps, Design, Technical notes), đánh dấu giả định. Cũng dùng để giúp PO sửa issue đang ở status:fail-to-dev. Dùng khi \"tạo issue\", \"viết ticket\", \"soạn lại issue theo mẫu\"."
 ---
 
 # github-issue-create — Bước 1: tạo issue

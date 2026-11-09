@@ -1,6 +1,6 @@
 ---
 name: release-plan
-description: Skill của PM (cùng Tech Lead) trong quy trình WATA. Gom các issue của một milestone hoặc đang ở qa-passed/uat, cho biết cái nào sẵn sàng, cái nào chặn release, việc phải làm trước release (migration, env var, cấu hình) lấy từ build write-up, thứ tự merge/deploy, lịch UAT, kế hoạch rollback và ai chịu trách nhiệm. Chỉ đọc; kết quả đưa PM. Dùng khi "lên kế hoạch release", "release này gồm gì", "sẵn sàng release chưa".
+description: "Skill của PM (cùng Tech Lead) trong quy trình WATA. Gom các issue của một milestone hoặc đang ở qa-passed/uat, cho biết cái nào sẵn sàng, cái nào chặn release, việc phải làm trước release (migration, env var, cấu hình) lấy từ build write-up, thứ tự merge/deploy, lịch UAT, kế hoạch rollback và ai chịu trách nhiệm. Chỉ đọc; kết quả đưa PM. Dùng khi \"lên kế hoạch release\", \"release này gồm gì\", \"sẵn sàng release chưa\"."
 ---
 
 # release-plan — kế hoạch release

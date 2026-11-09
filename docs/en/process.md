@@ -242,7 +242,7 @@ Each role has a guide under [role guides](/en/roles/po); who does what in each s
 | Developer | Plan approval, hard cases, Needs human | G2 (plan) | Code, unit tests, first-pass review |
 | Tech Lead | Architecture, risk tier, merge | G2, G3, G4 | Refutation brief, merge readiness, hotfix |
 | QA | Test-case approval, manual/mobile testing | G2 (test cases) | Test cases, automation, manual session |
-| AI Enablement | Skills, coding standards, MCP, repeated AI errors; process owner | — | Retro, Sprint 0 check |
+| AI Enablement (held by Tech Lead + PO) | Skills, coding standards, MCP, repeated AI errors; process owner | — | Retro, Sprint 0 check |
 | Security | Data policy, AI permissions, tokens | — (consulted on `risk:high`) | Sprint 0 check |
 | Customer | Chooses UI options, acceptance | G5 (with the PO) | Demo notes, UAT checklist |
 

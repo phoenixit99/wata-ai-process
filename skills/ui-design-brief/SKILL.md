@@ -1,6 +1,6 @@
 ---
 name: ui-design-brief
-description: Giai đoạn Thiết kế UI trong quy trình Scrum WATA, cho Designer. Từ story và design system của dự án, soạn "## UI brief" (màn hình, trạng thái, component, quy tắc), đề xuất 2–3 phương án giao diện, hỗ trợ tạo/tinh chỉnh frame Figma, rồi ghi kết quả duyệt "## Design approval: APPROVED/CHANGES" (Designer + PO/khách hàng) trước khi code. Dùng khi "brief UI", "thiết kế cho story", "duyệt thiết kế".
+description: "Giai đoạn Thiết kế UI trong quy trình Scrum WATA, cho Designer. Từ story và design system của dự án, soạn \"## UI brief\" (màn hình, trạng thái, component, quy tắc), đề xuất 2–3 phương án giao diện, hỗ trợ tạo/tinh chỉnh frame Figma, rồi ghi kết quả duyệt \"## Design approval: APPROVED/CHANGES\" (Designer + PO/khách hàng) trước khi code. Dùng khi \"brief UI\", \"thiết kế cho story\", \"duyệt thiết kế\"."
 ---
 
 # ui-design-brief — brief UI và duyệt thiết kế trước khi code

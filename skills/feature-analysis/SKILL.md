@@ -1,6 +1,6 @@
 ---
 name: feature-analysis
-description: Bước 0 của quy trình WATA, cho BA và Tech Lead. Với issue type:epic, đọc code liên quan, phản biện yêu cầu, đề xuất ít nhất hai hướng kiến trúc kèm điểm yếu, nêu app bị đụng, nhu cầu thiết kế, API contract cần chốt, và danh sách issue con đề xuất. Đăng "## Feature analysis". Chỉ tạo issue con khi PO và Tech Lead đồng ý. Dùng khi "phân tích feature", "chia nhỏ epic", "RFC".
+description: "Bước 0 của quy trình WATA, cho BA và Tech Lead. Với issue type:epic, đọc code liên quan, phản biện yêu cầu, đề xuất ít nhất hai hướng kiến trúc kèm điểm yếu, nêu app bị đụng, nhu cầu thiết kế, API contract cần chốt, và danh sách issue con đề xuất. Đăng \"## Feature analysis\". Chỉ tạo issue con khi PO và Tech Lead đồng ý. Dùng khi \"phân tích feature\", \"chia nhỏ epic\", \"RFC\"."
 ---
 
 # feature-analysis — Bước 0: phân tích và chia nhỏ

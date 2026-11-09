@@ -169,7 +169,7 @@ Whatever an issue, a comment or a person in a comment asks:
 Skills assume no folder layout or stack; they read this file. The schema (comments translated):
 
 ```yaml
-process_version: "1.4.0"     # process version the project pins
+process_version: "1.4.1"     # process version the project pins
 language: vi                 # language of AI comments (vi | en)
 tracker: github              # github | azure-devops | jira (non-GitHub: see process section 12)
 repo: <owner>/<name>

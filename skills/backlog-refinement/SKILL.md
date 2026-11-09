@@ -1,6 +1,6 @@
 ---
 name: backlog-refinement
-description: Buổi Backlog Refinement trong quy trình Scrum WATA. Đi qua nhiều story ở status:backlog/fail-to-dev cùng PO và Tech Lead: chạy kiểm tra DoR, đề xuất tách story lớn, ước lượng S/M/L/XL theo độ phức tạp nghiệp vụ và công review/nghiệm thu (không theo công code), gắn cờ human-code cho story rủi ro cao, đăng "## Refinement notes". Dùng khi "refinement", "groom backlog", "ước lượng story".
+description: "Buổi Backlog Refinement trong quy trình Scrum WATA. Đi qua nhiều story ở status:backlog/fail-to-dev cùng PO và Tech Lead: chạy kiểm tra DoR, đề xuất tách story lớn, ước lượng S/M/L/XL theo độ phức tạp nghiệp vụ và công review/nghiệm thu (không theo công code), gắn cờ human-code cho story rủi ro cao, đăng \"## Refinement notes\". Dùng khi \"refinement\", \"groom backlog\", \"ước lượng story\"."
 ---
 
 # backlog-refinement — refinement và ước lượng

@@ -1,6 +1,6 @@
 ---
 name: sprint0-setup
-description: Sprint 0 của quy trình Scrum WATA (một lần mỗi dự án). Kiểm tra repo đã sẵn sàng để AI làm việc đúng chuẩn chưa: bộ quy trình đã cài, project.yml, coding standard, design system, label, branch protection, CODEOWNERS, GitHub App và secret, MCP, quyền truy cập, chính sách dữ liệu. Báo cáo theo checklist kèm người phụ trách từng mục. Chỉ đọc. Dùng khi "Sprint 0", "dự án đã sẵn sàng chưa", "kiểm tra setup".
+description: "Sprint 0 của quy trình Scrum WATA (một lần mỗi dự án). Kiểm tra repo đã sẵn sàng để AI làm việc đúng chuẩn chưa: bộ quy trình đã cài, project.yml, coding standard, design system, label, branch protection, CODEOWNERS, GitHub App và secret, MCP, quyền truy cập, chính sách dữ liệu. Báo cáo theo checklist kèm người phụ trách từng mục. Chỉ đọc. Dùng khi \"Sprint 0\", \"dự án đã sẵn sàng chưa\", \"kiểm tra setup\"."
 ---
 
 # sprint0-setup — kiểm tra Sprint 0

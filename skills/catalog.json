@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.4.1",
   "roles": [
     "po",
     "ba",
@@ -553,6 +553,7 @@
       "step": "retro",
       "roles": [
         "ai-enablement",
+        "po",
         "pm",
         "tech-lead"
       ],

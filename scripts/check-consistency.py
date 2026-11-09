@@ -42,6 +42,16 @@ for n in names:
     m = re.match(r"---\nname: ([a-z0-9-]+)\ndescription: (.+?)\n---\n", t, re.S)
     if not m or m.group(1) != n:
         err(f"{n}: frontmatter thiếu hoặc name không khớp thư mục")
+    else:
+        # description phải là chuỗi trong ngoặc kép (JSON hợp lệ, cũng là YAML hợp lệ). Không có ngoặc,
+        # một chuỗi ": " bên trong làm YAML hỏng và Claude Code không nạp được skill.
+        desc = m.group(2).strip()
+        try:
+            ok = desc.startswith('"') and isinstance(json.loads(desc), str) and json.loads(desc).strip()
+        except ValueError:
+            ok = False
+        if not ok:
+            err(f"{n}: description phải là chuỗi trong ngoặc kép, ví dụ description: \"...\"")
     if "docs/agents/contract.md" not in t:
         err(f"{n}: không yêu cầu đọc docs/agents/contract.md")
     if not re.search(r"^## Luật\s*$", t, re.M):

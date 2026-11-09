@@ -1,6 +1,6 @@
 ---
 name: daily-scrum
-description: Daily Scrum trong quy trình Scrum WATA, cho PM/Scrum Master. Thay báo cáo miệng bằng bảng từ label: việc bị chặn (needs-human, blocked, qa-failed, uat-failed), hàng chờ review/QA so với giới hạn WIP, issue quá SLA, tiến độ so với Sprint Goal. Chỉ đọc. Dùng khi "daily", "stand-up", "hôm nay kẹt gì".
+description: "Daily Scrum trong quy trình Scrum WATA, cho PM/Scrum Master. Thay báo cáo miệng bằng bảng từ label: việc bị chặn (needs-human, blocked, qa-failed, uat-failed), hàng chờ review/QA so với giới hạn WIP, issue quá SLA, tiến độ so với Sprint Goal. Chỉ đọc. Dùng khi \"daily\", \"stand-up\", \"hôm nay kẹt gì\"."
 ---
 
 # daily-scrum — bảng cho buổi daily 15 phút

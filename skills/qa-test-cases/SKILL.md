@@ -1,6 +1,6 @@
 ---
 name: qa-test-cases
-description: Bước 3 của quy trình WATA, chạy TRƯỚC khi code. Từ Acceptance Criteria của issue ở status:test-design, kiểm chứng từng AC trên code hiện tại, sinh test case (TC-<số>-<thứ tự>, P1–P3, auto/manual/mobile), lập plan AC → file → test, lưu bảng vào e2e/test-cases/ và đăng "## Test design: PASS/FAIL" để người duyệt ở cổng G2. Dùng khi "thiết kế test", "viết test case", "lập plan cho issue".
+description: "Bước 3 của quy trình WATA, chạy TRƯỚC khi code. Từ Acceptance Criteria của issue ở status:test-design, kiểm chứng từng AC trên code hiện tại, sinh test case (TC-<số>-<thứ tự>, P1–P3, auto/manual/mobile), lập plan AC → file → test, lưu bảng vào e2e/test-cases/ và đăng \"## Test design: PASS/FAIL\" để người duyệt ở cổng G2. Dùng khi \"thiết kế test\", \"viết test case\", \"lập plan cho issue\"."
 ---
 
 # qa-test-cases — Bước 3: thiết kế test và plan

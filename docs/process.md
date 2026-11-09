@@ -239,7 +239,7 @@ Chi tiết từng vai trò ở `roles/`; bảng ai làm gì ở từng trạng t
 | Dev | Duyệt plan, sửa ca khó, xử lý Needs human | G2 (plan) | Code, unit test, review sơ bộ |
 | Tech Lead | Kiến trúc, mức rủi ro, merge | G2, G3, G4 | Refutation brief, merge readiness, hotfix |
 | QA | Duyệt test case, test manual/mobile | G2 (test case) | Sinh test case, automation, phiên test manual |
-| AI Enablement | Skill, coding standard, MCP, lỗi AI lặp lại; process owner | — | Retro, kiểm tra Sprint 0 |
+| AI Enablement (Tech Lead + PO kiêm nhiệm) | Skill, coding standard, MCP, lỗi AI lặp lại; process owner | — | Retro, kiểm tra Sprint 0 |
 | Security | Chính sách dữ liệu, quyền của AI, token | — (tham vấn `risk:high`) | Kiểm tra Sprint 0 |
 | Khách hàng | Chọn phương án UI, nghiệm thu | G5 (cùng PO) | Tài liệu demo, UAT checklist |
 
