@@ -5,7 +5,7 @@ description: Bước 4 của quy trình WATA. Code issue ở status:ready-to-dev
 
 # github-issue-implement — Bước 4: code và mở PR
 
-> **Vai trò:** Dev · **Bước:** 4 · **Chế độ:** tự động + tương tác · **Kích hoạt:** label `status:ready-to-dev`, `status:in-progress` (tự động) hoặc người gọi · **Đọc:** `## Test design: PASS`, `## Plan approval`, `## Code review: FAIL`, `## QA report: FAIL` · **Ghi:** `## Build write-up`, `## Needs human`
+> **Vai trò:** Dev · **Bước:** 4 · **Chế độ:** tự động + tương tác · **Kích hoạt:** label `status:ready-to-dev`, `status:in-progress` (tự động) hoặc người gọi · **Đọc:** `## Test design: PASS`, `## Plan approval`, `## Code review: FAIL`, `## QA report: FAIL`, `## Design approval: APPROVED` · **Ghi:** `## Build write-up`, `## Needs human`
 
 `$ARGUMENTS`: `<số issue> [--auto]`. Trống: liệt kê issue `status:ready-to-dev` theo priority và
 issue `status:in-progress` của người chạy, hỏi làm issue nào.
@@ -19,11 +19,12 @@ issue `status:in-progress` của người chạy, hỏi làm issue nào.
    - `## Test design: PASS` + label `status:ready-to-dev` → **làm mới**.
    - `## Code review: FAIL` hoặc `## QA report: FAIL` mới hơn `## Build write-up` → **chế độ sửa**:
      spec của lần chạy này là các finding trong comment đó, không hơn. Đọc label `round:*`.
-3. **Cổng G2 phải đã qua.** Làm mới mà không có `## Test design: PASS`, hoặc `status:ready-to-dev`
+3. **Story có label `human-code`:** người code trực tiếp; dừng, không code (tương tác: hỏi người chạy có phải người được giao không và chỉ hỗ trợ khi được yêu cầu).
+4. **Cổng G2 phải đã qua.** Làm mới mà không có `## Test design: PASS`, hoặc `status:ready-to-dev`
    không do người gắn (xem timeline): dừng, báo, không code.
-4. PR hiện có của issue (cả PR đã đóng) và những gì đã merge vào vùng code này kể từ test design.
+5. PR hiện có của issue (cả PR đã đóng) và những gì đã merge vào vùng code này kể từ test design.
    **Tiền đề còn đúng không trên `origin/main` mới nhất?** Có thể đã có người sửa.
-5. Code ở mọi app trong plan, coding standard của từng app, `.claude/project.yml` (lệnh build).
+6. Code ở mọi app trong plan, coding standard của từng app, `.claude/project.yml` (lệnh build).
 
 ## Bước 1: Nhận việc
 
@@ -41,8 +42,8 @@ issue `status:in-progress` của người chạy, hỏi làm issue nào.
 3. Code theo thứ tự contract chung → API → web/admin → mobile, theo coding standard. Không thêm
    thư viện hay nâng phiên bản nếu plan không có.
 4. Đổi API: response cũ vẫn dùng được cho `mobile.supported_app_versions` bản app gần nhất.
-5. Đổi UI: thêm `data-testid` cho phần tử mà test case `auto` cần; lấy thiết kế qua Figma MCP
-   (skill `figma-to-code`) khi có link.
+5. Đổi UI: code theo frame trong `## Design approval: APPROVED` (không có thì dừng: story UI chưa qua G2);
+   thêm `data-testid` cho phần tử mà test case `auto` cần; lấy thiết kế qua Figma MCP (skill `figma-to-code`).
 6. Commit theo Conventional Commits, có `#<số>`.
 7. Tương tác: **cho xem diff** (mỗi file, một câu cho mỗi hunk, cái gì plan không nhắc) và chờ đồng ý.
 

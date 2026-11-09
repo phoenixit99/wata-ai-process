@@ -55,9 +55,13 @@ jobs:
 
           # yq có sẵn trên runner ubuntu-latest của GitHub (chưa kiểm chứng trên runner tự host).
           wip=$(yq '.limits.wip_in_progress // 3' .claude/project.yml)
+          wip_review=$(yq '.limits.wip_in_review // 4' .claude/project.yml)
+          wip_qa=$(yq '.limits.wip_qa // 4' .claude/project.yml)
           max_turns=$(yq '.limits.max_turns_per_run // 60' .claude/project.yml)
           current=$(gh issue view "$ISSUE" --repo "$GITHUB_REPOSITORY" --json labels \
             --jq '[.labels[].name | select(startswith("status:"))] | join(",")')
+          human_code=$(gh issue view "$ISSUE" --repo "$GITHUB_REPOSITORY" --json labels \
+            --jq '[.labels[].name | select(. == "human-code")] | length')
           # Guard chạy song song và có thể chưa gỡ xong label cũ, nên kiểm "có chứa", không kiểm "bằng".
           has() { case ",$current," in *",$1,"*) return 0 ;; *) return 1 ;; esac; }
 
@@ -114,13 +118,20 @@ jobs:
             fi
           fi
 
-          # Giới hạn WIP cho issue mới bắt đầu code. Vượt giới hạn: giữ ready-to-dev;
+          # Story gắn human-code: người code trực tiếp, agent không implement.
+          if [ "$skill" = "github-issue-implement" ] && [ "$human_code" != "0" ]; then
+            note="story có label human-code; người code trực tiếp"
+            skill=""
+          fi
+
+          # Giới hạn WIP cho issue mới bắt đầu code: cả hàng đang code, hàng chờ review và hàng chờ QA
+          # (theo quy trình Scrum, review/QA là nút thắt). Vượt giới hạn: giữ ready-to-dev;
           # wata-sla-reminder gọi lại theo priority khi có chỗ.
           if [ "$skill" = "github-issue-implement" ] && has status:ready-to-dev; then
-            busy=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-              --label status:in-progress --json number --jq 'length')
-            if [ "$busy" -ge "$wip" ]; then
-              note="WIP $busy/$wip đầy; #$ISSUE chờ trong hàng ready-to-dev"
+            count() { gh issue list --repo "$GITHUB_REPOSITORY" --state open --label "$1" --json number --jq 'length'; }
+            busy=$(count status:in-progress); in_review=$(count status:in-review); in_qa=$(count status:qa)
+            if [ "$busy" -ge "$wip" ] || [ "$in_review" -ge "$wip_review" ] || [ "$in_qa" -ge "$wip_qa" ]; then
+              note="WIP đầy (code $busy/$wip, review $in_review/$wip_review, QA $in_qa/$wip_qa); #$ISSUE chờ trong hàng ready-to-dev"
               skill=""
             fi
           fi

@@ -5,7 +5,7 @@ description: Bước 3 của quy trình WATA, chạy TRƯỚC khi code. Từ Acc
 
 # qa-test-cases — Bước 3: thiết kế test và plan
 
-> **Vai trò:** AI (tự động) · **Bước:** 3 · **Chế độ:** tự động + tương tác · **Kích hoạt:** label `status:test-design` (tự động) hoặc người gọi · **Đọc:** `## Triage: PASS` · **Ghi:** `## Test design: PASS`, `## Test design: FAIL`
+> **Vai trò:** AI (tự động) · **Bước:** 3 · **Chế độ:** tự động + tương tác · **Kích hoạt:** label `status:test-design` (tự động) hoặc người gọi · **Đọc:** `## Triage: PASS`, `## Refinement notes`, `## UI brief` · **Ghi:** `## Test design: PASS`, `## Test design: FAIL`
 
 `$ARGUMENTS`: `<số issue> [--auto]`. Trống: liệt kê issue `status:test-design` chưa có
 `## Test design:`, hỏi làm issue nào.

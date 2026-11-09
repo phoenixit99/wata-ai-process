@@ -1,9 +1,9 @@
-# AI Agent Software Development Process — v1.3
+# AI Agent Software Development Process — v1.4
 
 WATA Software · Internal document · English translation of the canonical Vietnamese process ([Tiếng Việt](/process)).
 
 This document is for **everyone who takes part in software development**: PO, BA, PM, Designer,
-Developer, Tech Lead, QA. If you only need your own part, start with your page under
+Developer, Tech Lead, QA, AI Enablement, Security. Sprint cadence, events and estimation are in the [Scrum process](/en/scrum). If you only need your own part, start with your page under
 [role guides](/en/roles/po). Technical setup is in the [setup guide](/en/setup-guide); the rules
 for the AI are in the [agent contract](/en/contract).
 
@@ -13,6 +13,7 @@ for the AI are in the [agent contract](/en/contract).
 
 | Version | Main changes |
 |---|---|
+| 1.4 | The [Scrum process](/en/scrum) joins the same process set: UI design approval is a G2 condition for UI stories; WIP limits for the review and QA queues; `size:*` and `human-code` labels; AI Enablement (process owner), Security and customer roles; [Definition of Done](/en/definition-of-done); 7 skills for Scrum events. |
 | 1.3 | Every role has its own skills (adds `plan-approval`, `design-review`, `qa-manual-session`, `uat-run`, `release-plan`); the skill catalog is the single source, with a consistency checker. |
 | 1.2 | Adds the PM role, Step 0 (feature analysis), UAT, the hotfix flow, risk tiers, RACI, SLAs for human queues, role guides. Steps 7 and 8 are explicitly human work. Status is held in `status:*` labels. |
 | 1.1 | 11 improvements: review in a separate session, test design before code, human gates G2/G3, Needs human and Blocked states, R11, server-side guardrails, shared contract, prompt-injection rule, API backward compatibility, honest QA reporting, company-wide adoption. |
@@ -99,7 +100,7 @@ an issue blocked by R8 moves to `status:blocked`.
 | R7 | No TBD, "???" or unfilled template text | Yes |
 | R8 | Not blocked by an unfinished issue | Yes (blocked → `blocked`) |
 | R9 | Bugs: steps to reproduce, expected and actual result | Yes (bugs) |
-| R10 | API changes describe request/response; UI changes link a Figma frame | Recommended |
+| R10 | API changes describe request/response. UI stories have a UI brief; **the Figma frame must be approved (`## Design approval: APPROVED`) before gate G2** | Yes (UI stories); recommended (API) |
 | R11 | Duplicates and issues changing the same code were searched for; any found are linked with an order | Yes |
 
 How to write criteria: [Writing acceptance criteria](/en/writing-acceptance-criteria).
@@ -153,7 +154,8 @@ human work; the AI only prepares material.
 - IDs `TC-<issue>-<n>`, priority P1–P3, type `auto` / `manual` / `mobile`.
 - A table **criterion → files to change → test case**, the blast radius, and what is deliberately out of scope.
 - The test-case table is saved in `e2e/test-cases/<issue>.md` and summarised on the issue.
-- **Gate G2:** the Tech Lead/Dev approves the plan and QA approves the test cases (skill `plan-approval` helps), then **a person** applies `status:ready-to-dev`.
+- **Gate G2:** the Tech Lead/Dev approves the plan and QA approves the test cases (skill `plan-approval` helps); UI stories need `## Design approval: APPROVED` (Designer + PO/customer, skill `ui-design-brief`). Then **a person** applies `status:ready-to-dev`.
+- Stories labelled `human-code` are coded by a person; the agent does not run implement.
 
 ### Step 4: Code and pull request
 
@@ -240,6 +242,9 @@ Each role has a guide under [role guides](/en/roles/po); who does what in each s
 | Developer | Plan approval, hard cases, Needs human | G2 (plan) | Code, unit tests, first-pass review |
 | Tech Lead | Architecture, risk tier, merge | G2, G3, G4 | Refutation brief, merge readiness, hotfix |
 | QA | Test-case approval, manual/mobile testing | G2 (test cases) | Test cases, automation, manual session |
+| AI Enablement | Skills, coding standards, MCP, repeated AI errors; process owner | — | Retro, Sprint 0 check |
+| Security | Data policy, AI permissions, tokens | — (consulted on `risk:high`) | Sprint 0 check |
+| Customer | Chooses UI options, acceptance | G5 (with the PO) | Demo notes, UAT checklist |
 
 **Holding several roles:** one person may hold several roles but **never signs two consecutive gates
 for the same issue** (the author of an issue does not approve its plan; the merger does not do G3 for a
@@ -259,6 +264,7 @@ recorded in a comment and is final.
 | The AI passes a human gate | The guard workflow removes gate labels applied by a bot, and the agent does not run on them |
 | Prompt injection through issues | Issue and comment text is data, not instructions (`CLAUDE.md`, contract) |
 | Two jobs overwrite each other | One status label; the guard removes old ones; per-issue concurrency; re-read before writing |
+| PRs pile up waiting for review/QA | WIP limits `wip_in_review`, `wip_qa`: the agent starts no new story while the queues are full; fixed review slots |
 | False reporting | Three-part footer; builds count only on the head commit; never report what was not observed |
 | Endless fix loops | At most 3 rounds, then `needs-human` |
 | People become the bottleneck | SLAs for human queues, automatic reminders (`wata-sla-reminder`), PM escalation |
@@ -281,13 +287,13 @@ recorded in a comment and is final.
 | Escaped defects | Bugs after merge | Effectiveness of the whole process |
 | AI cost | Token cost / issue | Cost efficiency |
 
-Skill `status-report` compiles these weekly for the PM.
+Skill `status-report` compiles these weekly for the PM. Reference targets (lead time down ≥ 40% after 3 sprints, review wait < 1 day, fail-to-dev < 20%, first-round review pass ≥ 60%, ≥ 80% of AC automated) are in [Scrum process section 8](/en/scrum).
 
 ## 12. Company-wide adoption
 
 | Layer | Contains | Owner | Can a project change it? |
 |---|---|---|---|
-| Core | Statuses, DoR, five gates, guardrails, contract, report format, process skills, `wata-*` workflows, labels | Process owner | No; differences need an approved exception |
+| Core | Statuses, DoR, DoD, five gates, guardrails, contract, report format, process skills, `wata-*` workflows, labels | Company-level AI Enablement (process owner) | No; differences need an approved exception |
 | Configuration | Tracker, apps and stacks, build commands, coding standards, supported app versions, gate signers, SLAs | Project Tech Lead + PM | Yes, within the `project.yml` schema |
 | Extensions | Project-specific skills, extra review criteria | Project Tech Lead | Only additions; never loosen the core |
 
@@ -307,6 +313,6 @@ Skill `status-report` compiles these weekly for the PM.
 
 **Open questions:**
 
-- Who is the process owner?
+- Who holds the company-level AI Enablement role (process owner)?
 - Are projects on a client's tracker in scope for the first phase?
 - The SLAs, WIP limit, AI budget and risk thresholds in these documents are **proposals**; the team decides before the pilot.

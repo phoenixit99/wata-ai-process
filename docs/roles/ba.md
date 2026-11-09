@@ -28,6 +28,16 @@ Bạn biến nhu cầu kinh doanh thành yêu cầu làm được: phân tích f
 /dev-pipeline                # xem bảng việc hôm nay
 ```
 
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Refinement | Làm rõ nghiệp vụ, tách story, đề xuất AC (`backlog-refinement`) |
+| Planning | Giải thích story cho team |
+| Sprint Review | Ghi nhận phản hồi, chuẩn bị story mới |
+
 <!-- role-skills:start -->
 ## Skill của bạn
 
@@ -38,4 +48,5 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
 | `feature-analysis` | Phân tích epic, phản biện, hai hướng kiến trúc, đề xuất issue con | `/feature-analysis <#>` | `@claude đọc .claude/skills/feature-analysis/SKILL.md và làm theo cho issue #<số>` |
 | `github-issue-create` | Soạn issue đúng mẫu từ ngôn ngữ tự nhiên | `/github-issue-create <#>` | `@claude đọc .claude/skills/github-issue-create/SKILL.md và làm theo cho issue #<số>` |
+| `backlog-refinement` | Refinement hàng loạt: tách story, ước lượng S–XL, cờ cần người code | `/backlog-refinement <#>` | `@claude đọc .claude/skills/backlog-refinement/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

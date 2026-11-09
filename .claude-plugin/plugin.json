@@ -1,6 +1,6 @@
 {
   "name": "wata",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Quy trình phát triển dự án sử dụng AI Agent của WATA Software: skill cho từng bước từ issue đến UAT.",
   "author": {
     "name": "WATA Software"

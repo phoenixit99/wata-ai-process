@@ -44,15 +44,19 @@ jobs:
             }
 
             if (process.env.MODE === 'queue') {
-              const wip = (cfg.limits || {}).wip_in_progress || 3;
+              const lim = cfg.limits || {};
               const busy = (await issuesWith('status:in-progress')).length;
-              let free = wip - busy;
+              const inReview = (await issuesWith('status:in-review')).length;
+              const inQa = (await issuesWith('status:qa')).length;
+              if (inReview >= (lim.wip_in_review || 4) || inQa >= (lim.wip_qa || 4)) return;  // nút thắt review/QA
+              let free = (lim.wip_in_progress || 3) - busy;
               if (free <= 0) return;
               const rank = (i) => {
                 const n = i.labels.map(l => l.name);
                 return n.includes('priority:p1') ? 1 : n.includes('priority:p2') ? 2 : n.includes('priority:p3') ? 3 : 4;
               };
               const waiting = (await issuesWith('status:ready-to-dev'))
+                .filter(i => !i.labels.some(l => l.name === 'human-code'))
                 .sort((a, b) => rank(a) - rank(b) || new Date(a.created_at) - new Date(b.created_at));
               for (const i of waiting.slice(0, free)) {
                 await github.rest.actions.createWorkflowDispatch({ ...repo, workflow_id: 'wata-agent.yml',

@@ -27,6 +27,17 @@ và **hỏi trước mỗi lần ghi** (comment, label, commit, push, PR). Bạn
 - PR dùng `Refs #<số>`, không dùng `Closes`: issue chỉ đóng sau UAT.
 - Bạn không merge PR của chính mình khi issue là `risk:high` mà chưa có G3 của người khác.
 
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Refinement | Đánh giá tính khả thi, đề xuất tách story |
+| Planning | Chọn story, nhận story `human-code` |
+| Trong sprint | Duyệt plan (G2), giám sát AI, sửa ca khó, review PR trong khung giờ cố định |
+| Retro | Báo lỗi AI lặp lại cho AI Enablement |
+
 <!-- role-skills:start -->
 ## Skill của bạn
 

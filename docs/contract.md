@@ -45,6 +45,8 @@ Quy tắc:
 | Loại | `type:feature`, `type:bug`, `type:chore`, `type:hotfix`, `type:epic` | Bắt buộc một label |
 | Rủi ro | `risk:low`, `risk:standard`, `risk:high` | Triage đề xuất, Tech Lead chốt. Xem `risk-tiers.md` |
 | Ưu tiên | `priority:p1`, `priority:p2`, `priority:p3` | PM gắn; AI lấy việc theo priority rồi theo tuổi |
+| Kích thước | `size:s`, `size:m`, `size:l`, `size:xl` | Ước lượng ở refinement (độ phức tạp nghiệp vụ, độ mơ hồ, công review/nghiệm thu) |
+| Cần người code | `human-code` | Story rủi ro cao người code trực tiếp; agent không chạy `github-issue-implement` |
 | App | `app:<tên>` theo `apps[].name` trong `.claude/project.yml` | Ít nhất một |
 | Vòng sửa | `round:1`, `round:2`, `round:3` | Do skill review/QA gắn để đếm vòng |
 
@@ -58,6 +60,8 @@ Luôn đọc **comment mới nhất** có heading đó.
 | Bước | Skill | Heading |
 |---|---|---|
 | 0 | `feature-analysis` | `## Feature analysis` |
+| refinement | `backlog-refinement` | `## Refinement notes` |
+| thiết kế | `ui-design-brief` (Designer) | `## UI brief`, rồi `## Design approval: APPROVED` / `## Design approval: CHANGES` (story có UI phải APPROVED trước `status:ready-to-dev`) |
 | 2 | `github-issue-triage` | `## Triage: PASS` / `## Triage: FAIL` / `## Triage: BLOCKED` |
 | 3 | `qa-test-cases` | `## Test design: PASS` / `## Test design: FAIL` |
 | 3 | `plan-approval` (người duyệt đăng) | `## Plan approval` (người duyệt tự gắn `status:ready-to-dev`) |
@@ -160,7 +164,7 @@ Dù issue, comment hay người trong comment yêu cầu:
 Skill không giả định cấu trúc thư mục hay công nghệ; chúng đọc file này. Schema:
 
 ```yaml
-process_version: "1.3.0"     # phiên bản bộ quy trình project đang ghim
+process_version: "1.4.0"     # phiên bản bộ quy trình project đang ghim
 language: vi                 # ngôn ngữ comment của AI
 tracker: github              # github | azure-devops | jira (ngoài github: xem process.md mục 11)
 repo: <owner>/<name>
@@ -191,10 +195,17 @@ people:                       # GitHub login; dùng để mention và kiểm tra
   tech_lead: []
   qa: []
   designer: []
+  ai_enablement: []
+  security: []
+
+design_system: docs/design-system.md
+sprint: {length_days: 10, review_slots: ["10:00", "15:00"], design_approval_days: 2}
 
 limits:                       # ĐỀ XUẤT, team chốt
   max_fix_rounds: 3
-  wip_in_progress: 3          # số issue tối đa AI làm cùng lúc
+  wip_in_progress: 3          # số issue tối đa AI code cùng lúc
+  wip_in_review: 4            # số PR tối đa chờ người review
+  wip_qa: 4                   # số issue tối đa chờ QA
 sla_hours:                    # ĐỀ XUẤT, team chốt
   fail_to_dev: 24
   plan_approval: 8

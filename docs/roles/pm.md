@@ -34,6 +34,18 @@ UAT). Việc của bạn là giữ luồng chảy: ưu tiên, gỡ kẹt, báo c
 
 Bạn kiêm PO được, nhưng không tự ký hai cổng liên tiếp cho cùng một issue.
 
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Sprint 0 | Label, board, CI, quyền truy cập, số liệu nền (`sprint0-setup`) |
+| Planning | Tính năng lực theo review/QA, chốt phạm vi (`sprint-planning`) |
+| Daily | Bảng việc bị chặn và hàng chờ (`daily-scrum`) |
+| Review | Tài liệu demo cùng PO (`sprint-review`) |
+| Retro | Điều phối, theo dõi hành động cải tiến (`sprint-retro`) |
+
 <!-- role-skills:start -->
 ## Skill của bạn
 
@@ -42,6 +54,11 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
+| `sprint0-setup` | Kiểm tra checklist Sprint 0 của dự án | `/sprint0-setup <#>` | `@claude đọc .claude/skills/sprint0-setup/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-planning` | Đề xuất phạm vi sprint theo năng lực review/QA | `/sprint-planning <#>` | `@claude đọc .claude/skills/sprint-planning/SKILL.md và làm theo cho issue #<số>` |
 | `status-report` | Báo cáo tiến độ và chỉ số cho PM | `/status-report <#>` | `@claude đọc .claude/skills/status-report/SKILL.md và làm theo cho issue #<số>` |
 | `release-plan` | Kế hoạch release cho PM | `/release-plan <#>` | `@claude đọc .claude/skills/release-plan/SKILL.md và làm theo cho issue #<số>` |
+| `daily-scrum` | Bảng việc bị chặn và hàng chờ cho Daily Scrum | `/daily-scrum <#>` | `@claude đọc .claude/skills/daily-scrum/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-review` | Tài liệu demo sprint, phản hồi thành story mới | `/sprint-review <#>` | `@claude đọc .claude/skills/sprint-review/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-retro` | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | `/sprint-retro <#>` | `@claude đọc .claude/skills/sprint-retro/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

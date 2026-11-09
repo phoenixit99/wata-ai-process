@@ -1,6 +1,10 @@
-# WATA AI Dev Process
+<p align="center"><img src="docs/public/wata-logo.png" alt="WATA Software" width="320"></p>
 
-Bộ quy trình phát triển phần mềm sử dụng AI Agent của WATA Software, dùng chung cho mọi project.
+# WATA AI Process
+
+Bộ quy trình phát triển phần mềm và **quản lý dự án Scrum** sử dụng AI Agent của WATA Software, dùng chung
+cho mọi project. Gồm hai lớp: [quy trình phát triển](docs/process.md) (từng issue: label, cổng, skill) và
+[quy trình Scrum](docs/scrum.md) (sprint, sự kiện, năng lực, effort).
 Repo này **không thuộc dự án nào**; mỗi project cài bộ quy trình từ đây và ghim phiên bản.
 
 **Bản gốc của quy trình là [`docs/process.md`](docs/process.md)** (tiếng Việt); bản tiếng Anh ở
@@ -30,18 +34,20 @@ wata-ai-process/
 ├── docs/                           Tài liệu + nguồn website (VitePress)
 │   ├── index.md                    Trang chủ website
 │   ├── process.md                  Quy trình (bản gốc)
+│   ├── scrum.md                    Quy trình Scrum ứng dụng AI
+│   ├── sprint-0.md, definition-of-done.md
 │   ├── skills.md                   Danh mục skill (sinh tự động)
 │   ├── en/                         Bản tiếng Anh của mọi trang
 │   ├── .vitepress/                 Cấu hình site, theme màu WATA
 │   ├── contract.md                 Luật chung cho AI: label, heading, chế độ chạy, việc cấm
-│   ├── roles/                      Hướng dẫn theo vai trò: po, ba, pm, designer, dev, tech-lead, qa
+│   ├── roles/                      Hướng dẫn 9 vai trò: po, ba, pm, designer, dev, tech-lead, qa, ai-enablement, security
 │   ├── raci.md                     Ai làm gì ở từng trạng thái, SLA đề xuất
 │   ├── risk-tiers.md               Phân loại rủi ro và cổng được rút gọn
 │   ├── writing-acceptance-criteria.md
 │   ├── glossary.md
 │   ├── setup-guide.md              Cài cho một project, checklist điều kiện áp dụng
 │   └── coding-standards/           Bản khởi đầu: nextjs, nestjs, flutter
-├── skills/                         20 skill + catalog.json (nguồn duy nhất)
+├── skills/                         27 skill + catalog.json (nguồn duy nhất)
 ├── template/                       File cài vào repo project
 │   ├── CLAUDE.md
 │   ├── .mcp.json
@@ -50,6 +56,7 @@ wata-ai-process/
 ├── scripts/
 │   ├── install.sh                  Cài / nâng cấp vào một project
 │   ├── setup-labels.sh             Tạo bộ label trên GitHub
+│   ├── gen-effort-chart.py         Sinh biểu đồ effort cho trang Scrum
 │   ├── sync-skills.py              Sinh header skill, bảng skill, mục skill ở trang vai trò từ catalog
 │   └── check-consistency.py        Kiểm tra mọi thứ đồng bộ (chạy trong CI)
 ├── .github/workflows/check.yml     CI của repo này
@@ -61,7 +68,7 @@ wata-ai-process/
 
 ## Skill
 
-Mọi skill (20) được **viết mới cho quy trình này** (tháng 11-2026). Mỗi vai trò có ít nhất một skill tự gọi được. Cách làm của các bước 2–6 (điểm dừng
+Mọi skill (27) được **viết mới cho quy trình này** (tháng 11-2026). Mỗi vai trò có ít nhất một skill tự gọi được. Cách làm của các bước 2–6 (điểm dừng
 chờ đồng ý, cách đọc ticket, review hai lượt, footer ba phần) học từ quy trình đã chạy thực tế ở một
 dự án khác, nhưng nội dung viết lại chung cho GitHub và cho WATA.
 
@@ -70,10 +77,14 @@ Bảng dưới sinh tự động từ [`skills/catalog.json`](skills/catalog.jso
 <!-- skills:start -->
 | Bước | Skill | Dùng khi | Vai trò | Kích hoạt |
 |---|---|---|---|---|
-| - | [`dev-pipeline`](skills/dev-pipeline/SKILL.md) | Định tuyến theo label; bảng việc theo vai trò | PO, BA, PM, Designer, Dev, Tech Lead, QA | người gọi |
+| - | [`dev-pipeline`](skills/dev-pipeline/SKILL.md) | Định tuyến theo label; bảng việc theo vai trò | PO, BA, PM, Designer, Dev, Tech Lead, QA, AI Enablement, Security | người gọi |
+| sprint-0 | [`sprint0-setup`](skills/sprint0-setup/SKILL.md) | Kiểm tra checklist Sprint 0 của dự án | Tech Lead, PM, AI Enablement, Security | người gọi |
 | 0 | [`feature-analysis`](skills/feature-analysis/SKILL.md) | Phân tích epic, phản biện, hai hướng kiến trúc, đề xuất issue con | BA, Tech Lead | label `type:epic` (tự động) hoặc người gọi |
 | 1 | [`github-issue-create`](skills/github-issue-create/SKILL.md) | Soạn issue đúng mẫu từ ngôn ngữ tự nhiên | PO, BA | người gọi |
 | 2 | [`github-issue-triage`](skills/github-issue-triage/SKILL.md) | Kiểm tra Definition of Ready R1–R11 | AI (tự động) | label `status:backlog` (tự động) hoặc người gọi |
+| refinement | [`backlog-refinement`](skills/backlog-refinement/SKILL.md) | Refinement hàng loạt: tách story, ước lượng S–XL, cờ cần người code | PO, BA, Tech Lead | người gọi |
+| design | [`ui-design-brief`](skills/ui-design-brief/SKILL.md) | Brief UI từ design system, phương án giao diện, duyệt thiết kế trước khi code | Designer | người gọi |
+| planning | [`sprint-planning`](skills/sprint-planning/SKILL.md) | Đề xuất phạm vi sprint theo năng lực review/QA | PM, PO, Tech Lead | người gọi |
 | 3 | [`qa-test-cases`](skills/qa-test-cases/SKILL.md) | Thiết kế test case và plan trước khi code | AI (tự động) | label `status:test-design` (tự động) hoặc người gọi |
 | 3 | [`plan-approval`](skills/plan-approval/SKILL.md) | Hỗ trợ người duyệt ký cổng G2 | Tech Lead, Dev, QA | người gọi |
 | 4 | [`github-issue-implement`](skills/github-issue-implement/SKILL.md) | Code theo plan đã duyệt, mở PR | Dev | label `status:ready-to-dev`, `status:in-progress` (tự động) hoặc người gọi |
@@ -90,6 +101,9 @@ Bảng dưới sinh tự động từ [`skills/catalog.json`](skills/catalog.jso
 | hotfix | [`hotfix`](skills/hotfix/SKILL.md) | Sửa khẩn cấp production | Tech Lead, Dev | người gọi |
 | - | [`status-report`](skills/status-report/SKILL.md) | Báo cáo tiến độ và chỉ số cho PM | PM | người gọi |
 | - | [`release-plan`](skills/release-plan/SKILL.md) | Kế hoạch release cho PM | PM, Tech Lead | người gọi |
+| daily | [`daily-scrum`](skills/daily-scrum/SKILL.md) | Bảng việc bị chặn và hàng chờ cho Daily Scrum | PM | người gọi |
+| review | [`sprint-review`](skills/sprint-review/SKILL.md) | Tài liệu demo sprint, phản hồi thành story mới | PO, PM | người gọi |
+| retro | [`sprint-retro`](skills/sprint-retro/SKILL.md) | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | AI Enablement, PM, Tech Lead | người gọi |
 <!-- skills:end -->
 
 ## Cài vào một project
@@ -142,7 +156,7 @@ cho nội bộ, bật Deployment Protection trong cài đặt project trên Verc
 | Phần | Tình trạng |
 |---|---|
 | Tài liệu quy trình, vai trò, contract | Hoàn chỉnh v1.2, chờ team review |
-| Skill (20) | Viết xong; đồng bộ với catalog (`scripts/check-consistency.py` xanh); **chưa chạy trên repo thật** |
+| Skill (27) | Viết xong; đồng bộ với catalog (`scripts/check-consistency.py` xanh); **chưa chạy trên repo thật** |
 | Workflow GitHub Actions | Viết xong. Đã kiểm: YAML parse được; logic định tuyến của `wata-agent` chạy giả lập 10 tình huống (gh/yq giả). **Chưa** chạy actionlint/shellcheck (máy không có) và **chưa chạy trên GitHub** |
 | `install.sh`, `setup-labels.sh` | `install.sh` đã chạy thử trên repo trống (cài, nâng cấp, mọi đường dẫn tài liệu skill tham chiếu đều tồn tại). `setup-labels.sh`: đã thử phần đọc file, chưa gọi `gh` thật |
 | Cần đối chiếu trước khi bật | Action có nạp `.claude/skills` khi chạy bằng `@claude` không (tài liệu không nói; đã có câu gọi dự phòng); định dạng `.claude-plugin/*.json`; địa chỉ Figma MCP trong `.mcp.json`; `yq` có sẵn trên runner (đúng với runner GitHub-hosted theo hiểu biết hiện tại, chưa kiểm) |

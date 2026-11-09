@@ -17,6 +17,17 @@
 - Đặt tên layer có nghĩa; dùng auto-layout.
 - Cấp quyền xem file Figma cho tài khoản dùng Figma MCP của team.
 
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Sprint 0 | Xây dựng và mô tả design system (`docs/design-system.md`) |
+| Refinement | Viết brief UI cho story có giao diện |
+| Duyệt thiết kế | Brief, phương án, tinh chỉnh Figma; ghi `## Design approval` (`ui-design-brief`) trong 1–2 ngày đầu sprint |
+| Review | Đối chiếu UI đã code (`design-review`) |
+
 <!-- role-skills:start -->
 ## Skill của bạn
 
@@ -25,5 +36,6 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
+| `ui-design-brief` | Brief UI từ design system, phương án giao diện, duyệt thiết kế trước khi code | `/ui-design-brief <#>` | `@claude đọc .claude/skills/ui-design-brief/SKILL.md và làm theo cho issue #<số>` |
 | `design-review` | Designer so UI đã code với Figma | `/design-review <#>` | `@claude đọc .claude/skills/design-review/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

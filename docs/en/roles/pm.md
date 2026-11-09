@@ -33,6 +33,18 @@ merge, UAT). Your job is to keep the flow moving: priorities, unblocking, report
 
 You may also be the PO, but never sign two consecutive gates for the same issue.
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Sprint 0 | Labels, board, CI, access, baseline numbers (`sprint0-setup`) |
+| Planning | Compute capacity from review/QA, agree scope (`sprint-planning`) |
+| Daily | Blocked work and queues (`daily-scrum`) |
+| Review | Demo notes with the PO (`sprint-review`) |
+| Retro | Facilitate, track improvement actions (`sprint-retro`) |
+
 <!-- role-skills:start -->
 ## Your skills
 
@@ -41,6 +53,11 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | Skill | Purpose | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
+| `sprint0-setup` | Checks the project's Sprint 0 checklist | `/sprint0-setup <#>` | `@claude read .claude/skills/sprint0-setup/SKILL.md and follow it for issue #<number>` |
+| `sprint-planning` | Proposes sprint scope from review/QA capacity | `/sprint-planning <#>` | `@claude read .claude/skills/sprint-planning/SKILL.md and follow it for issue #<number>` |
 | `status-report` | Progress and metrics report for the PM | `/status-report <#>` | `@claude read .claude/skills/status-report/SKILL.md and follow it for issue #<number>` |
 | `release-plan` | Release plan for the PM | `/release-plan <#>` | `@claude read .claude/skills/release-plan/SKILL.md and follow it for issue #<number>` |
+| `daily-scrum` | Blocked work and queues for the Daily Scrum | `/daily-scrum <#>` | `@claude read .claude/skills/daily-scrum/SKILL.md and follow it for issue #<number>` |
+| `sprint-review` | Sprint demo notes, feedback into new stories | `/sprint-review <#>` | `@claude read .claude/skills/sprint-review/SKILL.md and follow it for issue #<number>` |
+| `sprint-retro` | Sprint metrics; repeated AI errors into skill fixes | `/sprint-retro <#>` | `@claude read .claude/skills/sprint-retro/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

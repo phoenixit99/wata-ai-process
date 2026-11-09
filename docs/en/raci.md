@@ -10,6 +10,8 @@ SLAs are **proposals**; the team sets them in `.claude/project.yml` → `sla_hou
 | `status:backlog` → triage | R | I | I | — | — | — | C (risk) | — | automatic |
 | `status:fail-to-dev` | — | A/R | R | I | — | — | — | — | 24 hours |
 | `status:blocked` | — | I | — | A (unblock) | — | C | C | — | — |
+| Refinement (`backlog-refinement`) | R (triage, draft size) | A | R | I | C | C | R | C | 20–25% of the sprint |
+| UI design approval (`ui-design-brief`) | R (brief) | C | I | I | A | — | — | — | first 1–2 sprint days |
 | `status:test-design` → test design | R | I | C | — | — | C | C | C | automatic |
 | **G2**: approve plan + test cases (`plan-approval`) | — | I | — | I | — | R (plan) | A | R (test cases) | 8 hours |
 | `status:in-progress` → code | R | — | — | — | C (UI) | C | I | — | automatic |
@@ -25,6 +27,8 @@ SLAs are **proposals**; the team sets them in `.claude/project.yml` → `sla_hou
 | Release plan (`release-plan`) | R (drafts) | C | — | A | — | — | R | I | per release |
 | Progress report (`status-report`) | R (drafts) | I | — | A | — | — | I | — | weekly |
 | Process change | — | C | C | C | C | C | C | C | Process owner: A |
+
+**AI Enablement** is accountable (A) for skills, MCP configuration and fixing repeated AI errors after the retro. **Security** is consulted (C) at G2/G3 for `risk:high` stories and signs off access in Sprint 0. **The customer** chooses UI options and accepts together with the PO. The RACI by sprint stage is in [Scrum process section 3.1](/en/scrum).
 
 ## Holding several roles
 

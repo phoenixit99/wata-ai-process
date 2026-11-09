@@ -36,6 +36,17 @@ Comment on an issue or PR, starting with `@claude`:
 - Something found during UAT that the criteria never mentioned is a **new request**: open a new issue instead of rejecting UAT.
 - If you are also the PM: never sign two consecutive gates for the same issue.
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Refinement | Answer questions, agree AC and size; complete Fail-to-dev stories (`backlog-refinement`) |
+| Planning | Bring priorities, agree the Sprint Goal with the team |
+| Design approval | Choose the UI option with the Designer and customer in the first 1–2 sprint days |
+| Sprint Review | Demo with the customer, turn feedback into stories (`sprint-review`) |
+
 <!-- role-skills:start -->
 ## Your skills
 
@@ -45,5 +56,8 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
 | `github-issue-create` | Drafts a well-formed issue from plain language | `/github-issue-create <#>` | `@claude read .claude/skills/github-issue-create/SKILL.md and follow it for issue #<number>` |
+| `backlog-refinement` | Batch refinement: split stories, size S–XL, human-code flag | `/backlog-refinement <#>` | `@claude read .claude/skills/backlog-refinement/SKILL.md and follow it for issue #<number>` |
+| `sprint-planning` | Proposes sprint scope from review/QA capacity | `/sprint-planning <#>` | `@claude read .claude/skills/sprint-planning/SKILL.md and follow it for issue #<number>` |
 | `uat-run` | PO runs UAT, drafts the verdict | `/uat-run <#>` | `@claude read .claude/skills/uat-run/SKILL.md and follow it for issue #<number>` |
+| `sprint-review` | Sprint demo notes, feedback into new stories | `/sprint-review <#>` | `@claude read .claude/skills/sprint-review/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

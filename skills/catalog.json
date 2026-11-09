@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "roles": [
     "po",
     "ba",
@@ -7,10 +7,12 @@
     "designer",
     "dev",
     "tech-lead",
-    "qa"
+    "qa",
+    "ai-enablement",
+    "security"
   ],
   "_fields": {
-    "step": "bước trong docs/process.md mục 6; '-' nếu dùng ở mọi bước",
+    "step": "bước dev (0–9, 6b, hotfix) hoặc sự kiện Scrum (sprint-0, refinement, design, planning, daily, review, retro); '-' nếu dùng ở mọi bước",
     "roles": "vai trò tự gọi skill này",
     "mode": "interactive | auto | both",
     "triggers": "label kích hoạt tự động trong wata-agent (rỗng nếu chỉ gọi tay)",
@@ -28,7 +30,9 @@
         "designer",
         "dev",
         "tech-lead",
-        "qa"
+        "qa",
+        "ai-enablement",
+        "security"
       ],
       "mode": "interactive",
       "triggers": [],
@@ -37,6 +41,24 @@
       "summary": {
         "vi": "Định tuyến theo label; bảng việc theo vai trò",
         "en": "Routes by status label; per-role work queue"
+      }
+    },
+    {
+      "name": "sprint0-setup",
+      "step": "sprint-0",
+      "roles": [
+        "tech-lead",
+        "pm",
+        "ai-enablement",
+        "security"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [],
+      "reads": [],
+      "summary": {
+        "vi": "Kiểm tra checklist Sprint 0 của dự án",
+        "en": "Checks the project's Sprint 0 checklist"
       }
     },
     {
@@ -98,6 +120,67 @@
       }
     },
     {
+      "name": "backlog-refinement",
+      "step": "refinement",
+      "roles": [
+        "po",
+        "ba",
+        "tech-lead"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [
+        "## Refinement notes"
+      ],
+      "reads": [
+        "## Triage: FAIL"
+      ],
+      "summary": {
+        "vi": "Refinement hàng loạt: tách story, ước lượng S–XL, cờ cần người code",
+        "en": "Batch refinement: split stories, size S–XL, human-code flag"
+      }
+    },
+    {
+      "name": "ui-design-brief",
+      "step": "design",
+      "roles": [
+        "designer"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [
+        "## UI brief",
+        "## Design approval: APPROVED",
+        "## Design approval: CHANGES"
+      ],
+      "reads": [
+        "## Refinement notes"
+      ],
+      "summary": {
+        "vi": "Brief UI từ design system, phương án giao diện, duyệt thiết kế trước khi code",
+        "en": "UI brief from the design system, options, design approval before coding"
+      }
+    },
+    {
+      "name": "sprint-planning",
+      "step": "planning",
+      "roles": [
+        "pm",
+        "po",
+        "tech-lead"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [],
+      "reads": [
+        "## Refinement notes"
+      ],
+      "summary": {
+        "vi": "Đề xuất phạm vi sprint theo năng lực review/QA",
+        "en": "Proposes sprint scope from review/QA capacity"
+      }
+    },
+    {
       "name": "qa-test-cases",
       "step": "3",
       "roles": [],
@@ -110,7 +193,9 @@
         "## Test design: FAIL"
       ],
       "reads": [
-        "## Triage: PASS"
+        "## Triage: PASS",
+        "## Refinement notes",
+        "## UI brief"
       ],
       "summary": {
         "vi": "Thiết kế test case và plan trước khi code",
@@ -131,7 +216,8 @@
         "## Plan approval"
       ],
       "reads": [
-        "## Test design: PASS"
+        "## Test design: PASS",
+        "## Design approval: APPROVED"
       ],
       "summary": {
         "vi": "Hỗ trợ người duyệt ký cổng G2",
@@ -157,7 +243,8 @@
         "## Test design: PASS",
         "## Plan approval",
         "## Code review: FAIL",
-        "## QA report: FAIL"
+        "## QA report: FAIL",
+        "## Design approval: APPROVED"
       ],
       "summary": {
         "vi": "Code theo plan đã duyệt, mở PR",
@@ -424,6 +511,64 @@
         "vi": "Kế hoạch release cho PM",
         "en": "Release plan for the PM"
       }
+    },
+    {
+      "name": "daily-scrum",
+      "step": "daily",
+      "roles": [
+        "pm"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [],
+      "reads": [
+        "## Needs human"
+      ],
+      "summary": {
+        "vi": "Bảng việc bị chặn và hàng chờ cho Daily Scrum",
+        "en": "Blocked work and queues for the Daily Scrum"
+      }
+    },
+    {
+      "name": "sprint-review",
+      "step": "review",
+      "roles": [
+        "po",
+        "pm"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [],
+      "reads": [
+        "## UAT: ACCEPTED",
+        "## Build write-up"
+      ],
+      "summary": {
+        "vi": "Tài liệu demo sprint, phản hồi thành story mới",
+        "en": "Sprint demo notes, feedback into new stories"
+      }
+    },
+    {
+      "name": "sprint-retro",
+      "step": "retro",
+      "roles": [
+        "ai-enablement",
+        "pm",
+        "tech-lead"
+      ],
+      "mode": "interactive",
+      "triggers": [],
+      "writes": [],
+      "reads": [
+        "## Needs human",
+        "## Code review: FAIL",
+        "## QA report: FAIL",
+        "## UAT: REJECTED"
+      ],
+      "summary": {
+        "vi": "Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill",
+        "en": "Sprint metrics; repeated AI errors into skill fixes"
+      }
     }
   ],
   "role_names": {
@@ -454,6 +599,14 @@
     "qa": {
       "vi": "QA",
       "en": "QA"
+    },
+    "ai-enablement": {
+      "vi": "AI Enablement",
+      "en": "AI Enablement"
+    },
+    "security": {
+      "vi": "Security",
+      "en": "Security"
     }
   }
 }

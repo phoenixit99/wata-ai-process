@@ -35,6 +35,17 @@ tiers, and keep the guardrails in place.
 
 `risk:high` issues: the person doing G3 is not the person who merges; add a security and migration review.
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Sprint 0 | Architecture, coding standards, branch protection, CODEOWNERS (`sprint0-setup`) |
+| Refinement | Assess technical risk, decide size and the `human-code` flag (`backlog-refinement`) |
+| Planning | Identify stories a person must code; check review capacity |
+| During the sprint | Architecture, G2, G3, G4; keep the fixed review slots |
+
 <!-- role-skills:start -->
 ## Your skills
 
@@ -43,11 +54,15 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | Skill | Purpose | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
+| `sprint0-setup` | Checks the project's Sprint 0 checklist | `/sprint0-setup <#>` | `@claude read .claude/skills/sprint0-setup/SKILL.md and follow it for issue #<number>` |
 | `feature-analysis` | Analyses an epic: challenge, two architectures, proposed child issues | `/feature-analysis <#>` | `@claude read .claude/skills/feature-analysis/SKILL.md and follow it for issue #<number>` |
+| `backlog-refinement` | Batch refinement: split stories, size S–XL, human-code flag | `/backlog-refinement <#>` | `@claude read .claude/skills/backlog-refinement/SKILL.md and follow it for issue #<number>` |
+| `sprint-planning` | Proposes sprint scope from review/QA capacity | `/sprint-planning <#>` | `@claude read .claude/skills/sprint-planning/SKILL.md and follow it for issue #<number>` |
 | `plan-approval` | Helps reviewers sign gate G2 | `/plan-approval <#>` | `@claude read .claude/skills/plan-approval/SKILL.md and follow it for issue #<number>` |
 | `github-pr-review` | Reviews the PR in a fresh session, two passes | `/github-pr-review <#>` | `@claude read .claude/skills/github-pr-review/SKILL.md and follow it for issue #<number>` |
 | `refutation-brief` | Prepares gate G3 | `/refutation-brief <#>` | `@claude read .claude/skills/refutation-brief/SKILL.md and follow it for issue #<number>` |
 | `merge-readiness` | Pre-merge checks for gate G4 | `/merge-readiness <#>` | `@claude read .claude/skills/merge-readiness/SKILL.md and follow it for issue #<number>` |
 | `hotfix` | Emergency production fix | `/hotfix <#>` | `@claude read .claude/skills/hotfix/SKILL.md and follow it for issue #<number>` |
 | `release-plan` | Release plan for the PM | `/release-plan <#>` | `@claude read .claude/skills/release-plan/SKILL.md and follow it for issue #<number>` |
+| `sprint-retro` | Sprint metrics; repeated AI errors into skill fixes | `/sprint-retro <#>` | `@claude read .claude/skills/sprint-retro/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

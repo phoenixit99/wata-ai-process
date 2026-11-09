@@ -35,6 +35,17 @@ AI gom kết quả này vào `## QA report`. Issue chỉ qua QA khi **mọi case
 - Case liên quan nhiều app (web tạo, mobile hiển thị) là case dễ sót nhất.
 - Ưu tiên P1 = lỗi thì không release được.
 
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Refinement | Chỉ ra case khó kiểm thử, AC còn mơ hồ |
+| Planning | Báo năng lực test manual/mobile của sprint |
+| Trong sprint | Duyệt test case (G2), test manual/mobile (`qa-manual-session`) |
+| Retro | Báo lỗi AI bỏ sót khi test |
+
 <!-- role-skills:start -->
 ## Skill của bạn
 

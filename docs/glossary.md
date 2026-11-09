@@ -23,8 +23,15 @@
 | **Risk tier** | Mức rủi ro `risk:low/standard/high`, quyết định cổng nào được rút gọn |
 | **Session** | Một lần chạy AI với ngữ cảnh riêng. Mỗi bước dùng session mới để AI không tự đồng ý với chính mình |
 | **Skill** | Bản hướng dẫn chuẩn cho AI làm một bước, lưu trong repo, có review và lịch sử |
+| **Danh mục skill** | `skills/catalog.json`: danh sách duy nhất của skill, vai trò, label kích hoạt và heading; tài liệu sinh từ đây |
 | **SLA** | Thời gian tối đa một issue được nằm ở hàng chờ của một người |
 | **Test case P1/P2/P3** | Mức ưu tiên: P1 lỗi thì không release được |
 | **UAT** | Nghiệm thu của PO trên staging sau khi merge |
 | **Vòng sửa (round)** | Một lần AI sửa sau review hoặc QA fail; tối đa 3 vòng |
-| **WIP** | Số issue đang làm cùng lúc; giới hạn để PR không chất đống chờ review |
+| **AI Enablement** | Vai trò bảo trì skill, coding standard, MCP và phân tích lỗi AI lặp lại; process owner |
+| **Definition of Done (DoD)** | 12 điều kiện để story được tính là Done ([DoD](definition-of-done.md)) |
+| **Design system** | Màu, font, khoảng cách, component, quy tắc layout, nguyên tắc UX ở dạng AI đọc được; đầu vào bắt buộc cho thiết kế |
+| **human-code** | Label cho story rủi ro cao mà người code trực tiếp; agent không implement |
+| **Size (S/M/L/XL)** | Ước lượng theo độ phức tạp nghiệp vụ, độ mơ hồ và công review/nghiệm thu, không theo công code |
+| **Sprint 0** | Giai đoạn thiết lập nền tảng một lần mỗi dự án ([Sprint 0](sprint-0.md)) |
+| **WIP** | Số issue đang làm cùng lúc; giới hạn cho cả hàng đang code, chờ review và chờ QA |

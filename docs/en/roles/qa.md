@@ -35,6 +35,17 @@ The AI merges these into `## QA report`. An issue passes QA only when **every P1
 - Cases spanning several apps (created on web, shown on mobile) are the easiest to miss.
 - P1 = a failure blocks the release.
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Refinement | Point out hard-to-test cases and vague AC |
+| Planning | State the sprint's manual/mobile testing capacity |
+| During the sprint | Approve test cases (G2), manual/mobile testing (`qa-manual-session`) |
+| Retro | Report what the AI missed in testing |
+
 <!-- role-skills:start -->
 ## Your skills
 

@@ -28,4 +28,10 @@
 | **Test case P1/P2/P3** | Priority: a P1 failure blocks the release |
 | **UAT** | PO acceptance on staging after merge |
 | **Fix round** | One AI fix after a failed review or QA; at most 3 |
-| **WIP** | Number of issues in progress at once; limited so PRs do not pile up waiting for review |
+| **AI Enablement** | Role that maintains skills, coding standards, MCP and analyses repeated AI errors; the process owner |
+| **Definition of Done (DoD)** | The 12 conditions for a story to count as Done ([DoD](/en/definition-of-done)) |
+| **Design system** | Colours, fonts, spacing, components, layout rules, UX principles in a form the AI can read; mandatory input for design |
+| **human-code** | Label for high-risk stories a person codes; the agent does not implement them |
+| **Size (S/M/L/XL)** | Estimate by business complexity, ambiguity and review/acceptance effort, not coding effort |
+| **Sprint 0** | One-off foundation stage per project ([Sprint 0](/en/sprint-0)) |
+| **WIP** | Number of issues in progress at once; limited for coding, waiting-for-review and waiting-for-QA queues |

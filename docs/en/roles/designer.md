@@ -17,6 +17,17 @@
 - Name layers meaningfully; use auto-layout.
 - Give the team's Figma MCP account view access to the file.
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Sprint 0 | Build and describe the design system (`docs/design-system.md`) |
+| Refinement | Write UI briefs for UI stories |
+| Design approval | Brief, options, refine Figma; record `## Design approval` (`ui-design-brief`) in the first 1–2 sprint days |
+| Review | Compare the built UI (`design-review`) |
+
 <!-- role-skills:start -->
 ## Your skills
 
@@ -25,5 +36,6 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | Skill | Purpose | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
+| `ui-design-brief` | UI brief from the design system, options, design approval before coding | `/ui-design-brief <#>` | `@claude read .claude/skills/ui-design-brief/SKILL.md and follow it for issue #<number>` |
 | `design-review` | Designer compares built UI with Figma | `/design-review <#>` | `@claude read .claude/skills/design-review/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

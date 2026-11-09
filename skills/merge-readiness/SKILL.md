@@ -27,6 +27,9 @@ con người** (`gh pr merge` bị chặn trong `.claude/settings.json`).
 | M9 | PR body có `Refs #<số>`, không có `Closes/Fixes #<số>` | PR body |
 | M10 | "Còn nợ trước release" trong write-up đã có người nhận (env var, migration...) | write-up + comment |
 | M11 | Không có commit mới sau lần QA cuối (nếu có: QA/review phải chạy lại) | so thời gian commit với QA report |
+| M12 | Story có UI: `## Design approval: APPROVED` có mặt; nếu có `## Design review` sau code thì là OK | comment |
+
+M1–M12 tương ứng D1–D9 của [Definition of Done](../../docs/agents/definition-of-done.md) (`docs/agents/definition-of-done.md`); D10–D12 kiểm sau merge.
 
 ## Kết luận
 

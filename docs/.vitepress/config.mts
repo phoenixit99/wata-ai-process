@@ -5,13 +5,21 @@ const REPO = 'https://github.com/phoenixit99/wata-ai-process'
 function sidebarVi() {
   return [
     {
-      text: 'Quy trình',
+      text: 'Quy trình phát triển',
       items: [
-        { text: 'Quy trình v1.3', link: '/process' },
+        { text: 'Quy trình phát triển v1.4', link: '/process' },
         { text: 'RACI theo trạng thái', link: '/raci' },
         { text: 'Phân loại rủi ro', link: '/risk-tiers' },
         { text: 'Viết Acceptance Criteria', link: '/writing-acceptance-criteria' },
         { text: 'Thuật ngữ', link: '/glossary' }
+      ]
+    },
+    {
+      text: 'Quy trình Scrum',
+      items: [
+        { text: 'Scrum ứng dụng AI', link: '/scrum' },
+        { text: 'Sprint 0', link: '/sprint-0' },
+        { text: 'Definition of Done', link: '/definition-of-done' }
       ]
     },
     {
@@ -23,7 +31,9 @@ function sidebarVi() {
         { text: 'Designer', link: '/roles/designer' },
         { text: 'Developer', link: '/roles/dev' },
         { text: 'Tech Lead', link: '/roles/tech-lead' },
-        { text: 'QA', link: '/roles/qa' }
+        { text: 'QA', link: '/roles/qa' },
+        { text: 'AI Enablement', link: '/roles/ai-enablement' },
+        { text: 'Security', link: '/roles/security' }
       ]
     },
     {
@@ -48,13 +58,21 @@ function sidebarVi() {
 function sidebarEn() {
   return [
     {
-      text: 'Process',
+      text: 'Development process',
       items: [
-        { text: 'Process v1.3', link: '/en/process' },
+        { text: 'Development process v1.4', link: '/en/process' },
         { text: 'RACI by status', link: '/en/raci' },
         { text: 'Risk tiers', link: '/en/risk-tiers' },
         { text: 'Writing acceptance criteria', link: '/en/writing-acceptance-criteria' },
         { text: 'Glossary', link: '/en/glossary' }
+      ]
+    },
+    {
+      text: 'Scrum process',
+      items: [
+        { text: 'Scrum with AI', link: '/en/scrum' },
+        { text: 'Sprint 0', link: '/en/sprint-0' },
+        { text: 'Definition of Done', link: '/en/definition-of-done' }
       ]
     },
     {
@@ -66,7 +84,9 @@ function sidebarEn() {
         { text: 'Designer', link: '/en/roles/designer' },
         { text: 'Developer', link: '/en/roles/dev' },
         { text: 'Tech Lead', link: '/en/roles/tech-lead' },
-        { text: 'QA', link: '/en/roles/qa' }
+        { text: 'QA', link: '/en/roles/qa' },
+        { text: 'AI Enablement', link: '/en/roles/ai-enablement' },
+        { text: 'Security', link: '/en/roles/security' }
       ]
     },
     {
@@ -94,7 +114,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   head: [
-    ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
+    ['link', { rel: 'icon', href: '/wata-mark.png', type: 'image/png' }],
     ['meta', { name: 'theme-color', content: '#9e1b20' }]
   ],
   // README, template và skill nằm ngoài docs/; link tới chúng đi qua GitHub.
@@ -104,7 +124,8 @@ export default defineConfig({
     html: false
   },
   themeConfig: {
-    logo: '/logo.svg',
+    logo: { src: '/wata-logo.png', alt: 'WATA Software' },
+    siteTitle: 'AI Process',
     socialLinks: [{ icon: 'github', link: REPO }],
     search: { provider: 'local' }
   },
@@ -114,7 +135,8 @@ export default defineConfig({
       lang: 'vi',
       themeConfig: {
         nav: [
-          { text: 'Quy trình', link: '/process' },
+          { text: 'Quy trình dev', link: '/process' },
+          { text: 'Scrum', link: '/scrum' },
           { text: 'Vai trò', link: '/roles/po' },
           { text: 'Skill', link: '/skills' },
           { text: 'Cài đặt', link: '/setup-guide' }
@@ -124,7 +146,7 @@ export default defineConfig({
         docFooter: { prev: 'Trang trước', next: 'Trang sau' },
         lastUpdated: { text: 'Cập nhật' },
         editLink: { pattern: `${REPO}/edit/main/docs/:path`, text: 'Sửa trang này trên GitHub' },
-        footer: { message: 'WATA Software · Tài liệu nội bộ', copyright: 'Phiên bản 1.3.0' },
+        footer: { message: 'WATA Software · Tài liệu nội bộ', copyright: 'Phiên bản 1.4.0' },
         darkModeSwitchLabel: 'Giao diện',
         sidebarMenuLabel: 'Mục lục',
         returnToTopLabel: 'Lên đầu trang',
@@ -138,7 +160,8 @@ export default defineConfig({
       description: 'AI Agent software development process — WATA Software',
       themeConfig: {
         nav: [
-          { text: 'Process', link: '/en/process' },
+          { text: 'Dev process', link: '/en/process' },
+          { text: 'Scrum', link: '/en/scrum' },
           { text: 'Roles', link: '/en/roles/po' },
           { text: 'Skills', link: '/en/skills' },
           { text: 'Setup', link: '/en/setup-guide' }
@@ -146,7 +169,7 @@ export default defineConfig({
         sidebar: sidebarEn(),
         outline: { level: [2, 3] },
         editLink: { pattern: `${REPO}/edit/main/docs/:path`, text: 'Edit this page on GitHub' },
-        footer: { message: 'WATA Software · Internal document', copyright: 'Version 1.3.0' }
+        footer: { message: 'WATA Software · Internal document', copyright: 'Version 1.4.0' }
       }
     }
   }

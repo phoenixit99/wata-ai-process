@@ -81,3 +81,13 @@
 .VPFooter {
   border-top: 3px solid var(--wata-red-700) !important;
 }
+
+/* Logo WATA (ngang, tỉ lệ 3:1) ở header và trang chủ */
+.VPNavBarTitle .logo {
+  height: 30px;
+  width: auto;
+}
+.VPHero .image-src {
+  max-width: 340px;
+  max-height: 120px;
+}

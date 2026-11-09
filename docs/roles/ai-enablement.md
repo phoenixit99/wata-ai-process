@@ -1,0 +1,43 @@
+# Hướng dẫn cho AI Enablement
+
+Bạn giữ cho AI làm việc tốt: skill, coding standard, cấu hình MCP, và phân tích lỗi AI lặp lại. Ở cấp project
+bạn là **process owner**; có thể kiêm nhiệm bởi Tech Lead. Ở cấp công ty, AI Enablement sở hữu repo trung tâm
+`wata-ai-process`.
+
+## Việc của bạn trong quy trình
+
+| Khi | Bạn làm | Công cụ |
+|---|---|---|
+| Sprint 0 | Cấu hình MCP (GitHub, Figma, Playwright); chọn công cụ AI tạo Figma; kiểm tra setup; hướng dẫn team dùng skill | `/sprint0-setup` |
+| Hằng ngày | Theo dõi `status:needs-human` và lỗi workflow agent; xử lý cấu hình hỏng | GitHub Actions |
+| Retrospective | Tổng hợp lỗi AI lặp lại; mỗi lỗi ≥ 2 lần phải có hành động sửa skill, coding standard hoặc DoR | `/sprint-retro` |
+| Khi cần sửa skill | Mở issue/PR trên repo trung tâm; skill thuộc lõi, không sửa thẳng trong `.claude/skills/` của project | Repo trung tâm |
+| Nâng phiên bản quy trình | Đọc CHANGELOG, chạy `install.sh --upgrade`, cập nhật `process_version` | `scripts/install.sh` |
+| Chi phí AI | Cùng PM theo dõi chi phí token, điều chỉnh `max_turns_per_run` | `project.yml` |
+
+## Nguyên tắc
+
+- Sửa nguyên nhân, không sửa triệu chứng: lỗi lặp lại ở nhiều project thì sửa ở lõi.
+- Thay đổi skill đi qua PR có review và changelog như code; chạy `npm run sync` và `npm run check` trong repo trung tâm.
+- Không nới guardrail để AI "chạy được"; guardrail thuộc Tech Lead và Security.
+
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Sprint 0 | MCP, công cụ Figma, skill, hướng dẫn team (`sprint0-setup`) |
+| Retro | Lỗi AI lặp lại thành hành động sửa skill/standard (`sprint-retro`) |
+
+<!-- role-skills:start -->
+## Skill của bạn
+
+Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng lệnh ở cột 3; trên GitHub, comment câu ở cột 4 (dùng được cả khi skill không được nạp sẵn).
+
+| Skill | Dùng khi | Claude Code | GitHub |
+|---|---|---|---|
+| `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
+| `sprint0-setup` | Kiểm tra checklist Sprint 0 của dự án | `/sprint0-setup <#>` | `@claude đọc .claude/skills/sprint0-setup/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-retro` | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | `/sprint-retro <#>` | `@claude đọc .claude/skills/sprint-retro/SKILL.md và làm theo cho issue #<số>` |
+<!-- role-skills:end -->

@@ -36,6 +36,17 @@ Comment trong issue hoặc PR, bắt đầu bằng `@claude`:
 - Lỗi phát hiện khi UAT mà AC không nhắc tới là **yêu cầu mới**: tạo issue mới, đừng reject UAT.
 - Nếu bạn kiêm PM: không tự ký hai cổng liên tiếp cho cùng một issue.
 
+## Trong sprint
+
+Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
+
+| Sự kiện | Việc của bạn |
+|---|---|
+| Refinement | Trả lời câu hỏi, chốt AC, size; bổ sung story Fail to dev (`backlog-refinement`) |
+| Planning | Đưa ưu tiên, cùng team chốt Sprint Goal |
+| Duyệt thiết kế | Cùng Designer và khách chọn phương án UI trong 1–2 ngày đầu sprint |
+| Sprint Review | Demo với khách, chuyển phản hồi thành story (`sprint-review`) |
+
 <!-- role-skills:start -->
 ## Skill của bạn
 
@@ -45,5 +56,8 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
 | `github-issue-create` | Soạn issue đúng mẫu từ ngôn ngữ tự nhiên | `/github-issue-create <#>` | `@claude đọc .claude/skills/github-issue-create/SKILL.md và làm theo cho issue #<số>` |
+| `backlog-refinement` | Refinement hàng loạt: tách story, ước lượng S–XL, cờ cần người code | `/backlog-refinement <#>` | `@claude đọc .claude/skills/backlog-refinement/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-planning` | Đề xuất phạm vi sprint theo năng lực review/QA | `/sprint-planning <#>` | `@claude đọc .claude/skills/sprint-planning/SKILL.md và làm theo cho issue #<số>` |
 | `uat-run` | PO nghiệm thu, soạn kết luận UAT | `/uat-run <#>` | `@claude đọc .claude/skills/uat-run/SKILL.md và làm theo cho issue #<số>` |
+| `sprint-review` | Tài liệu demo sprint, phản hồi thành story mới | `/sprint-review <#>` | `@claude đọc .claude/skills/sprint-review/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

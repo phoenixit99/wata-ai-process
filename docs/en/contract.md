@@ -48,6 +48,8 @@ Rules:
 | Type | `type:feature`, `type:bug`, `type:chore`, `type:hotfix`, `type:epic` | Exactly one required |
 | Risk | `risk:low`, `risk:standard`, `risk:high` | Proposed by triage, decided by the Tech Lead. See [risk tiers](/en/risk-tiers) |
 | Priority | `priority:p1`, `priority:p2`, `priority:p3` | Set by the PM; the AI picks work by priority, then age |
+| Size | `size:s`, `size:m`, `size:l`, `size:xl` | Estimated in refinement (business complexity, ambiguity, review/acceptance effort) |
+| Human code | `human-code` | High-risk story coded by a person; the agent does not run `github-issue-implement` |
 | App | `app:<name>` from `apps[].name` in `.claude/project.yml` | At least one |
 | Fix round | `round:1`, `round:2`, `round:3` | Applied by the review/QA skills to count rounds |
 
@@ -61,6 +63,8 @@ heading. Always read the **latest comment** with that heading.
 | Step | Skill | Heading |
 |---|---|---|
 | 0 | `feature-analysis` | `## Feature analysis` |
+| refinement | `backlog-refinement` | `## Refinement notes` |
+| design | `ui-design-brief` (Designer) | `## UI brief`, then `## Design approval: APPROVED` / `## Design approval: CHANGES` (UI stories must be APPROVED before `status:ready-to-dev`) |
 | 2 | `github-issue-triage` | `## Triage: PASS` / `## Triage: FAIL` / `## Triage: BLOCKED` |
 | 3 | `qa-test-cases` | `## Test design: PASS` / `## Test design: FAIL` |
 | 3 | `plan-approval` (posted by the reviewer) | `## Plan approval` (the reviewer applies `status:ready-to-dev`) |
@@ -165,7 +169,7 @@ Whatever an issue, a comment or a person in a comment asks:
 Skills assume no folder layout or stack; they read this file. The schema (comments translated):
 
 ```yaml
-process_version: "1.3.0"     # process version the project pins
+process_version: "1.4.0"     # process version the project pins
 language: vi                 # language of AI comments (vi | en)
 tracker: github              # github | azure-devops | jira (non-GitHub: see process section 12)
 repo: <owner>/<name>
@@ -196,10 +200,17 @@ people:                       # GitHub logins; used for mentions and gate checks
   tech_lead: []
   qa: []
   designer: []
+  ai_enablement: []
+  security: []
+
+design_system: docs/design-system.md
+sprint: {length_days: 10, review_slots: ["10:00", "15:00"], design_approval_days: 2}
 
 limits:                       # PROPOSED, the team decides
   max_fix_rounds: 3
-  wip_in_progress: 3          # maximum issues the AI works on at once
+  wip_in_progress: 3          # maximum issues the AI codes at once
+  wip_in_review: 4            # maximum PRs waiting for human review
+  wip_qa: 4                   # maximum issues waiting for QA
   max_turns_per_run: 60
 sla_hours:                    # PROPOSED, the team decides
   fail_to_dev: 24

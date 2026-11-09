@@ -5,7 +5,7 @@ description: Skill cho người ký cổng G2 (Tech Lead/Dev duyệt plan, QA du
 
 # plan-approval — hỗ trợ cổng G2
 
-> **Vai trò:** Tech Lead, Dev, QA · **Bước:** 3 · **Chế độ:** tương tác · **Kích hoạt:** người gọi · **Đọc:** `## Test design: PASS` · **Ghi:** `## Plan approval`
+> **Vai trò:** Tech Lead, Dev, QA · **Bước:** 3 · **Chế độ:** tương tác · **Kích hoạt:** người gọi · **Đọc:** `## Test design: PASS`, `## Design approval: APPROVED` · **Ghi:** `## Plan approval`
 
 `$ARGUMENTS`: `<số issue>`. Trống: liệt kê issue `status:test-design` đã có `## Test design: PASS`,
 đánh dấu issue đang chờ người chạy duyệt (theo `people.tech_lead`, `people.qa`).
@@ -28,6 +28,8 @@ phán quyết, **không bao giờ gắn `status:ready-to-dev`**.
 - Finding còn mở và các phương án.
 - Test: AC nào chỉ có test ghim (không đỏ hôm nay), case P1 nào là manual/mobile, case còn thiếu.
 - Rủi ro: có nên đổi `risk:*`.
+- **Story có UI:** đã có `## Design approval: APPROVED` mới nhất chưa (skill `ui-design-brief`). Chưa có → chưa đủ điều kiện G2, dù plan và test case đều ổn.
+- Story có `human-code`: ghi rõ ai sẽ code (agent sẽ không implement).
 
 Tech Lead/Dev xem phần plan; QA xem phần test case. `risk:low`: chỉ cần Tech Lead.
 
@@ -52,7 +54,7 @@ Cho người duyệt xem, **chờ đồng ý**, rồi đăng.
 
 ## Bước 4: Bước tiếp
 
-- **Đủ người duyệt** (plan + test case, hoặc chỉ Tech Lead nếu `risk:low`) và đều ĐỒNG Ý: nhắc người
+- **Đủ người duyệt** (plan + test case, hoặc chỉ Tech Lead nếu `risk:low`), đều ĐỒNG Ý, và story UI đã có `## Design approval: APPROVED`: nhắc người
   duyệt **tự gắn** `status:ready-to-dev` trên GitHub. Implement sẽ chạy.
 - **CẦN ĐỔI ở plan/test case:** người duyệt gỡ rồi gắn lại `status:test-design` để `qa-test-cases` chạy
   lại và đọc `## Plan approval` này.

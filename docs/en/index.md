@@ -4,7 +4,7 @@ layout: home
 hero:
   name: AI Agent Software Development Process
   text: From issue to UAT, the AI does the repetitive work and people make the decisions
-  tagline: WATA Software · For every project · Version 1.3
+  tagline: WATA Software · For every project · Version 1.4
   actions:
     - theme: brand
       text: Read the process
@@ -15,11 +15,20 @@ hero:
     - theme: alt
       text: Skill catalog
       link: /en/skills
+    - theme: alt
+      text: Scrum process
+      link: /en/scrum
+
+  image:
+    src: /wata-logo.png
+    alt: WATA Software
 
 features:
+  - title: Scrum with AI
+    details: A 10-step sprint, new events and timeboxes, planning by review/QA capacity, effort shifting from execution to requirements, decisions and acceptance.
   - title: Five human gates
     details: The PO confirms the request (G1), Tech Lead and QA approve the plan (G2), a reviewer tries to refute the work (G3), the Tech Lead merges (G4), the PO accepts in UAT (G5). The AI never passes a gate on its own.
-  - title: 20 skills, every role
+  - title: 27 skills, every role
     details: Every step and every role has its own skill, run in Claude Code or with @claude on GitHub. One catalog keeps everything in sync.
   - title: Labels are the source of truth
     details: Every issue carries exactly one status:* label. The label tells you where the work is, who has it, and which automated step runs next.
@@ -42,5 +51,7 @@ features:
 | Developer | [Developer guide](/en/roles/dev) | `github-issue-implement`, `qa-failed-fix` |
 | Tech Lead | [Tech Lead guide](/en/roles/tech-lead), [Setup](/en/setup-guide) | `plan-approval`, `merge-readiness`, `hotfix` |
 | QA | [QA guide](/en/roles/qa) | `plan-approval`, `qa-manual-session` |
+| AI Enablement | [AI Enablement guide](/en/roles/ai-enablement) | `sprint-retro`, `sprint0-setup` |
+| Security | [Security guide](/en/roles/security) | `sprint0-setup` |
 
 Every role can use `dev-pipeline` to see today's work.

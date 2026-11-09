@@ -29,6 +29,17 @@ back, and decide.
 - PRs use `Refs #<number>`, not `Closes`: the issue closes only after UAT.
 - Do not merge your own PR on a `risk:high` issue without someone else's G3.
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Refinement | Assess feasibility, propose splits |
+| Planning | Pick stories, take `human-code` stories |
+| During the sprint | Approve plans (G2), supervise the AI, handle hard cases, review PRs in the fixed slots |
+| Retro | Report repeated AI errors to AI Enablement |
+
 <!-- role-skills:start -->
 ## Your skills
 

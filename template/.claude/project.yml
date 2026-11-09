@@ -1,7 +1,7 @@
 # Cấu hình project cho bộ quy trình WATA AI Agent.
 # Schema đầy đủ: docs/agents/contract.md mục 9. Tech Lead và PM điền trước khi bật agent.
 
-process_version: "1.3.0"
+process_version: "1.4.0"
 language: vi
 tracker: github
 repo: <owner>/<repo>
@@ -59,10 +59,21 @@ people:            # GitHub login, không có @
   tech_lead: []
   qa: []
   designer: []
+  ai_enablement: []  # bảo trì skill, standard, MCP (process owner ở cấp project)
+  security: []
+
+design_system: docs/design-system.md   # đầu vào bắt buộc để AI tạo brief/Figma
+
+sprint:            # ĐỀ XUẤT — team chốt
+  length_days: 10                       # sprint 2 tuần
+  review_slots: ["10:00", "15:00"]      # khung giờ cố định duyệt PR mỗi ngày
+  design_approval_days: 2               # khách duyệt thiết kế trong 1–2 ngày đầu sprint
 
 limits:            # ĐỀ XUẤT — team chốt trước pilot
   max_fix_rounds: 3
-  wip_in_progress: 3
+  wip_in_progress: 3          # issue AI đang code cùng lúc
+  wip_in_review: 4            # PR chờ người review (nút thắt mới theo quy trình Scrum)
+  wip_qa: 4                   # issue chờ QA
   max_turns_per_run: 60
 
 sla_hours:         # ĐỀ XUẤT — team chốt trước pilot (giờ làm việc)

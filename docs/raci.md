@@ -10,6 +10,8 @@ SLA là **đề xuất**; team chốt trong `.claude/project.yml` → `sla_hours
 | `status:backlog` → triage | R | I | I | — | — | — | C (risk) | — | tự động |
 | `status:fail-to-dev` | — | A/R | R | I | — | — | — | — | 24 giờ |
 | `status:blocked` | — | I | — | A (gỡ chặn) | — | C | C | — | — |
+| Refinement (`backlog-refinement`) | R (triage, size nháp) | A | R | I | C | C | R | C | 20–25% sprint |
+| Duyệt thiết kế UI (`ui-design-brief`) | R (brief) | C | I | I | A | — | — | — | 1–2 ngày đầu sprint |
 | `status:test-design` → test design | R | I | C | — | — | C | C | C | tự động |
 | **G2**: duyệt plan + test case (`plan-approval`) | — | I | — | I | — | R (plan) | A | R (test case) | 8 giờ |
 | `status:in-progress` → code | R | — | — | — | C (UI) | C | I | — | tự động |
@@ -25,6 +27,8 @@ SLA là **đề xuất**; team chốt trong `.claude/project.yml` → `sla_hours
 | Kế hoạch release (`release-plan`) | R (soạn) | C | — | A | — | — | R | I | mỗi release |
 | Báo cáo tiến độ (`status-report`) | R (soạn) | I | — | A | — | — | I | — | hằng tuần |
 | Thay đổi quy trình | — | C | C | C | C | C | C | C | Process owner: A |
+
+**AI Enablement** chịu trách nhiệm (A) cho skill, cấu hình MCP và hành động sửa lỗi AI lặp lại sau retro. **Security** được hỏi ý kiến (C) ở G2/G3 cho story `risk:high` và ký duyệt quyền truy cập ở Sprint 0. **Khách hàng** chọn phương án UI và cùng PO nghiệm thu. RACI theo giai đoạn sprint ở [Quy trình Scrum mục 3.1](scrum.md).
 
 ## Kiêm nhiệm
 

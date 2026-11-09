@@ -29,6 +29,16 @@ the business rules.
 /dev-pipeline                # today's work queue
 ```
 
+## In the sprint
+
+Sprint cadence and events: [Scrum process](/en/scrum).
+
+| Event | Your part |
+|---|---|
+| Refinement | Clarify business rules, split stories, propose AC (`backlog-refinement`) |
+| Planning | Explain stories to the team |
+| Sprint Review | Capture feedback, prepare new stories |
+
 <!-- role-skills:start -->
 ## Your skills
 
@@ -39,4 +49,5 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
 | `feature-analysis` | Analyses an epic: challenge, two architectures, proposed child issues | `/feature-analysis <#>` | `@claude read .claude/skills/feature-analysis/SKILL.md and follow it for issue #<number>` |
 | `github-issue-create` | Drafts a well-formed issue from plain language | `/github-issue-create <#>` | `@claude read .claude/skills/github-issue-create/SKILL.md and follow it for issue #<number>` |
+| `backlog-refinement` | Batch refinement: split stories, size S–XL, human-code flag | `/backlog-refinement <#>` | `@claude read .claude/skills/backlog-refinement/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

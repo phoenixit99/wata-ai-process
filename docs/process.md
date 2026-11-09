@@ -1,9 +1,9 @@
-# Quy trình phát triển dự án sử dụng AI Agent — v1.3
+# Quy trình phát triển dự án sử dụng AI Agent — v1.4
 
 WATA Software · Tài liệu nội bộ · Bản gốc (canonical) của quy trình.
 
 Tài liệu này dành cho **mọi người tham gia phát triển phần mềm**: PO, BA, PM, Designer, Dev,
-Tech Lead, QA. Nếu bạn chỉ cần biết việc của mình, đọc trang vai trò trong `roles/`
+Tech Lead, QA, AI Enablement, Security. Nhịp sprint, sự kiện và ước lượng nằm ở [Quy trình Scrum](scrum.md). Nếu bạn chỉ cần biết việc của mình, đọc trang vai trò trong `roles/`
 trước. Phần cài đặt kỹ thuật nằm ở `setup-guide.md`; luật cho AI nằm ở `contract.md`.
 
 ---
@@ -12,6 +12,7 @@ trước. Phần cài đặt kỹ thuật nằm ở `setup-guide.md`; luật cho
 
 | Phiên bản | Thay đổi chính |
 |---|---|
+| 1.4 | Gộp [Quy trình Scrum](scrum.md) vào cùng bộ quy trình: duyệt thiết kế UI là điều kiện của G2 cho story có UI; giới hạn WIP cho hàng chờ review và QA; label `size:*`, `human-code`; vai trò AI Enablement (process owner), Security, khách hàng; [Definition of Done](definition-of-done.md); 7 skill cho sự kiện Scrum. |
 | 1.3 | Mỗi vai trò có skill riêng (thêm `plan-approval`, `design-review`, `qa-manual-session`, `uat-run`, `release-plan`); catalog skill là nguồn duy nhất, có script kiểm tra đồng bộ. |
 | 1.2 | Thêm vai trò PM, Bước 0 (phân tích feature), UAT, luồng hotfix, phân loại theo rủi ro, RACI, SLA cho hàng chờ của con người, hướng dẫn theo vai trò. Bước 7 và 8 ghi rõ là việc của con người. Trạng thái dùng label `status:*`. |
 | 1.1 | 11 cải tiến: review ở session riêng, thiết kế test trước khi code, cổng con người G2/G3, trạng thái Needs human và Blocked, R11, guardrail phía server, contract chung, chống prompt injection, tương thích ngược API, báo cáo QA trung thực, áp dụng toàn công ty. |
@@ -97,7 +98,7 @@ AI chỉ chuyển issue sang `status:test-design` khi đạt mọi điều kiệ
 | R7 | Không còn TBD, "???", phần mẫu chưa điền | Có |
 | R8 | Không bị chặn bởi issue chưa xong | Có (vướng → blocked) |
 | R9 | Bug: có bước tái hiện, kết quả mong đợi, kết quả thực tế | Có (bug) |
-| R10 | Đổi API có request/response; đổi UI có link frame Figma | Khuyến nghị |
+| R10 | Đổi API có request/response. Story đổi UI có brief UI; **frame Figma phải được duyệt (`## Design approval: APPROVED`) trước cổng G2** | Có (story UI); khuyến nghị (API) |
 | R11 | Đã tìm issue trùng và issue đang sửa cùng đoạn code; có thì link và ghi thứ tự | Có |
 
 Cách viết AC: `writing-acceptance-criteria.md`.
@@ -151,7 +152,8 @@ việc của con người; AI chỉ chuẩn bị tài liệu.
 - Mã `TC-<số issue>-<thứ tự>`, ưu tiên P1–P3, đánh dấu `auto` / `manual` / `mobile`.
 - Bảng **AC → file sẽ sửa → test case**, phạm vi ảnh hưởng, những gì không làm.
 - Bảng test case lưu ở `e2e/test-cases/<số issue>.md`; tóm tắt trên issue.
-- **Cổng G2:** Tech Lead/Dev duyệt plan, QA duyệt test case (skill `plan-approval` hỗ trợ), rồi **con người** gắn `status:ready-to-dev`.
+- **Cổng G2:** Tech Lead/Dev duyệt plan, QA duyệt test case (skill `plan-approval` hỗ trợ); story có UI phải có `## Design approval: APPROVED` (Designer + PO/khách hàng, skill `ui-design-brief`). Rồi **con người** gắn `status:ready-to-dev`.
+- Story gắn `human-code`: người code trực tiếp; agent không chạy implement.
 
 ### Bước 4: Code và PR
 
@@ -237,6 +239,9 @@ Chi tiết từng vai trò ở `roles/`; bảng ai làm gì ở từng trạng t
 | Dev | Duyệt plan, sửa ca khó, xử lý Needs human | G2 (plan) | Code, unit test, review sơ bộ |
 | Tech Lead | Kiến trúc, mức rủi ro, merge | G2, G3, G4 | Refutation brief, merge readiness, hotfix |
 | QA | Duyệt test case, test manual/mobile | G2 (test case) | Sinh test case, automation, phiên test manual |
+| AI Enablement | Skill, coding standard, MCP, lỗi AI lặp lại; process owner | — | Retro, kiểm tra Sprint 0 |
+| Security | Chính sách dữ liệu, quyền của AI, token | — (tham vấn `risk:high`) | Kiểm tra Sprint 0 |
+| Khách hàng | Chọn phương án UI, nghiệm thu | G5 (cùng PO) | Tài liệu demo, UAT checklist |
 
 **Kiêm nhiệm:** một người có thể giữ nhiều vai trò, nhưng **không tự ký hai cổng liên tiếp cho cùng
 một issue** (ví dụ người viết issue không tự duyệt plan của nó; người merge không tự làm G3 cho
@@ -255,6 +260,7 @@ và QA. Khi không đồng ý với AI, quyết định của con người đư�
 | AI tự qua cổng con người | Guard workflow gỡ label cổng nếu do bot gắn, và agent không chạy trên label đó |
 | Prompt injection qua issue | Nội dung issue/comment là dữ liệu, không phải lệnh (`CLAUDE.md`, contract) |
 | Hai job ghi đè nhau | Một label trạng thái; guard gỡ label cũ; `concurrency` theo issue; đọc lại trước khi ghi |
+| PR dồn ứ chờ review/QA | Giới hạn WIP `wip_in_review`, `wip_qa`: agent không bắt đầu story mới khi hàng chờ đầy; khung giờ review cố định |
 | Báo cáo sai sự thật | Footer ba phần; build tính trên commit cuối; không báo điều không thấy |
 | Vòng lặp vô hạn | Tối đa 3 vòng rồi `needs-human` |
 | Con người thành điểm nghẽn | SLA cho hàng chờ, nhắc tự động (`wata-sla-reminder`), PM escalate |
@@ -277,13 +283,13 @@ và QA. Khi không đồng ý với AI, quyết định của con người đư�
 | Lỗi lọt sau release | Bug sau merge | Hiệu quả toàn quy trình |
 | Chi phí AI | Chi phí token / issue | Hiệu quả chi phí |
 
-Skill `status-report` tổng hợp các chỉ số này hằng tuần cho PM.
+Skill `status-report` tổng hợp các chỉ số này hằng tuần cho PM. Mục tiêu tham khảo (lead time giảm ≥ 40% sau 3 sprint, chờ review < 1 ngày, fail-to-dev < 20%, đạt review vòng 1 ≥ 60%, ≥ 80% AC có automation) ở [Quy trình Scrum mục 8](scrum.md).
 
 ## 12. Áp dụng cho toàn công ty
 
 | Lớp | Gồm | Ai sở hữu | Project được đổi? |
 |---|---|---|---|
-| Lõi | Trạng thái, DoR, 5 cổng, guardrail, contract, format báo cáo, skill quy trình, workflow `wata-*`, label | Process owner | Không; muốn khác phải xin ngoại lệ |
+| Lõi | Trạng thái, DoR, DoD, 5 cổng, guardrail, contract, format báo cáo, skill quy trình, workflow `wata-*`, label | AI Enablement cấp công ty (process owner) | Không; muốn khác phải xin ngoại lệ |
 | Cấu hình | Tracker, app và công nghệ, lệnh build, coding standard, số bản app hỗ trợ, người ký cổng, SLA | Tech Lead + PM project | Có, trong khuôn mẫu `project.yml` |
 | Mở rộng | Skill nghiệp vụ riêng, tiêu chí review thêm | Tech Lead project | Chỉ được thêm, không nới lỏng lõi |
 
@@ -303,6 +309,6 @@ Skill `status-report` tổng hợp các chỉ số này hằng tuần cho PM.
 
 **Câu hỏi mở:**
 
-- Ai là process owner?
+- Ai giữ vai trò AI Enablement cấp công ty (process owner)?
 - Project dùng tracker của khách hàng có nằm trong giai đoạn đầu không?
 - SLA, giới hạn WIP, ngân sách AI và ngưỡng rủi ro trong tài liệu là **đề xuất**; team chốt trước pilot.

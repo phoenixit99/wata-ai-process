@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.4.0 — 2026-11-09
+
+Gộp Quy trình Scrum ứng dụng AI Agent vào cùng repo và website.
+
+- Trang mới (song ngữ): Quy trình Scrum v1.1 (từ PDF v1.0, đã thống nhất với quy trình dev), Definition of
+  Done, Sprint 0, hướng dẫn vai trò AI Enablement và Security. Biểu đồ effort sinh bằng
+  `scripts/gen-effort-chart.py`.
+- Thống nhất 6 điểm: test case thiết kế trước khi code; AI review ở session riêng; DoR 11 tiêu chí; duyệt
+  thiết kế UI là điều kiện của G2; giới hạn WIP cho review và QA; thêm DoD.
+- 7 skill mới: `sprint0-setup`, `backlog-refinement`, `ui-design-brief`, `sprint-planning`, `daily-scrum`,
+  `sprint-review`, `sprint-retro` (tổng 27). Vai trò mới trong catalog: `ai-enablement`, `security`.
+- Label `size:s/m/l/xl`, `human-code`; heading `## Refinement notes`, `## UI brief`,
+  `## Design approval: APPROVED/CHANGES`.
+- `wata-agent` và `wata-sla-reminder`: không lấy việc mới khi hàng chờ review/QA đầy; bỏ qua story `human-code`.
+- `project.yml`: `wip_in_review`, `wip_qa`, `people.ai_enablement`, `people.security`, `design_system`, `sprint`.
+  Template thêm `docs/design-system.md`.
+- Website: logo WATA chính thức ở header, trang chủ và favicon; mục Scrum trong menu.
+
 ## 1.3.0 — 2026-11-09
 
 Đồng bộ skill cho mọi vai trò.

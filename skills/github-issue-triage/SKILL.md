@@ -39,7 +39,7 @@ Với **từng** điều kiện, ghi Đạt / Không đạt / Không áp dụng,
 | R7 | Không còn `TBD`, `???`, `<...>`, phần mẫu chưa điền |
 | R8 | Không có issue chặn đang mở (đọc trạng thái hiện tại của mọi issue được nhắc là phụ thuộc) |
 | R9 | Bug: có bước tái hiện, kết quả mong đợi, kết quả thực tế, môi trường |
-| R10 | Đổi API: có request/response. Đổi UI: có link Figma (khuyến nghị, không làm fail) |
+| R10 | Đổi API: có request/response (khuyến nghị). Đổi UI: có brief UI trong mục Design (bắt buộc); link Figma đã duyệt được gắn sau ở bước thiết kế, trước G2 |
 | R11 | Tìm trùng/chồng lấn: theo tiêu đề **và** theo code bị đụng; đọc cả issue đã đóng; có đối chứng dương |
 
 Cho R11:
