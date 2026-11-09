@@ -34,16 +34,16 @@ A sprint has 10 consecutive steps. The effort column shows the direction compare
 
 | # | Step | People | AI | Effort | Skills |
 |---|---|---|---|---|---|
-| 1 | Discovery and requirements | PO/BA | Drafts stories, suggests AC | Up | `github-issue-create`, `feature-analysis` |
-| 2 | Refinement and DoR | PO + Tech Lead | Automatic triage, story splitting, draft sizes | Up | `backlog-refinement`, `github-issue-triage` |
-| 3 | Sprint Planning | Whole team | Review/QA capacity data | Same | `sprint-planning` |
-| 4 | UI design, architecture, test design | Designer approves UI, Tech Lead decides architecture, QA approves test cases | UI brief, options, test design | Down | `ui-design-brief`, `qa-test-cases`, `plan-approval` |
-| 5 | Coding and unit tests | Dev assigns and supervises | Code, tests | Strongly down | `github-issue-implement` |
-| 6 | Code review | Final reviewer | First-round review in a separate session | Up | `github-pr-review`, `design-review` |
-| 7 | QA and automation | QA reviews, explores, tests real devices | Runs automation for the designed test cases | Down | `e2e-playwright`, `qa-manual-session` |
-| 8 | CI/CD and deployment | Approves merge and release | Automated checks, release notes | Down | `refutation-brief`, `merge-readiness`, `release-plan` |
-| 9 | Sprint Review and UAT | PO, customer | Demo notes, feedback into stories | Up | `uat-checklist`, `uat-run`, `sprint-review` |
-| 10 | Retrospective | Whole team | Metrics, repeated AI errors | Same | `sprint-retro` |
+| 1 | Discovery and requirements | PO/BA | Drafts stories, suggests AC | Up | `issue-create`, `refine` |
+| 2 | Refinement and DoR | PO + Tech Lead | Automatic triage, story splitting, draft sizes | Up | `refine --batch`, `triage` |
+| 3 | Sprint Planning | Whole team | Review/QA capacity data | Same | `sprint plan` |
+| 4 | UI design, architecture, test design | Designer approves UI, Tech Lead decides architecture, QA approves test cases | UI brief, options, test design | Down | `design-brief`, `test-design`, `test-design --approve` |
+| 5 | Coding and unit tests | Dev assigns and supervises | Code, tests | Strongly down | `implement` |
+| 6 | Code review | Final reviewer | First-round review in a separate session | Up | `pr-review`, `pr-review --design` |
+| 7 | QA and automation | QA reviews, explores, tests real devices | Runs automation for the designed test cases | Down | `qa`, `qa --manual` |
+| 8 | CI/CD and deployment | Approves merge and release | Automated checks, release notes | Down | `merge-gate`, `merge-gate --merge`, `sprint release` |
+| 9 | Sprint Review and UAT | PO, customer | Demo notes, feedback into stories | Up | `uat`, `uat --run`, `sprint review` |
+| 10 | Retrospective | Whole team | Metrics, repeated AI errors | Same | `sprint retro` |
 
 **[Aligned]** Test cases are designed in step 4, **before coding** (version 1.0 placed them in QA). Tests follow
 the requirement rather than the code the AI just wrote; QA in step 7 reviews results and explores.
@@ -105,13 +105,13 @@ Reference sprint: 2 weeks. The team may move to 1-week sprints once review and a
 
 | Event | Traditional | With AI | Notes | Skill |
 |---|---|---|---|---|
-| Sprint Planning | 4 h | 3–4 h | Plan by review/QA capacity | `sprint-planning` |
-| Daily Scrum | 15 min | 15 min | A label dashboard replaces status reports; focus on blocked work | `daily-scrum` |
-| Backlog Refinement | ≤ 10% of the sprint | 20–25% of the sprint | The biggest increase | `backlog-refinement` |
-| Sprint Review | 2 h | 2–3 h | More features to demo | `sprint-review` |
-| Retrospective | 1.5 h | 1.5 h | Adds skill/standard improvements | `sprint-retro` |
+| Sprint Planning | 4 h | 3–4 h | Plan by review/QA capacity | `sprint plan` |
+| Daily Scrum | 15 min | 15 min | A label dashboard replaces status reports; focus on blocked work | `sprint daily` |
+| Backlog Refinement | ≤ 10% of the sprint | 20–25% of the sprint | The biggest increase | `refine --batch` |
+| Sprint Review | 2 h | 2–3 h | More features to demo | `sprint review` |
+| Retrospective | 1.5 h | 1.5 h | Adds skill/standard improvements | `sprint retro` |
 | Review queue (new) | — | 2 slots/day | Fixed slots for approving PRs (`sprint.review_slots`) to avoid backlog | — |
-| Design approval (new) | — | 30–60 min per group of stories | PO + Designer + customer, in the first 1–2 days of the sprint | `ui-design-brief` |
+| Design approval (new) | — | 30–60 min per group of stories | PO + Designer + customer, in the first 1–2 days of the sprint | `design-brief` |
 
 ## 6. Stages in detail
 
@@ -128,7 +128,7 @@ traditional Scrum.
 | People | Tech Lead: architecture, coding standards. PM: labels, board, CI, access. Security: data policy, tokens, AI permissions. Designer: design system, sample brief. AI Enablement: skills, MCP |
 | AI | Scaffolds the monorepo, CI, issue/PR templates (`install.sh`); drafts coding standards; sets up the tool for AI to create/write designs in Figma (tool chosen by the team after trials) |
 | Output | Repository, skills, coding standards, design system, DoR/DoD, MCP (GitHub, Figma, Playwright) |
-| Gate | Tech Lead and Security sign off standards and access; Designer approves the design system. Checked with `sprint0-setup` |
+| Gate | Tech Lead and Security sign off standards and access; Designer approves the design system. Checked with `install.sh --check` |
 
 **Effort: up.** A new stage (about 1–2 weeks), a one-off investment reused in later sprints.
 
@@ -140,7 +140,7 @@ traditional Scrum.
 |---|---|
 | Input | Customer needs, meeting notes |
 | People | PO/BA: work with the customer, decide value and priority, agree AC. Designer: describe UI needs (UI brief) |
-| AI | Drafts stories from the notes; proposes Given/When/Then AC and missing edge cases; splits large stories (`github-issue-create`, `feature-analysis`) |
+| AI | Drafts stories from the notes; proposes Given/When/Then AC and missing edge cases; splits large stories (`issue-create`, `refine`) |
 | Output | Story in `status:backlog` with Description, AC, Design, affected apps |
 | Gate | Gate G1: the PO confirms the story has every required section |
 
@@ -155,7 +155,7 @@ text literally and does not fill gaps the way an experienced developer would.
 |---|---|
 | Input | Stories in `status:backlog` |
 | People | PO + Tech Lead: answer questions, agree scope, assess risk, decide size and the `human-code` flag. PO completes Fail-to-dev stories |
-| AI | Automatic triage against R1–R11; moves to `test-design` or `fail-to-dev` with proposed wording; proposes splits and S/M/L/XL sizes (`backlog-refinement`) |
+| AI | Automatic triage against R1–R11; moves to `test-design` or `fail-to-dev` with proposed wording; proposes splits and S/M/L/XL sizes (`refine --batch`) |
 | Output | Ready stories with `size:*` |
 | Gate | Every mandatory DoR criterion met |
 
@@ -170,7 +170,7 @@ output quality once the AI is involved.
 |---|---|
 | Input | Ready stories, data from previous sprints |
 | People | Whole team: choose stories, commit to the Sprint Goal. Tech Lead: identify stories a person must code (`human-code`) |
-| AI | Data: lead time, PRs each person can review, Fail-to-dev rate; suggests splitting or grouping stories (`sprint-planning`) |
+| AI | Data: lead time, PRs each person can review, Fail-to-dev rate; suggests splitting or grouping stories (`sprint plan`) |
 | Output | Sprint Backlog (milestone), Sprint Goal |
 | Gate | Total work does not exceed the team's review, QA and acceptance capacity |
 
@@ -184,15 +184,15 @@ output quality once the AI is involved.
 |---|---|
 | Input | Sprint stories, UI brief, design system |
 | People | Designer: write briefs, review and refine Figma, check UX and accessibility. PO + customer: choose and confirm the UI option. Tech Lead: architecture, API contract, data model; approves the plan. QA: approves test cases |
-| AI | UI brief and 2–3 options from the design system covering normal/error/empty/loading states (`ui-design-brief`); technical options; test cases and the AC → file → test table (`qa-test-cases`) |
+| AI | UI brief and 2–3 options from the design system covering normal/error/empty/loading states (`design-brief`); technical options; test cases and the AC → file → test table (`test-design`) |
 | Output | Approved Figma frame (`## Design approval: APPROVED`) linked to the story; a short technical design; the test-case table |
-| Gate | **Gate G2**: Designer and customer confirm the UI (UI stories), Tech Lead approves the plan, QA approves test cases (`plan-approval`), then a person applies `status:ready-to-dev` |
+| Gate | **Gate G2**: Designer and customer confirm the UI (UI stories), Tech Lead approves the plan, QA approves test cases (`test-design --approve`), then a person applies `status:ready-to-dev` |
 
 **Effort: down about 25%.** The AI produces the designs and options; the Designer moves from drawing every screen
 to describing, reviewing and refining. Architecture decisions stay with people.
 
 **[Aligned]** Design approval is **a condition of gate G2** for UI stories: no coding before the Figma is approved.
-`design-review` after coding is a comparison, not a replacement for this approval.
+`pr-review --design` after coding is a comparison, not a replacement for this approval.
 
 ### 6.6 Coding and unit tests
 
@@ -202,7 +202,7 @@ to describing, reviewing and refining. Architecture decisions stay with people.
 |---|---|
 | Input | Story in `status:ready-to-dev`, coding standard, approved Figma, technical design, test-case table |
 | People | Developer: assigns work to the AI, monitors, handles what the AI gets wrong or what is complex; owns the code. `human-code` stories: a person codes |
-| AI | Creates the branch, writes code and unit tests from the test-case table, runs lint/typecheck/build; opens the PR linked to the story (`github-issue-implement`) |
+| AI | Creates the branch, writes code and unit tests from the test-case table, runs lint/typecheck/build; opens the PR linked to the story (`implement`) |
 | Output | Pull request with the AC mapping table |
 | Gate | Green CI: lint, typecheck, unit tests, build |
 
@@ -216,7 +216,7 @@ to describing, reviewing and refining. Architecture decisions stay with people.
 |---|---|
 | Input | Pull request |
 | People | Reviewer/Tech Lead: final approval focused on business logic, architecture and security; accepts or requests changes. Reviews in the fixed review slots |
-| AI | First-round review **in a separate session** against 9 criteria, line comments (`github-pr-review`). Blocker/Major go back to the AI to fix **in the implement session**, then a fresh review session reviews again (up to 3 rounds) |
+| AI | First-round review **in a separate session** against 9 criteria, line comments (`pr-review`). Blocker/Major go back to the AI to fix **in the implement session**, then a fresh review session reviews again (up to 3 rounds) |
 | Output | PR approved, story moves to QA |
 | Gate | No Blocker/Major left; the final reviewer approved |
 
@@ -233,8 +233,8 @@ itself"): the session that wrote the code is the worst one to review it.
 | Item | Content |
 |---|---|
 | Input | Reviewed PR, test-case table approved in 6.5 |
-| People | QA: add business scenarios, exploratory and UX testing, real-device (mobile) testing with `qa-manual-session` |
-| AI | Writes and runs Playwright for `auto` test cases; classifies failures (test, product, environment); product defects go back to coding (up to 3 rounds); reports on the PR (`e2e-playwright`) |
+| People | QA: add business scenarios, exploratory and UX testing, real-device (mobile) testing with `qa --manual` |
+| AI | Writes and runs Playwright for `auto` test cases; classifies failures (test, product, environment); product defects go back to coding (up to 3 rounds); reports on the PR (`qa`) |
 | Output | Automated tests, QA passed/failed report |
 | Gate | Every AC has at least one test; automation green; every P1 manual/mobile case passed |
 
@@ -249,7 +249,7 @@ tests to reviewing and exploring. Automation coverage rises. The QA queue has a 
 |---|---|
 | Input | PR with QA passed |
 | People | Tech Lead: refutation (G3) and merge (G4). PM/Tech Lead: approve the production release |
-| AI | CI runs every check; G3 brief (`refutation-brief`), pre-merge checks (`merge-readiness`); release plan and notes (`release-plan`) |
+| AI | CI runs every check; G3 brief (`merge-gate`), pre-merge checks (`merge-gate --merge`); release plan and notes (`sprint release`) |
 | Output | Build on staging/production, release notes |
 | Gate | Only people merge and approve releases |
 
@@ -263,7 +263,7 @@ tests to reviewing and exploring. Automation coverage rises. The QA queue has a 
 |---|---|
 | Input | Increment on staging |
 | People | PO + customer: demo, acceptance, feedback. PO: update the backlog from feedback |
-| AI | UAT checklist (`uat-checklist`), guided acceptance for the PO (`uat-run`); demo notes, change summary; feedback into new stories (`sprint-review`) |
+| AI | UAT checklist (`uat`), guided acceptance for the PO (`uat --run`); demo notes, change summary; feedback into new stories (`sprint review`) |
 | Output | Features accepted (gate G5), backlog updated |
 | Gate | Customer/PO accept against the AC |
 
@@ -278,7 +278,7 @@ with the customer up front.
 |---|---|
 | Input | Sprint metrics, repeated AI errors |
 | People | Whole team: evaluate, choose improvements. AI Enablement: update skills, coding standards, DoR |
-| AI | Compiles metrics and repeated errors from review/QA/UAT comments (`sprint-retro`) |
+| AI | Compiles metrics and repeated errors from review/QA/UAT comments (`sprint retro`) |
 | Output | Improvement actions; issues/PRs fixing skills (central repo) or standards (project repo) |
 | Gate | Every AI error repeated ≥ 2 times gets an action fixing a skill or standard |
 
@@ -352,7 +352,7 @@ team needs more BA, review and architecture capacity, and less pure coding capac
 | AI cost per story | Tokens/licences per story | Track the trend |
 
 The full metric list (including time waiting on people, Needs-human rate, defects found at G3, UAT rejections) is
-in [development process section 11](/en/process). `status-report` and `sprint-retro` compute them.
+in [development process section 11](/en/process). `sprint report` and `sprint retro` compute them.
 
 ## 9. Risks and controls
 

@@ -55,7 +55,7 @@ Cho Tech Lead xem, **chờ đồng ý** (đây là G2 rút gọn). Đăng commen
 
 ## Bước 4: Review, QA, merge
 
-- Review bằng `github-pr-review` **trong session mới** (có thể là Tech Lead khác hoặc cùng Tech Lead ở
+- Review bằng `pr-review` **trong session mới** (có thể là Tech Lead khác hoặc cùng Tech Lead ở
   session mới).
 - QA: case liên quan tới lỗi + smoke test luồng chính.
 - Tech Lead merge (G3 + G4). Deploy theo quy trình release của project, do con người.

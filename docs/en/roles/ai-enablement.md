@@ -22,9 +22,9 @@ requirements and refinement ([Scrum section 7](/en/scrum)); the PM makes sure th
 
 | When | You do | Tool |
 |---|---|---|
-| Sprint 0 | Configure MCP (GitHub, Figma, Playwright); choose the AI Figma tool; check the setup; coach the team on skills | `/sprint0-setup` |
+| Sprint 0 | Configure MCP (GitHub, Figma, Playwright); choose the AI Figma tool; check the setup; coach the team on skills | `install.sh --check` |
 | Daily | Watch `status:needs-human` and agent workflow failures; fix broken configuration | GitHub Actions |
-| Retrospective | Compile repeated AI errors; every error seen ≥ 2 times gets an action fixing a skill, coding standard or DoR | `/sprint-retro` |
+| Retrospective | Compile repeated AI errors; every error seen ≥ 2 times gets an action fixing a skill, coding standard or DoR | `/sprint retro` |
 | A skill needs fixing | Open an issue/PR on the central repo; skills are core, never edited directly in the project's `.claude/skills/` | Central repo |
 | Upgrading the process | Read the CHANGELOG, run `install.sh --upgrade`, update `process_version` | `scripts/install.sh` |
 | AI cost | Track token cost with the PM, adjust `max_turns_per_run` | `project.yml` |
@@ -52,8 +52,8 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 
 | Event | Your part |
 |---|---|
-| Sprint 0 | MCP, Figma tool, skills, team coaching (`sprint0-setup`) |
-| Retro | Turn repeated AI errors into skill/standard fixes (`sprint-retro`) |
+| Sprint 0 | MCP, Figma tool, skills, team coaching (`install.sh --check`) |
+| Retro | Turn repeated AI errors into skill/standard fixes (`sprint retro`) |
 
 <!-- role-skills:start -->
 ## Your skills
@@ -63,6 +63,5 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | Skill | Purpose | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
-| `sprint0-setup` | Checks the project's Sprint 0 checklist | `/sprint0-setup <#>` | `@claude read .claude/skills/sprint0-setup/SKILL.md and follow it for issue #<number>` |
-| `sprint-retro` | Sprint metrics; repeated AI errors into skill fixes | `/sprint-retro <#>` | `@claude read .claude/skills/sprint-retro/SKILL.md and follow it for issue #<number>` |
+| `sprint` | Scrum events: `plan`, `daily`, `review`, `retro`, `report`, `release` | `/sprint plan|daily|review|retro|report|release` | `@claude read .claude/skills/sprint/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

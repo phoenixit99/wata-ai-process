@@ -6,9 +6,9 @@ Bạn biến nhu cầu kinh doanh thành yêu cầu làm được: phân tích f
 
 | Khi | Bạn làm | Công cụ | Xong khi |
 |---|---|---|---|
-| Có feature lớn (epic) | Tạo issue loại epic; chạy (hoặc nhờ dev chạy) `/feature-analysis <số>`, hoặc comment `@claude phân tích epic này theo skill feature-analysis` | GitHub / Claude Code | Có `## Feature analysis` |
+| Có feature lớn (epic) | Tạo issue loại epic; chạy (hoặc nhờ dev chạy) `/refine <số>`, hoặc comment `@claude phân tích epic này theo skill refine` | GitHub / Claude Code | Có `## Feature analysis` |
 | Sau phân tích | Cùng PO và Tech Lead chốt hướng, API contract, danh sách issue con | GitHub comment | PO và Tech Lead đồng ý |
-| Tạo issue con | Dùng `/github-issue-create` hoặc template; link về epic ("Part of #<epic>") | GitHub / Claude Code | Issue đủ AC; PO gắn `status:backlog` (G1) |
+| Tạo issue con | Dùng `/issue-create` hoặc template; link về epic ("Part of #<epic>") | GitHub / Claude Code | Issue đủ AC; PO gắn `status:backlog` (G1) |
 | Issue `status:fail-to-dev` về nghiệp vụ | Bổ sung theo comment triage | GitHub | Trong SLA |
 | `## Needs human` về nghiệp vụ | Trả lời, ghi lý do | GitHub | — |
 | Khi PO uỷ quyền | Ký cổng G1 thay PO | GitHub | — |
@@ -23,8 +23,8 @@ Bạn biến nhu cầu kinh doanh thành yêu cầu làm được: phân tích f
 ## Dùng Claude Code (khuyến nghị cho BA)
 
 ```
-/feature-analysis 120        # phân tích epic #120
-/github-issue-create <mô tả> # soạn issue con
+/refine 120        # phân tích epic #120
+/issue-create <mô tả> # soạn issue con
 /dev-pipeline                # xem bảng việc hôm nay
 ```
 
@@ -34,7 +34,7 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 
 | Sự kiện | Việc của bạn |
 |---|---|
-| Refinement | Làm rõ nghiệp vụ, tách story, đề xuất AC (`backlog-refinement`) |
+| Refinement | Làm rõ nghiệp vụ, tách story, đề xuất AC (`refine --batch`) |
 | Planning | Giải thích story cho team |
 | Sprint Review | Ghi nhận phản hồi, chuẩn bị story mới |
 
@@ -46,7 +46,6 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
-| `feature-analysis` | Phân tích epic, phản biện, hai hướng kiến trúc, đề xuất issue con | `/feature-analysis <#>` | `@claude đọc .claude/skills/feature-analysis/SKILL.md và làm theo cho issue #<số>` |
-| `github-issue-create` | Soạn issue đúng mẫu từ ngôn ngữ tự nhiên | `/github-issue-create <#>` | `@claude đọc .claude/skills/github-issue-create/SKILL.md và làm theo cho issue #<số>` |
-| `backlog-refinement` | Refinement hàng loạt: tách story, ước lượng S–XL, cờ cần người code | `/backlog-refinement <#>` | `@claude đọc .claude/skills/backlog-refinement/SKILL.md và làm theo cho issue #<số>` |
+| `issue-create` | Soạn issue đúng mẫu từ ngôn ngữ tự nhiên | `/issue-create <#>` | `@claude đọc .claude/skills/issue-create/SKILL.md và làm theo cho issue #<số>` |
+| `refine` | Phân tích epic (mặc định); refinement hàng loạt, size S–XL, cờ human-code (`--batch`) | `/refine <#>` | `@claude đọc .claude/skills/refine/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

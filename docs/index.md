@@ -28,8 +28,8 @@ features:
     details: Sprint 10 bước, sự kiện và timebox mới, lập kế hoạch theo năng lực review/QA, effort dịch chuyển từ thực thi sang yêu cầu, quyết định và nghiệm thu.
   - title: 5 cổng con người
     details: PO xác nhận yêu cầu (G1), Tech Lead và QA duyệt plan (G2), reviewer phản biện (G3), Tech Lead merge (G4), PO nghiệm thu (G5). AI không bao giờ tự qua cổng.
-  - title: 27 skill, mọi vai trò
-    details: Mỗi bước và mỗi vai trò có skill riêng, gọi trong Claude Code hoặc bằng @claude trên GitHub. Một catalog duy nhất giữ mọi thứ đồng bộ.
+  - title: 13 skill, ba lệnh cần nhớ
+    details: Dev gọi /dev-pipeline, PM gọi /sprint, các vai trò khác comment @claude trên GitHub; AI tự chọn đúng skill theo trạng thái issue. Một catalog duy nhất giữ mọi thứ đồng bộ.
   - title: Label là nguồn sự thật
     details: Mỗi issue đúng một label status:*. Nhìn label là biết việc đang ở đâu, ai đang xử lý, và bước tự động nào sẽ chạy tiếp.
   - title: Test trước, code sau
@@ -44,14 +44,14 @@ features:
 
 | Bạn là | Đọc trước | Skill chính |
 |---|---|---|
-| PO | [Hướng dẫn PO](/roles/po), [Viết AC](/writing-acceptance-criteria) | `github-issue-create`, `uat-run` |
-| BA | [Hướng dẫn BA](/roles/ba) | `feature-analysis`, `github-issue-create` |
-| PM | [Hướng dẫn PM](/roles/pm), [RACI](/raci) | `status-report`, `release-plan` |
-| Designer | [Hướng dẫn Designer](/roles/designer) | `design-review` |
-| Developer | [Hướng dẫn Dev](/roles/dev) | `github-issue-implement`, `qa-failed-fix` |
-| Tech Lead | [Hướng dẫn Tech Lead](/roles/tech-lead), [Cài đặt](/setup-guide) | `plan-approval`, `merge-readiness`, `hotfix` |
-| QA | [Hướng dẫn QA](/roles/qa) | `plan-approval`, `qa-manual-session` |
-| AI Enablement | [Hướng dẫn AI Enablement](/roles/ai-enablement) | `sprint-retro`, `sprint0-setup` |
-| Security | [Hướng dẫn Security](/roles/security) | `sprint0-setup` |
+| PO | [Hướng dẫn PO](/roles/po), [Viết AC](/writing-acceptance-criteria) | `issue-create`, `uat --run` |
+| BA | [Hướng dẫn BA](/roles/ba) | `refine`, `issue-create` |
+| PM | [Hướng dẫn PM](/roles/pm), [RACI](/raci) | `sprint report`, `sprint release` |
+| Designer | [Hướng dẫn Designer](/roles/designer) | `pr-review --design` |
+| Developer | [Hướng dẫn Dev](/roles/dev) | `implement`, `implement --fix` |
+| Tech Lead | [Hướng dẫn Tech Lead](/roles/tech-lead), [Cài đặt](/setup-guide) | `test-design --approve`, `merge-gate --merge`, `hotfix` |
+| QA | [Hướng dẫn QA](/roles/qa) | `test-design --approve`, `qa --manual` |
+| AI Enablement | [Hướng dẫn AI Enablement](/roles/ai-enablement) | `sprint retro`, `install.sh --check` |
+| Security | [Hướng dẫn Security](/roles/security) | `merge-gate`, `install.sh --check` |
 
 Mọi vai trò đều dùng được `dev-pipeline` để xem việc của mình hôm nay.

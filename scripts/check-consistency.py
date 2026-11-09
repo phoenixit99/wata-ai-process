@@ -70,8 +70,8 @@ for s in cat["skills"]:
 # 4. Label kích hoạt trong catalog khớp route của wata-agent.
 agent = read("template/.github/workflows/wata-agent.yml")
 route = set(re.findall(r'((?:status|type):[a-z0-9-]+)\)\s+skill="([a-z0-9-]+)"', agent))
-if "status:in-progress)" in agent and 'skill="github-issue-implement"' in agent:
-    route.add(("status:in-progress", "github-issue-implement"))
+if "status:in-progress)" in agent and 'skill="implement"' in agent:
+    route.add(("status:in-progress", "implement"))
 expected = {(lbl, s["name"]) for s in cat["skills"] for lbl in s["triggers"]}
 for pair in sorted(expected - route):
     err(f"catalog: {pair[1]} kích hoạt bởi {pair[0]} nhưng wata-agent không định tuyến")
@@ -133,7 +133,21 @@ for p in sorted(vi_pages - en_pages):
 for p in sorted(en_pages - vi_pages):
     err(f"docs/en/{p} không có bản tiếng Việt docs/{p}")
 
-# 10. Phần sinh tự động không bị sửa tay / chưa được sinh lại.
+# 10. Tên skill đã bỏ (catalog "retired") không còn xuất hiện ngoài CHANGELOG và catalog.
+retired = cat.get("retired", {})
+for p in list((ROOT / "skills").rglob("*.md")) + list((ROOT / "template").rglob("*")) + list((ROOT / "docs").rglob("*.md")) \
+        + [ROOT / "README.md"] + list((ROOT / "scripts").glob("*")):
+    if not p.is_file() or "node_modules" in p.parts or ".vitepress" in p.parts:
+        continue
+    text = p.read_text(encoding="utf-8", errors="ignore")
+    for old in retired:
+        if re.search(r"(?<![\w-])" + re.escape(old) + r"(?![\w-])", text):
+            err(f"{p.relative_to(ROOT)}: còn tên skill đã bỏ '{old}' (dùng '{retired[old]}')")
+for old in retired:
+    if (ROOT / "skills" / old).exists():
+        err(f"skills/{old}/ vẫn còn dù '{old}' đã bỏ")
+
+# 11. Phần sinh tự động không bị sửa tay / chưa được sinh lại.
 spec = importlib.util.spec_from_file_location("sync_skills", ROOT / "scripts/sync-skills.py")
 sync = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(sync)

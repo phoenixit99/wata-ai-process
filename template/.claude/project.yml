@@ -1,7 +1,7 @@
 # Cấu hình project cho bộ quy trình WATA AI Agent.
 # Schema đầy đủ: docs/agents/contract.md mục 9. Tech Lead và PM điền trước khi bật agent.
 
-process_version: "1.4.2"
+process_version: "1.5.0"
 language: vi
 tracker: github
 repo: <owner>/<repo>

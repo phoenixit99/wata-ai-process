@@ -12,8 +12,8 @@ UAT). Việc của bạn là giữ luồng chảy: ưu tiên, gỡ kẹt, báo c
 | **SLA hàng chờ** | Chốt `sla_hours` với team. Workflow `wata-sla-reminder` nhắc người phụ trách mỗi sáng và mention bạn |
 | **Gỡ kẹt** | Mỗi ngày xem `status:needs-human`, `status:blocked`, issue quá SLA. Escalate hoặc phân công |
 | **Thay đổi phạm vi** | AC đổi sau khi đã `ready-to-dev`: yêu cầu cập nhật issue và chuyển về `status:backlog` để triage lại. Đánh giá ảnh hưởng tiến độ |
-| **Báo cáo** | Chạy `/status-report 7` (nội bộ) hoặc `/status-report 7 --client` (gửi khách hàng) |
-| **Release** | Chạy `/release-plan <milestone>`; chốt phạm vi release, điều phối UAT với PO, lịch deploy với Tech Lead |
+| **Báo cáo** | Chạy `/sprint report 7` (nội bộ) hoặc `/sprint report 7 --client` (gửi khách hàng) |
+| **Release** | Chạy `/sprint release <milestone>`; chốt phạm vi release, điều phối UAT với PO, lịch deploy với Tech Lead |
 | **Chi phí AI** | Theo dõi chi phí token theo project; đặt `limits.max_turns_per_run` và ngân sách tháng (đề xuất, team chốt) |
 | **Áp dụng quy trình** | Cùng Tech Lead hoàn thành checklist ở `../setup-guide.md`; ghi số liệu nền trước pilot |
 
@@ -40,11 +40,11 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 
 | Sự kiện | Việc của bạn |
 |---|---|
-| Sprint 0 | Label, board, CI, quyền truy cập, số liệu nền (`sprint0-setup`) |
-| Planning | Tính năng lực theo review/QA, chốt phạm vi (`sprint-planning`) |
-| Daily | Bảng việc bị chặn và hàng chờ (`daily-scrum`) |
-| Review | Tài liệu demo cùng PO (`sprint-review`) |
-| Retro | Điều phối, theo dõi hành động cải tiến (`sprint-retro`) |
+| Sprint 0 | Label, board, CI, quyền truy cập, số liệu nền (`install.sh --check`) |
+| Planning | Tính năng lực theo review/QA, chốt phạm vi (`sprint plan`) |
+| Daily | Bảng việc bị chặn và hàng chờ (`sprint daily`) |
+| Review | Tài liệu demo cùng PO (`sprint review`) |
+| Retro | Điều phối, theo dõi hành động cải tiến (`sprint retro`) |
 
 <!-- role-skills:start -->
 ## Skill của bạn
@@ -54,11 +54,5 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
-| `sprint0-setup` | Kiểm tra checklist Sprint 0 của dự án | `/sprint0-setup <#>` | `@claude đọc .claude/skills/sprint0-setup/SKILL.md và làm theo cho issue #<số>` |
-| `sprint-planning` | Đề xuất phạm vi sprint theo năng lực review/QA | `/sprint-planning <#>` | `@claude đọc .claude/skills/sprint-planning/SKILL.md và làm theo cho issue #<số>` |
-| `status-report` | Báo cáo tiến độ và chỉ số cho PM | `/status-report <#>` | `@claude đọc .claude/skills/status-report/SKILL.md và làm theo cho issue #<số>` |
-| `release-plan` | Kế hoạch release cho PM | `/release-plan <#>` | `@claude đọc .claude/skills/release-plan/SKILL.md và làm theo cho issue #<số>` |
-| `daily-scrum` | Bảng việc bị chặn và hàng chờ cho Daily Scrum | `/daily-scrum <#>` | `@claude đọc .claude/skills/daily-scrum/SKILL.md và làm theo cho issue #<số>` |
-| `sprint-review` | Tài liệu demo sprint, phản hồi thành story mới | `/sprint-review <#>` | `@claude đọc .claude/skills/sprint-review/SKILL.md và làm theo cho issue #<số>` |
-| `sprint-retro` | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | `/sprint-retro <#>` | `@claude đọc .claude/skills/sprint-retro/SKILL.md và làm theo cho issue #<số>` |
+| `sprint` | Sự kiện Scrum: `plan`, `daily`, `review`, `retro`, `report`, `release` | `/sprint plan|daily|review|retro|report|release` | `@claude đọc .claude/skills/sprint/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

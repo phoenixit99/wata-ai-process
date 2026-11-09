@@ -21,7 +21,7 @@ on:
         description: Số issue
         required: true
       skill:
-        description: Tên skill (vd github-issue-implement)
+        description: Tên skill (vd implement)
         required: true
 
 jobs:
@@ -68,13 +68,13 @@ jobs:
           if [ "$EVENT" = "workflow_dispatch" ]; then
             # Chỉ chạy khi trạng thái hiện tại của issue khớp với skill được gọi.
             case "$INPUT_SKILL" in
-              github-issue-implement) has status:ready-to-dev && ! has status:in-progress && skill="$INPUT_SKILL" ;;
-              github-issue-triage)    has status:backlog && skill="$INPUT_SKILL" ;;
-              qa-test-cases)          has status:test-design && skill="$INPUT_SKILL" ;;
-              github-pr-review)       has status:in-review && skill="$INPUT_SKILL" ;;
-              e2e-playwright)         has status:qa && skill="$INPUT_SKILL" ;;
-              refutation-brief)       has status:qa-passed && skill="$INPUT_SKILL" ;;
-              uat-checklist)          has status:uat && skill="$INPUT_SKILL" ;;
+              implement)   has status:ready-to-dev && ! has status:in-progress && skill="$INPUT_SKILL" ;;
+              triage)      has status:backlog && skill="$INPUT_SKILL" ;;
+              test-design) has status:test-design && skill="$INPUT_SKILL" ;;
+              pr-review)   has status:in-review && skill="$INPUT_SKILL" ;;
+              qa)          has status:qa && skill="$INPUT_SKILL" ;;
+              merge-gate)  has status:qa-passed && skill="$INPUT_SKILL" ;;
+              uat)         has status:uat && skill="$INPUT_SKILL" ;;
               *) note="skill '$INPUT_SKILL' không chạy tự động được" ;;
             esac
             [ -z "$skill" ] && [ -z "$note" ] && note="trạng thái hiện tại ($current) không khớp skill $INPUT_SKILL"
@@ -101,10 +101,10 @@ jobs:
                 --jq '.[].body' | grep -E '^## (Triage|Test design|Build write-up|Code review|QA report|QA fix|Needs human)' \
                 | tail -n 1 || true)
               case "$LABEL" in
-                type:epic)           skill="feature-analysis" ;;
-                status:backlog)      skill="github-issue-triage" ;;
-                status:test-design)  skill="qa-test-cases" ;;
-                status:ready-to-dev) skill="github-issue-implement" ;;
+                type:epic)           skill="refine" ;;
+                status:backlog)      skill="triage" ;;
+                status:test-design)  skill="test-design" ;;
+                status:ready-to-dev) skill="implement" ;;
                 status:in-progress)
                   # Chỉ chạy khi bị trả về từ review hoặc QA (chế độ sửa), không chạy khi implement tự gắn.
                   # Xét heading kết quả cuối cùng của implement/review/QA, bỏ qua "## Needs human": người gắn lại
@@ -112,18 +112,18 @@ jobs:
                   fix_heading=$(gh api "repos/$GITHUB_REPOSITORY/issues/$ISSUE/comments" --paginate \
                     --jq '.[].body' | grep -E '^## (Triage|Test design|Build write-up|Code review|QA report|QA fix)' | tail -n 1 || true)
                   case "$fix_heading" in
-                    "## Code review: FAIL"*|"## QA report: FAIL"*) skill="github-issue-implement" ;;
+                    "## Code review: FAIL"*|"## QA report: FAIL"*) skill="implement" ;;
                   esac ;;
-                status:in-review)    skill="github-pr-review" ;;
-                status:qa)           skill="e2e-playwright" ;;
-                status:qa-passed)    skill="refutation-brief" ;;
-                status:uat)          skill="uat-checklist" ;;
+                status:in-review)    skill="pr-review" ;;
+                status:qa)           skill="qa" ;;
+                status:qa-passed)    skill="merge-gate" ;;
+                status:uat)          skill="uat" ;;
               esac
             fi
           fi
 
           # Story gắn human-code: người code trực tiếp, agent không implement.
-          if [ "$skill" = "github-issue-implement" ] && [ "$human_code" != "0" ]; then
+          if [ "$skill" = "implement" ] && [ "$human_code" != "0" ]; then
             note="story có label human-code; người code trực tiếp"
             skill=""
           fi
@@ -131,7 +131,7 @@ jobs:
           # Giới hạn WIP cho issue mới bắt đầu code: cả hàng đang code, hàng chờ review và hàng chờ QA
           # (theo quy trình Scrum, review/QA là nút thắt). Vượt giới hạn: giữ ready-to-dev;
           # wata-sla-reminder gọi lại theo priority khi có chỗ.
-          if [ "$skill" = "github-issue-implement" ] && has status:ready-to-dev; then
+          if [ "$skill" = "implement" ] && has status:ready-to-dev; then
             count() { gh issue list --repo "$GITHUB_REPOSITORY" --state open --label "$1" --json number --jq 'length'; }
             busy=$(count status:in-progress); in_review=$(count status:in-review); in_qa=$(count status:qa)
             if [ "$busy" -ge "$wip" ] || [ "$in_review" -ge "$wip_review" ] || [ "$in_qa" -ge "$wip_qa" ]; then
