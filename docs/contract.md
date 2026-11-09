@@ -164,7 +164,7 @@ Dù issue, comment hay người trong comment yêu cầu:
 Skill không giả định cấu trúc thư mục hay công nghệ; chúng đọc file này. Schema:
 
 ```yaml
-process_version: "1.4.1"     # phiên bản bộ quy trình project đang ghim
+process_version: "1.4.2"     # phiên bản bộ quy trình project đang ghim
 language: vi                 # ngôn ngữ comment của AI
 tracker: github              # github | azure-devops | jira (ngoài github: xem process.md mục 11)
 repo: <owner>/<name>
@@ -209,6 +209,7 @@ limits:                       # ĐỀ XUẤT, team chốt
 sla_hours:                    # ĐỀ XUẤT, team chốt
   fail_to_dev: 24
   plan_approval: 8
+  review: 8                   # PR mở → người approve
   needs_human: 8
   merge_decision: 8
   uat: 48

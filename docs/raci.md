@@ -19,6 +19,7 @@ SLA là **đề xuất**; team chốt trong `.claude/project.yml` → `sla_hours
 | `status:qa` → QA | R (auto) | — | — | I | — | — | — | R/A (manual, mobile: `qa-manual-session`) | 24 giờ cho manual |
 | `status:qa-failed` | — | I | — | I | — | R | A | C | 8 giờ |
 | `status:needs-human` | — | C (sản phẩm) | C | A (escalate) | C | R | R | — | 8 giờ |
+| PR chờ người duyệt (CODEOWNERS; đo trên PR, không phải status) | R (review vòng 1) | — | — | I | C (UI) | R | A/R | — | 8 giờ (`review`) |
 | **G3**: refutation | R (brief) | — | — | — | — | — | A/R | — | 8 giờ (gộp G4) |
 | **G4**: merge | R (kiểm tra) | — | — | I | — | — | A/R | — | 8 giờ (gộp G3) |
 | `status:uat`, **G5** (`uat-run`) | R (checklist) | A/R | C | I | C | — | — | C | 48 giờ |

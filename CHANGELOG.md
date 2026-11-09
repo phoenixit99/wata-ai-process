@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.2 — 2026-11-09
+
+- **Không còn issue nằm im ở trạng thái của AI.** `wata-agent` thêm bước chạy sau mọi lần chạy skill: nếu skill
+  thất bại (lỗi API, hết `--max-turns`, quá thời gian, token App lỗi) hoặc chạy xong mà không đăng kết quả nào
+  lên issue, workflow đăng `## Needs human` kèm link log và chuyển issue sang `status:needs-human`. Step skill có
+  timeout riêng 80 phút (job 90 phút) để treo cũng được báo.
+- **Sửa lỗi:** gắn lại `status:in-progress` sau `## Needs human` không chạy lại được chế độ sửa (router đọc
+  `## Needs human` là heading cuối). Router giờ bỏ qua `## Needs human` khi quyết định chế độ sửa.
+- **SLA cho review của người.** Thêm `sla_hours.review` (đề xuất 8 giờ); `wata-sla-reminder` nhắc trên PR mở
+  chưa có approve quá SLA (người được yêu cầu review, không có thì Tech Lead; báo PM). Đo trên PR vì review
+  của người không phải một `status:*`. Project đang chạy: thêm khoá `review` vào `project.yml` để bật (không có
+  khoá thì không nhắc).
+
 ## 1.4.1 — 2026-11-09
 
 - Vai trò AI Enablement ở mỗi project do **Tech Lead và PO cùng kiêm nhiệm**: Tech Lead phía kỹ thuật (skill,

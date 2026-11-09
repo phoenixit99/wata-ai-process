@@ -19,6 +19,7 @@ SLAs are **proposals**; the team sets them in `.claude/project.yml` → `sla_hou
 | `status:qa` → QA | R (auto) | — | — | I | — | — | — | R/A (manual, mobile: `qa-manual-session`) | 24 hours for manual |
 | `status:qa-failed` | — | I | — | I | — | R | A | C | 8 hours |
 | `status:needs-human` | — | C (product) | C | A (escalate) | C | R | R | — | 8 hours |
+| PR waiting for human approval (CODEOWNERS; measured on the PR, not a status) | R (round-1 review) | — | — | I | C (UI) | R | A/R | — | 8 hours (`review`) |
 | **G3**: refutation | R (brief) | — | — | — | — | — | A/R | — | 8 hours (with G4) |
 | **G4**: merge | R (checks) | — | — | I | — | — | A/R | — | 8 hours (with G3) |
 | `status:uat`, **G5** (`uat-run`) | R (checklist) | A/R | C | I | C | — | — | C | 48 hours |
