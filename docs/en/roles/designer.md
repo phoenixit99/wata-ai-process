@@ -1,0 +1,29 @@
+# Guide for the Designer
+
+## Your work in the process
+
+| When | You do | Done when |
+|---|---|---|
+| An issue changes UI | Provide a **link to the specific Figma frame** (not the whole file) in the Design section | The link opens the right frame |
+| Designing | Cover every state: default, loading, error, empty, long text, different permissions | The AI does not have to guess |
+| The AI asks about the design | Answer in the issue or PR comments | — |
+| **Reviewing the UI** | Run `/design-review <number>` (or comment `@claude`): it compares staging or the write-up screenshots with Figma and lists deviations; you decide what must be fixed | `## Design review: OK` or `## Design review: CHANGES` |
+| A large feature | Take part in Step 0 when `## Feature analysis` says design work is needed | Frames exist before child issues are created |
+
+## Helping the AI build the design faithfully
+
+- Use the design system's components and tokens (colour, spacing, typography); the AI maps to the tokens
+  already in the code. Values off-token are rounded to the nearest token and noted for you to confirm.
+- Name layers meaningfully; use auto-layout.
+- Give the team's Figma MCP account view access to the file.
+
+<!-- role-skills:start -->
+## Your skills
+
+Generated from `skills/catalog.json`. In Claude Code use the command in column 3; on GitHub, comment the sentence in column 4 (works even if skills are not preloaded).
+
+| Skill | Purpose | Claude Code | GitHub |
+|---|---|---|---|
+| `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
+| `design-review` | Designer compares built UI with Figma | `/design-review <#>` | `@claude read .claude/skills/design-review/SKILL.md and follow it for issue #<number>` |
+<!-- role-skills:end -->

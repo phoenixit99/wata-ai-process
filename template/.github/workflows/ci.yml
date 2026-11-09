@@ -1,0 +1,57 @@
+# CI mẫu: lint, typecheck, test, build cho từng app. Đặt các job này là "required checks"
+# trong branch protection của main. TODO(project): chỉnh theo toolchain thật của project.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  node-apps:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [web, admin, api]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter ${{ matrix.app }} lint
+      - run: pnpm --filter ${{ matrix.app }} typecheck
+      - run: pnpm --filter ${{ matrix.app }} test
+      - run: pnpm --filter ${{ matrix.app }} build
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: node-apps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter e2e exec playwright install --with-deps
+      # TODO(project): khởi động api/web/admin với dữ liệu test trước khi chạy e2e.
+      - run: pnpm --filter e2e test

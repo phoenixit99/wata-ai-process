@@ -1,0 +1,41 @@
+# Cho PO, BA, PM, QA nhờ AI ngay trên GitHub: comment "@claude <yêu cầu>" trong issue hoặc PR.
+# Ví dụ: "@claude soạn lại issue này theo mẫu", "@claude giải thích PR này cho PO".
+# Chỉ thành viên/collaborator mới gọi được. AI vẫn tuân theo docs/agents/contract.md.
+name: wata-mention
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  claude:
+    if: >-
+      contains(github.event.comment.body, '@claude') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+      id-token: write
+    steps:
+      - id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.WATA_APP_ID }}
+          private-key: ${{ secrets.WATA_APP_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+      # Không truyền prompt: action chạy ở chế độ trả lời mention.
+      # Chưa kiểm chứng: action có tự nạp .claude/skills ở chế độ này không (tài liệu không nói).
+      # Vì vậy trang vai trò hướng dẫn câu gọi dự phòng: "@claude đọc .claude/skills/<skill>/SKILL.md và làm theo".
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ steps.app-token.outputs.token }}
+          claude_args: "--max-turns 30"

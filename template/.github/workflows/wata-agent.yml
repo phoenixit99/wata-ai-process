@@ -1,0 +1,177 @@
+# Chạy đúng một skill, trong một session mới, mỗi khi issue nhận label status:* có skill tương ứng.
+#
+# QUAN TRỌNG: agent phải đổi label bằng token của GitHub App (WATA_APP_ID / WATA_APP_PRIVATE_KEY).
+# Sự kiện tạo bằng GITHUB_TOKEN không kích hoạt workflow mới, nên bước sau sẽ không bao giờ chạy.
+# Xem docs/setup-guide.md mục 3 của repo quy trình.
+#
+# Hai job:
+#   route — không có concurrency; quyết định có chạy skill nào không. Mọi label khác (priority:*,
+#           risk:*, round:*) dừng ở đây nên không chiếm chỗ trong hàng đợi của issue.
+#   run   — concurrency theo issue; chỉ chạy khi route chọn được skill.
+# (GitHub giữ tối đa một lần chạy chờ trong một concurrency group; lần chạy chờ mới thay thế lần cũ.
+#  Vì vậy chỉ job thật sự chạy skill mới được vào group.)
+name: wata-agent
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: Số issue
+        required: true
+      skill:
+        description: Tên skill (vd github-issue-implement)
+        required: true
+
+jobs:
+  route:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+    outputs:
+      skill: ${{ steps.route.outputs.skill }}
+      issue: ${{ steps.route.outputs.issue }}
+      max_turns: ${{ steps.route.outputs.max_turns }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Route label to skill
+        id: route
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          LABEL: ${{ github.event.label.name }}
+          SENDER_TYPE: ${{ github.event.sender.type }}
+          AUTHOR_ASSOC: ${{ github.event.issue.author_association }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+          INPUT_SKILL: ${{ inputs.skill }}
+        run: |
+          set -euo pipefail
+          skill=""
+          last_heading=""
+          note=""
+
+          # yq có sẵn trên runner ubuntu-latest của GitHub (chưa kiểm chứng trên runner tự host).
+          wip=$(yq '.limits.wip_in_progress // 3' .claude/project.yml)
+          max_turns=$(yq '.limits.max_turns_per_run // 60' .claude/project.yml)
+          current=$(gh issue view "$ISSUE" --repo "$GITHUB_REPOSITORY" --json labels \
+            --jq '[.labels[].name | select(startswith("status:"))] | join(",")')
+          # Guard chạy song song và có thể chưa gỡ xong label cũ, nên kiểm "có chứa", không kiểm "bằng".
+          has() { case ",$current," in *",$1,"*) return 0 ;; *) return 1 ;; esac; }
+
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            # Chỉ chạy khi trạng thái hiện tại của issue khớp với skill được gọi.
+            case "$INPUT_SKILL" in
+              github-issue-implement) has status:ready-to-dev && ! has status:in-progress && skill="$INPUT_SKILL" ;;
+              github-issue-triage)    has status:backlog && skill="$INPUT_SKILL" ;;
+              qa-test-cases)          has status:test-design && skill="$INPUT_SKILL" ;;
+              github-pr-review)       has status:in-review && skill="$INPUT_SKILL" ;;
+              e2e-playwright)         has status:qa && skill="$INPUT_SKILL" ;;
+              refutation-brief)       has status:qa-passed && skill="$INPUT_SKILL" ;;
+              uat-checklist)          has status:uat && skill="$INPUT_SKILL" ;;
+              *) note="skill '$INPUT_SKILL' không chạy tự động được" ;;
+            esac
+            [ -z "$skill" ] && [ -z "$note" ] && note="trạng thái hiện tại ($current) không khớp skill $INPUT_SKILL"
+          else
+            # Chỉ người trong tổ chức mới kích hoạt được agent (repo public: người ngoài tạo issue được).
+            case "$AUTHOR_ASSOC" in
+              OWNER|MEMBER|COLLABORATOR) ;;
+              *) note="tác giả issue ($AUTHOR_ASSOC) không phải thành viên; không chạy agent" ;;
+            esac
+
+            # Cổng con người: bot gắn label cổng thì không chạy (guard sẽ gỡ label).
+            case "$LABEL" in
+              status:ready-to-dev|status:uat-failed|status:done)
+                [ "$SENDER_TYPE" = "Bot" ] && note="bot gắn label cổng con người $LABEL; không chạy" ;;
+            esac
+
+            # Label của sự kiện không còn là trạng thái hiện tại (đã bị guard hoặc người đổi) thì bỏ qua.
+            case "$LABEL" in
+              status:*) has "$LABEL" || note="${note:-label $LABEL không còn là trạng thái hiện tại ($current)}" ;;
+            esac
+
+            if [ -z "$note" ]; then
+              last_heading=$(gh api "repos/$GITHUB_REPOSITORY/issues/$ISSUE/comments" --paginate \
+                --jq '.[].body' | grep -E '^## (Triage|Test design|Build write-up|Code review|QA report|QA fix|Needs human)' \
+                | tail -n 1 || true)
+              case "$LABEL" in
+                type:epic)           skill="feature-analysis" ;;
+                status:backlog)      skill="github-issue-triage" ;;
+                status:test-design)  skill="qa-test-cases" ;;
+                status:ready-to-dev) skill="github-issue-implement" ;;
+                status:in-progress)
+                  # Chỉ chạy khi bị trả về từ review hoặc QA (chế độ sửa), không chạy khi implement tự gắn.
+                  case "$last_heading" in
+                    "## Code review: FAIL"*|"## QA report: FAIL"*) skill="github-issue-implement" ;;
+                  esac ;;
+                status:in-review)    skill="github-pr-review" ;;
+                status:qa)           skill="e2e-playwright" ;;
+                status:qa-passed)    skill="refutation-brief" ;;
+                status:uat)          skill="uat-checklist" ;;
+              esac
+            fi
+          fi
+
+          # Giới hạn WIP cho issue mới bắt đầu code. Vượt giới hạn: giữ ready-to-dev;
+          # wata-sla-reminder gọi lại theo priority khi có chỗ.
+          if [ "$skill" = "github-issue-implement" ] && has status:ready-to-dev; then
+            busy=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+              --label status:in-progress --json number --jq 'length')
+            if [ "$busy" -ge "$wip" ]; then
+              note="WIP $busy/$wip đầy; #$ISSUE chờ trong hàng ready-to-dev"
+              skill=""
+            fi
+          fi
+
+          echo "skill=$skill" >> "$GITHUB_OUTPUT"
+          echo "issue=$ISSUE" >> "$GITHUB_OUTPUT"
+          echo "max_turns=$max_turns" >> "$GITHUB_OUTPUT"
+          {
+            echo "Route: event=$EVENT label=${LABEL:-} current=$current last=${last_heading:-}"
+            echo "Skill: ${skill:-<none>} ${note:+($note)}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  run:
+    needs: route
+    if: needs.route.outputs.skill != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    concurrency:
+      group: wata-issue-${{ needs.route.outputs.issue }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.WATA_APP_ID }}
+          private-key: ${{ secrets.WATA_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      # TODO(project): cài toolchain mà skill cần để lint/test/build (Node + pnpm, Flutter, Playwright...).
+      # Ví dụ:
+      # - uses: pnpm/action-setup@v4
+      # - uses: actions/setup-node@v4
+      #   with: { node-version: 22, cache: pnpm }
+      # - run: pnpm install --frozen-lockfile
+
+      - name: Run skill
+        # Input đã đối chiếu với action.yml của anthropics/claude-code-action (prompt, anthropic_api_key,
+        # github_token cho GitHub App riêng, claude_args).
+        uses: anthropics/claude-code-action@v1
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ steps.app-token.outputs.token }}
+          prompt: "/${{ needs.route.outputs.skill }} ${{ needs.route.outputs.issue }} --auto"
+          claude_args: "--max-turns ${{ needs.route.outputs.max_turns }}"

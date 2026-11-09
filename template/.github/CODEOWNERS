@@ -1,0 +1,14 @@
+# Người duyệt bắt buộc (cổng G4). Bật "Require review from Code Owners" trong branch protection.
+# Thay @org/team bằng team hoặc login thật.
+
+*                         @<org>/<project>-tech-leads
+/apps/api/                @<org>/<project>-backend
+/apps/web/ /apps/admin/   @<org>/<project>-frontend
+/apps/mobile/             @<org>/<project>-mobile
+/packages/shared/         @<org>/<project>-tech-leads
+
+# Quy trình và guardrail: chỉ Tech Lead được duyệt thay đổi
+/.github/                 @<org>/<project>-tech-leads
+/.claude/                 @<org>/<project>-tech-leads
+/docs/agents/             @<org>/<project>-tech-leads
+/CLAUDE.md                @<org>/<project>-tech-leads

@@ -1,0 +1,79 @@
+# Cấu hình project cho bộ quy trình WATA AI Agent.
+# Schema đầy đủ: docs/agents/contract.md mục 9. Tech Lead và PM điền trước khi bật agent.
+
+process_version: "1.3.0"
+language: vi
+tracker: github
+repo: <owner>/<repo>
+default_branch: main
+
+apps:
+  - name: web
+    path: apps/web
+    stack: nextjs
+    standard: docs/coding-standards/nextjs.md
+    commands:
+      lint: "pnpm --filter web lint"
+      typecheck: "pnpm --filter web typecheck"
+      test: "pnpm --filter web test"
+      build: "pnpm --filter web build"
+  - name: admin
+    path: apps/admin
+    stack: nextjs
+    standard: docs/coding-standards/nextjs.md
+    commands:
+      lint: "pnpm --filter admin lint"
+      typecheck: "pnpm --filter admin typecheck"
+      test: "pnpm --filter admin test"
+      build: "pnpm --filter admin build"
+  - name: api
+    path: apps/api
+    stack: nestjs
+    standard: docs/coding-standards/nestjs.md
+    commands:
+      lint: "pnpm --filter api lint"
+      typecheck: "pnpm --filter api typecheck"
+      test: "pnpm --filter api test"
+      build: "pnpm --filter api build"
+  - name: mobile
+    path: apps/mobile
+    stack: flutter
+    standard: docs/coding-standards/flutter.md
+    commands:
+      lint: "cd apps/mobile && flutter analyze"
+      typecheck: "cd apps/mobile && flutter analyze"
+      test: "cd apps/mobile && flutter test"
+      build: "cd apps/mobile && flutter build apk --debug"
+
+shared_contract: packages/shared
+e2e:
+  path: e2e
+  command: "pnpm --filter e2e test"
+mobile:
+  supported_app_versions: 2
+
+people:            # GitHub login, không có @
+  po: []
+  ba: []
+  pm: []
+  tech_lead: []
+  qa: []
+  designer: []
+
+limits:            # ĐỀ XUẤT — team chốt trước pilot
+  max_fix_rounds: 3
+  wip_in_progress: 3
+  max_turns_per_run: 60
+
+sla_hours:         # ĐỀ XUẤT — team chốt trước pilot (giờ làm việc)
+  fail_to_dev: 24
+  plan_approval: 8
+  needs_human: 8
+  merge_decision: 8
+  uat: 48
+
+high_risk_paths:
+  - "**/auth/**"
+  - "**/payment*/**"
+  - "**/migrations/**"
+  - "packages/shared/**"

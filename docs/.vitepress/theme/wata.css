@@ -1,0 +1,83 @@
+/* Màu theo tài liệu PDF "Quy trình phát triển dự án sử dụng AI Agent" của WATA Software:
+   đỏ đậm cho tiêu đề và đầu bảng, đỏ logo cho nhấn, hồng rất nhạt cho dòng bảng xen kẽ. */
+:root {
+  --wata-red-900: #7a1418;
+  --wata-red-700: #9e1b20;   /* tiêu đề, đầu bảng, thanh chân trang trong PDF */
+  --wata-red-500: #c8242b;
+  --wata-red-400: #e31e2d;   /* đỏ logo */
+  --wata-rose-50: #fbf0f0;   /* dòng bảng xen kẽ */
+  --wata-rose-100: #f6dede;
+
+  --vp-c-brand-1: var(--wata-red-700);
+  --vp-c-brand-2: var(--wata-red-500);
+  --vp-c-brand-3: var(--wata-red-400);
+  --vp-c-brand-soft: rgba(227, 30, 45, 0.12);
+
+  --vp-home-hero-name-color: var(--wata-red-700);
+  --vp-button-brand-bg: var(--wata-red-700);
+  --vp-button-brand-hover-bg: var(--wata-red-500);
+  --vp-button-brand-active-bg: var(--wata-red-900);
+
+  --vp-custom-block-tip-border: var(--wata-red-400);
+  --vp-custom-block-tip-bg: var(--wata-rose-50);
+}
+
+.dark {
+  --vp-c-brand-1: #f2707a;
+  --vp-c-brand-2: #e8505b;
+  --vp-c-brand-3: #e31e2d;
+  --vp-c-brand-soft: rgba(242, 112, 122, 0.16);
+  --vp-home-hero-name-color: #f2707a;
+  --vp-button-brand-bg: #b5232a;
+  --vp-button-brand-hover-bg: #c8242b;
+  --wata-rose-50: rgba(227, 30, 45, 0.07);
+  --vp-custom-block-tip-bg: rgba(227, 30, 45, 0.08);
+}
+
+/* Tiêu đề đỏ đậm như PDF */
+.vp-doc h1,
+.vp-doc h2 {
+  color: var(--vp-c-brand-1);
+}
+.vp-doc h2 {
+  border-top: 0;
+  border-bottom: 1px solid var(--vp-c-brand-soft);
+  padding-bottom: 8px;
+}
+
+/* Bảng: đầu bảng đỏ đậm chữ trắng, dòng xen kẽ hồng nhạt */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+.vp-doc th {
+  background: var(--wata-red-700);
+  color: #fff;
+  border-color: var(--wata-red-700);
+  text-align: left;
+}
+.dark .vp-doc th {
+  background: #8a1a1f;
+  border-color: #8a1a1f;
+}
+.vp-doc tr:nth-child(2n) {
+  background: var(--wata-rose-50);
+}
+.vp-doc th code {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Bảng rộng cuộn ngang trên điện thoại */
+@media (max-width: 768px) {
+  .vp-doc table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Thanh chân trang đỏ như PDF */
+.VPFooter {
+  border-top: 3px solid var(--wata-red-700) !important;
+}

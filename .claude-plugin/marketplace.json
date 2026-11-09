@@ -1,0 +1,13 @@
+{
+  "name": "wata-internal",
+  "owner": {
+    "name": "WATA Software"
+  },
+  "plugins": [
+    {
+      "name": "wata",
+      "source": "./",
+      "description": "Quy trình phát triển dự án sử dụng AI Agent của WATA Software."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+# CI của repo quy trình: skill/catalog/tài liệu phải đồng bộ, script cài đặt chạy được, site build được.
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Skills, catalog, contract, bilingual docs in sync
+        run: python3 -I scripts/check-consistency.py
+      - name: Shell syntax
+        run: bash -n scripts/install.sh && bash -n scripts/setup-labels.sh
+      - name: Install into an empty repo
+        run: |
+          T="$RUNNER_TEMP/project" && mkdir -p "$T" && git -C "$T" init -q
+          scripts/install.sh "$T"
+          for p in $(grep -rhoE 'docs/agents/[A-Za-z/._-]+\.md' "$T/.claude/skills" | sort -u); do
+            test -f "$T/$p" || { echo "missing $p"; exit 1; }
+          done
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run docs:build
