@@ -7,12 +7,12 @@ AI viết phần lớn code. Bạn duyệt plan, xử lý ca khó, gỡ kẹt ch
 | Khi | Bạn làm | Lệnh |
 |---|---|---|
 | Bắt đầu ngày | Xem việc nên làm | `/dev-pipeline` |
-| **Cổng G2** (khi được giao) | Đọc `## Test design: PASS`: plan, phạm vi ảnh hưởng, những gì không làm. Dùng `plan-approval` ghi phán quyết; khi QA cũng đồng ý, một người gắn `status:ready-to-dev` | `/plan-approval <số>` |
+| **Cổng G2** (khi được giao) | Đọc `## Test design: PASS`: plan, phạm vi ảnh hưởng, những gì không làm. Dùng `test-design --approve` ghi phán quyết; khi QA cũng đồng ý, một người gắn `status:ready-to-dev` | `/test-design --approve <số>` |
 | `status:needs-human` | Đọc `## Needs human`, quyết định, ghi phán quyết, chuyển lại trạng thái phù hợp | GitHub / Claude Code |
-| `status:qa-failed`, `status:uat-failed` | Sửa đúng lỗi đã nêu | `/qa-failed-fix <số>` |
-| Ca phức tạp | Chạy tương tác thay vì tự động | `/github-issue-implement <số>` |
+| `status:qa-failed`, `status:uat-failed` | Sửa đúng lỗi đã nêu | `/implement --fix <số>` |
+| Ca phức tạp | Chạy tương tác thay vì tự động | `/implement <số>` |
 | Tự code | Nhận issue, code như bình thường; vẫn đi qua `in-review` → `qa` → G3/G4 → UAT | — |
-| Review bằng AI cho PR của mình | Chạy trong **session mới** | `/github-pr-review <số>` |
+| Review bằng AI cho PR của mình | Chạy trong **session mới** | `/pr-review <số>` |
 
 ## Chạy tương tác
 
@@ -46,10 +46,8 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
-| `plan-approval` | Hỗ trợ người duyệt ký cổng G2 | `/plan-approval <#>` | `@claude đọc .claude/skills/plan-approval/SKILL.md và làm theo cho issue #<số>` |
-| `github-issue-implement` | Code theo plan đã duyệt, mở PR | `/github-issue-implement <#>` | `@claude đọc .claude/skills/github-issue-implement/SKILL.md và làm theo cho issue #<số>` |
-| `figma-to-code` | Chuyển frame Figma thành UI, đối chiếu | `/figma-to-code <#>` | `@claude đọc .claude/skills/figma-to-code/SKILL.md và làm theo cho issue #<số>` |
-| `github-pr-review` | Review PR ở session riêng, hai lượt | `/github-pr-review <#>` | `@claude đọc .claude/skills/github-pr-review/SKILL.md và làm theo cho issue #<số>` |
-| `qa-failed-fix` | Dev sửa lỗi sau QA hoặc UAT | `/qa-failed-fix <#>` | `@claude đọc .claude/skills/qa-failed-fix/SKILL.md và làm theo cho issue #<số>` |
+| `test-design` | Test case và plan trước khi code (mặc định); hỗ trợ người ký G2 (`--approve`) | `/test-design <#> --approve` | `@claude đọc .claude/skills/test-design/SKILL.md và làm theo chế độ --approve cho issue #<số>` |
+| `implement` | Code theo plan, mở PR (mặc định); sửa sau QA/UAT (`--fix`); frame Figma thành UI (`--figma`) | `/implement <#>  ·  --fix  ·  --figma <link>` | `@claude đọc .claude/skills/implement/SKILL.md và làm theo cho issue #<số>` |
+| `pr-review` | Review PR ở session riêng, hai lượt (mặc định); Designer so UI với Figma (`--design`) | `/pr-review <#>` | `@claude đọc .claude/skills/pr-review/SKILL.md và làm theo cho issue #<số>` |
 | `hotfix` | Sửa khẩn cấp production | `/hotfix <#>` | `@claude đọc .claude/skills/hotfix/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

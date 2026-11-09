@@ -8,7 +8,7 @@ và mỗi khi quyền hoặc dữ liệu thay đổi.
 | Khi | Bạn làm | Bằng chứng |
 |---|---|---|
 | Sprint 0 | Duyệt chính sách dữ liệu: dữ liệu nào được đưa cho AI (không dữ liệu thật của khách vào prompt), điều khoản AI trong hợp đồng | Biên bản duyệt |
-| Sprint 0 | Duyệt quyền của GitHub App (tối thiểu, không bypass branch protection), token MCP (fine-grained, chỉ repo của project), secret | Kết quả `sprint0-setup` mục S8, S10, S13 |
+| Sprint 0 | Duyệt quyền của GitHub App (tối thiểu, không bypass branch protection), token MCP (fine-grained, chỉ repo của project), secret | Kết quả `install.sh --check` mục S8, S10, S13 |
 | Story `risk:high` | Tham vấn ở cổng G2 và G3 cho auth, thanh toán, dữ liệu cá nhân | Comment trên issue |
 | Định kỳ | Kiểm tra ngẫu nhiên PR đã duyệt; rà quyền app và token; xoay vòng secret | Ghi chú rà soát |
 | Sự cố | Thu hồi token/secret, tạm dừng workflow agent, phối hợp hotfix | Issue `type:hotfix` |
@@ -25,7 +25,7 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 
 | Sự kiện | Việc của bạn |
 |---|---|
-| Sprint 0 | Duyệt chính sách dữ liệu, quyền GitHub App, token (`sprint0-setup`) |
+| Sprint 0 | Duyệt chính sách dữ liệu, quyền GitHub App, token (`install.sh --check`) |
 | Trong sprint | Tham vấn story `risk:high` ở G2/G3 |
 
 <!-- role-skills:start -->
@@ -36,5 +36,5 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
-| `sprint0-setup` | Kiểm tra checklist Sprint 0 của dự án | `/sprint0-setup <#>` | `@claude đọc .claude/skills/sprint0-setup/SKILL.md và làm theo cho issue #<số>` |
+| `merge-gate` | Refutation brief cho G3 (mặc định); kiểm tra trước merge G4 (`--merge`) | `/merge-gate <#>` | `@claude đọc .claude/skills/merge-gate/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

@@ -18,7 +18,7 @@ cd <project-repo>
 ```
 Script **không ghi đè** file cấu hình đã có (in ra danh sách bỏ qua); so sánh và gộp tay các file đó. `--upgrade` chỉ ghi đè lớp lõi (skill, `docs/agents/*`, workflow `wata-*.yml`, `labels.yml`).
 
-Kiểm tra: có `.claude/skills/github-issue-triage/SKILL.md`, `docs/agents/contract.md`, `.github/workflows/wata-agent.yml`.
+Kiểm tra: có `.claude/skills/triage/SKILL.md`, `docs/agents/contract.md`, `.github/workflows/wata-agent.yml`.
 
 ## 2. Điền cấu hình
 
@@ -53,7 +53,7 @@ Kiểm tra: tạo issue thử, gắn `status:backlog`; workflow `wata-agent` ch�
 - [ ] Thử `@claude` trên một issue: nếu AI không nhận ra tên skill, dùng câu gọi dự phòng
       `@claude đọc .claude/skills/<skill>/SKILL.md và làm theo cho issue #<số>` (có trong trang vai trò).
 - [ ] Thêm bước cài toolchain (Node/pnpm, Flutter, Playwright) vào `wata-agent.yml` ở chỗ `TODO(project)`
-- [ ] Skill được cài ở `.claude/skills/` nên gọi trực tiếp `/github-issue-triage`. Nếu dùng dạng plugin
+- [ ] Skill được cài ở `.claude/skills/` nên gọi trực tiếp `/triage`. Nếu dùng dạng plugin
       thay vì copy, tên skill có tiền tố `wata:` và cần sửa `prompt` trong workflow tương ứng.
 
 ## 5. Label và board
@@ -91,4 +91,4 @@ Kiểm tra: thử push thẳng vào `main` bằng token của app → bị từ 
    chạy tương tác).
 2. Bật implement và review khi G2 chạy trơn tru.
 3. Bật QA và UAT.
-4. Sau 2–4 tuần: `/status-report 30`, so với số liệu nền, retro, gửi đề xuất sửa skill về repo trung tâm.
+4. Sau 2–4 tuần: `/sprint report 30`, so với số liệu nền, retro, gửi đề xuất sửa skill về repo trung tâm.

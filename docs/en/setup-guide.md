@@ -20,7 +20,7 @@ The script **never overwrites** configuration files that already exist (it lists
 compare and merge those by hand. `--upgrade` overwrites only the core layer (skills, `docs/agents/*`,
 `wata-*.yml` workflows, `labels.yml`).
 
-Check: `.claude/skills/github-issue-triage/SKILL.md`, `docs/agents/contract.md` and `.github/workflows/wata-agent.yml` exist.
+Check: `.claude/skills/triage/SKILL.md`, `docs/agents/contract.md` and `.github/workflows/wata-agent.yml` exist.
 
 ## 2. Fill in the configuration
 
@@ -55,7 +55,7 @@ Check: open a test issue and apply `status:backlog`; `wata-agent` runs triage, a
 - [ ] Try `@claude` on an issue: if the AI does not recognise a skill name, use the fallback sentence
       `@claude read .claude/skills/<skill>/SKILL.md and follow it for issue #<number>` (listed on every role page).
 - [ ] Add toolchain setup (Node/pnpm, Flutter, Playwright) to `wata-agent.yml` where it says `TODO(project)`
-- [ ] Skills are installed in `.claude/skills/`, so they are called directly as `/github-issue-triage`. If
+- [ ] Skills are installed in `.claude/skills/`, so they are called directly as `/triage`. If
       you use the plugin form instead of copying, skill names get the `wata:` prefix and the workflow `prompt` must change accordingly.
 
 ## 5. Labels and board
@@ -92,4 +92,4 @@ Check: try pushing straight to `main` with the app's token → rejected.
 1. Week one: only triage and test design (remove the other branches from the `case` in `wata-agent.yml`, or run interactively).
 2. Enable implement and review once G2 runs smoothly.
 3. Enable QA and UAT.
-4. After 2–4 weeks: `/status-report 30`, compare with the baseline, run a retro, send skill improvements back to the central repo.
+4. After 2–4 weeks: `/sprint report 30`, compare with the baseline, run a retro, send skill improvements back to the central repo.

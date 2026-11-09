@@ -28,8 +28,8 @@ features:
     details: A 10-step sprint, new events and timeboxes, planning by review/QA capacity, effort shifting from execution to requirements, decisions and acceptance.
   - title: Five human gates
     details: The PO confirms the request (G1), Tech Lead and QA approve the plan (G2), a reviewer tries to refute the work (G3), the Tech Lead merges (G4), the PO accepts in UAT (G5). The AI never passes a gate on its own.
-  - title: 27 skills, every role
-    details: Every step and every role has its own skill, run in Claude Code or with @claude on GitHub. One catalog keeps everything in sync.
+  - title: 13 skills, three commands to remember
+    details: Developers use /dev-pipeline, the PM uses /sprint, other roles comment @claude on GitHub; the AI picks the right skill from the issue status. A single catalog keeps everything in sync.
   - title: Labels are the source of truth
     details: Every issue carries exactly one status:* label. The label tells you where the work is, who has it, and which automated step runs next.
   - title: Tests before code
@@ -44,14 +44,14 @@ features:
 
 | You are | Read first | Main skills |
 |---|---|---|
-| PO | [PO guide](/en/roles/po), [Writing AC](/en/writing-acceptance-criteria) | `github-issue-create`, `uat-run` |
-| BA | [BA guide](/en/roles/ba) | `feature-analysis`, `github-issue-create` |
-| PM | [PM guide](/en/roles/pm), [RACI](/en/raci) | `status-report`, `release-plan` |
-| Designer | [Designer guide](/en/roles/designer) | `design-review` |
-| Developer | [Developer guide](/en/roles/dev) | `github-issue-implement`, `qa-failed-fix` |
-| Tech Lead | [Tech Lead guide](/en/roles/tech-lead), [Setup](/en/setup-guide) | `plan-approval`, `merge-readiness`, `hotfix` |
-| QA | [QA guide](/en/roles/qa) | `plan-approval`, `qa-manual-session` |
-| AI Enablement | [AI Enablement guide](/en/roles/ai-enablement) | `sprint-retro`, `sprint0-setup` |
-| Security | [Security guide](/en/roles/security) | `sprint0-setup` |
+| PO | [PO guide](/en/roles/po), [Writing AC](/en/writing-acceptance-criteria) | `issue-create`, `uat --run` |
+| BA | [BA guide](/en/roles/ba) | `refine`, `issue-create` |
+| PM | [PM guide](/en/roles/pm), [RACI](/en/raci) | `sprint report`, `sprint release` |
+| Designer | [Designer guide](/en/roles/designer) | `pr-review --design` |
+| Developer | [Developer guide](/en/roles/dev) | `implement`, `implement --fix` |
+| Tech Lead | [Tech Lead guide](/en/roles/tech-lead), [Setup](/en/setup-guide) | `test-design --approve`, `merge-gate --merge`, `hotfix` |
+| QA | [QA guide](/en/roles/qa) | `test-design --approve`, `qa --manual` |
+| AI Enablement | [AI Enablement guide](/en/roles/ai-enablement) | `sprint retro`, `install.sh --check` |
+| Security | [Security guide](/en/roles/security) | `merge-gate`, `install.sh --check` |
 
 Every role can use `dev-pipeline` to see today's work.

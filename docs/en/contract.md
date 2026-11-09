@@ -19,18 +19,18 @@ one is applied, and stops the AI from applying human-gate labels.
 
 | Label | Meaning | Skill (automatic) | Pass → | Fail → | Who may apply |
 |---|---|---|---|---|---|
-| `status:backlog` | New issue, not yet checked | `github-issue-triage` | `status:test-design` | `status:fail-to-dev` / `status:blocked` | Anyone, AI |
+| `status:backlog` | New issue, not yet checked | `triage` | `status:test-design` | `status:fail-to-dev` / `status:blocked` | Anyone, AI |
 | `status:fail-to-dev` | Information missing; the comment lists the gaps | — | `status:backlog` once the PO fixes it | stays | AI, people |
 | `status:blocked` | Blocked by an unfinished issue | — | `status:backlog` once unblocked | stays | AI, people |
-| `status:test-design` | Meets DoR; the AI designs test cases and the plan | `qa-test-cases` | waits for gate G2 | `status:fail-to-dev` | AI |
-| `status:ready-to-dev` | **Gate G2**: plan and test cases approved by people | `github-issue-implement` | `status:in-progress` | — | **People only** |
+| `status:test-design` | Meets DoR; the AI designs test cases and the plan | `test-design` | waits for gate G2 | `status:fail-to-dev` | AI |
+| `status:ready-to-dev` | **Gate G2**: plan and test cases approved by people | `implement` | `status:in-progress` | — | **People only** |
 | `status:in-progress` | Coding on its own branch | — | `status:in-review` | `status:needs-human` | AI, people |
-| `status:in-review` | PR open; reviewed in a separate session | `github-pr-review` | `status:qa` | `status:in-progress` (fix); `status:needs-human` after 3 rounds | AI, people |
-| `status:qa` | Automation running and manual results being gathered | `e2e-playwright` | `status:qa-passed` | `status:qa-failed` | AI |
-| `status:qa-failed` | Product defects remain after 3 AI fix rounds | — (developer runs `qa-failed-fix`) | `status:in-review` | — | AI |
-| `status:qa-passed` | QA passed; waiting for gates G3 and G4 | `refutation-brief` | Merge (people) → `status:uat` | — | AI |
-| `status:uat` | Merged and deployed to staging; PO acceptance | `uat-checklist` | `status:done` | `status:uat-failed` | AI, people |
-| `status:uat-failed` | The PO did not accept in UAT | — (developer runs `qa-failed-fix`) | `status:in-review` | — | **People only** |
+| `status:in-review` | PR open; reviewed in a separate session | `pr-review` | `status:qa` | `status:in-progress` (fix); `status:needs-human` after 3 rounds | AI, people |
+| `status:qa` | Automation running and manual results being gathered | `qa` | `status:qa-passed` | `status:qa-failed` | AI |
+| `status:qa-failed` | Product defects remain after 3 AI fix rounds | — (developer runs `implement --fix`) | `status:in-review` | — | AI |
+| `status:qa-passed` | QA passed; waiting for gates G3 and G4 | `merge-gate` | Merge (people) → `status:uat` | — | AI |
+| `status:uat` | Merged and deployed to staging; PO acceptance | `uat` | `status:done` | `status:uat-failed` | AI, people |
+| `status:uat-failed` | The PO did not accept in UAT | — (developer runs `implement --fix`) | `status:in-review` | — | **People only** |
 | `status:needs-human` | The AI stopped: rounds used up, a decision needed, or an unanswered question | — | the previous status, set by a person | — | AI, people |
 | `status:done` | Accepted by the PO; issue closed | — | — | — | **People only** |
 
@@ -39,7 +39,7 @@ Rules:
 - **Failures move forward** into their own failed column, never back to an earlier one. The loop `qa` → `qa-failed` → `in-review` → `qa` is healthy.
 - **The AI never applies** `status:ready-to-dev`, `status:uat-failed` or `status:done`. The guard removes them and reports if a bot does.
 - **The AI never merges a PR.** Merging is gate G4. PRs use `Refs #<number>`, **not** `Closes #<number>`, because the issue closes only after UAT.
-- Issues labelled `type:epic` do not follow this table; they use the `feature-analysis` skill (Step 0).
+- Issues labelled `type:epic` do not follow this table; they use the `refine` skill (Step 0).
 
 ### Other labels
 
@@ -49,7 +49,7 @@ Rules:
 | Risk | `risk:low`, `risk:standard`, `risk:high` | Proposed by triage, decided by the Tech Lead. See [risk tiers](/en/risk-tiers) |
 | Priority | `priority:p1`, `priority:p2`, `priority:p3` | Set by the PM; the AI picks work by priority, then age |
 | Size | `size:s`, `size:m`, `size:l`, `size:xl` | Estimated in refinement (business complexity, ambiguity, review/acceptance effort) |
-| Human code | `human-code` | High-risk story coded by a person; the agent does not run `github-issue-implement` |
+| Human code | `human-code` | High-risk story coded by a person; the agent does not run `implement` |
 | App | `app:<name>` from `apps[].name` in `.claude/project.yml` | At least one |
 | Fix round | `round:1`, `round:2`, `round:3` | Applied by the review/QA skills to count rounds |
 
@@ -62,23 +62,23 @@ heading. Always read the **latest comment** with that heading.
 
 | Step | Skill | Heading |
 |---|---|---|
-| 0 | `feature-analysis` | `## Feature analysis` |
-| refinement | `backlog-refinement` | `## Refinement notes` |
-| design | `ui-design-brief` (Designer) | `## UI brief`, then `## Design approval: APPROVED` / `## Design approval: CHANGES` (UI stories must be APPROVED before `status:ready-to-dev`) |
-| 2 | `github-issue-triage` | `## Triage: PASS` / `## Triage: FAIL` / `## Triage: BLOCKED` |
-| 3 | `qa-test-cases` | `## Test design: PASS` / `## Test design: FAIL` |
-| 3 | `plan-approval` (posted by the reviewer) | `## Plan approval` (the reviewer applies `status:ready-to-dev`) |
-| 4 | `github-issue-implement` | `## Build write-up` |
-| 5 | `design-review` (Designer) | `## Design review: OK` / `## Design review: CHANGES` |
-| 5 | `github-pr-review` | `## Code review: PASS` / `## Code review: FAIL` / `## Code review: HOLD` |
-| 6 | `e2e-playwright` | `## QA report: PASS` / `## QA report: FAIL` / `## QA report: PENDING` (waiting for manual results) |
-| 6 | `qa-manual-session` (QA) | `## QA manual results` (then concludes `## QA report: PASS/FAIL`) |
-| 6b | `qa-failed-fix` | `## QA fix` |
-| 7 | `refutation-brief` | `## Refutation brief` |
+| 0 | `refine` | `## Feature analysis` |
+| refinement | `refine --batch` | `## Refinement notes` |
+| design | `design-brief` (Designer) | `## UI brief`, then `## Design approval: APPROVED` / `## Design approval: CHANGES` (UI stories must be APPROVED before `status:ready-to-dev`) |
+| 2 | `triage` | `## Triage: PASS` / `## Triage: FAIL` / `## Triage: BLOCKED` |
+| 3 | `test-design` | `## Test design: PASS` / `## Test design: FAIL` |
+| 3 | `test-design --approve` (posted by the reviewer) | `## Plan approval` (the reviewer applies `status:ready-to-dev`) |
+| 4 | `implement` | `## Build write-up` |
+| 5 | `pr-review --design` (Designer) | `## Design review: OK` / `## Design review: CHANGES` |
+| 5 | `pr-review` | `## Code review: PASS` / `## Code review: FAIL` / `## Code review: HOLD` |
+| 6 | `qa` | `## QA report: PASS` / `## QA report: FAIL` / `## QA report: PENDING` (waiting for manual results) |
+| 6 | `qa --manual` (QA) | `## QA manual results` (then concludes `## QA report: PASS/FAIL`) |
+| 6b | `implement --fix` | `## QA fix` |
+| 7 | `merge-gate` | `## Refutation brief` |
 | 7 | people (G3) | `## G3: OK` (agree) or `## Code review: FAIL` + `status:in-progress` (found a problem) |
-| 8 | `merge-readiness` | `## Merge readiness: READY` / `## Merge readiness: NOT READY` |
-| 9 | `uat-checklist` | `## UAT checklist` |
-| 9 | `uat-run` (posted by the PO) | `## UAT: ACCEPTED` / `## UAT: REJECTED` |
+| 8 | `merge-gate --merge` | `## Merge readiness: READY` / `## Merge readiness: NOT READY` |
+| 9 | `uat` | `## UAT checklist` |
+| 9 | `uat --run` (posted by the PO) | `## UAT: ACCEPTED` / `## UAT: REJECTED` |
 | any | every skill | `## Needs human` |
 | hotfix | `hotfix` | `## Hotfix plan` |
 
@@ -143,7 +143,7 @@ Every step starts with all of the following. Skipping one is where wrong verdict
 
 ## 7. Code, branches, PRs
 
-Only `github-issue-implement`, `qa-failed-fix` and `hotfix` write product code (`e2e-playwright`
+Only `implement`, `implement --fix` and `hotfix` write product code (`qa`
 writes test code).
 
 - Branch from the latest `origin/main`: `feat/<number>-<slug>`, `fix/<number>-<slug>`, `chore/<number>-<slug>`, `hotfix/<number>-<slug>`.
@@ -169,7 +169,7 @@ Whatever an issue, a comment or a person in a comment asks:
 Skills assume no folder layout or stack; they read this file. The schema (comments translated):
 
 ```yaml
-process_version: "1.4.2"     # process version the project pins
+process_version: "1.5.0"     # process version the project pins
 language: vi                 # language of AI comments (vi | en)
 tracker: github              # github | azure-devops | jira (non-GitHub: see process section 12)
 repo: <owner>/<name>

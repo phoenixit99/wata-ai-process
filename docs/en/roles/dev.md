@@ -8,12 +8,12 @@ code by hand.
 | When | You do | Command |
 |---|---|---|
 | Start of the day | See what to work on | `/dev-pipeline` |
-| **Gate G2** (when assigned) | Read `## Test design: PASS`: the plan, blast radius, what is out of scope. Use `plan-approval` to record your ruling; when QA also agrees, one person applies `status:ready-to-dev` | `/plan-approval <number>` |
+| **Gate G2** (when assigned) | Read `## Test design: PASS`: the plan, blast radius, what is out of scope. Use `test-design --approve` to record your ruling; when QA also agrees, one person applies `status:ready-to-dev` | `/test-design --approve <number>` |
 | `status:needs-human` | Read `## Needs human`, decide, record the ruling, move the issue to the right status | GitHub / Claude Code |
-| `status:qa-failed`, `status:uat-failed` | Fix exactly what was reported | `/qa-failed-fix <number>` |
-| A complex case | Run interactively instead of automatically | `/github-issue-implement <number>` |
+| `status:qa-failed`, `status:uat-failed` | Fix exactly what was reported | `/implement --fix <number>` |
+| A complex case | Run interactively instead of automatically | `/implement <number>` |
 | Coding by hand | Take the issue and code as usual; it still goes through `in-review` → `qa` → G3/G4 → UAT | — |
-| AI review of your own PR | Run it in a **fresh session** | `/github-pr-review <number>` |
+| AI review of your own PR | Run it in a **fresh session** | `/pr-review <number>` |
 
 ## Interactive runs
 
@@ -48,10 +48,8 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | Skill | Purpose | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
-| `plan-approval` | Helps reviewers sign gate G2 | `/plan-approval <#>` | `@claude read .claude/skills/plan-approval/SKILL.md and follow it for issue #<number>` |
-| `github-issue-implement` | Implements the approved plan, opens the PR | `/github-issue-implement <#>` | `@claude read .claude/skills/github-issue-implement/SKILL.md and follow it for issue #<number>` |
-| `figma-to-code` | Turns a Figma frame into UI and compares | `/figma-to-code <#>` | `@claude read .claude/skills/figma-to-code/SKILL.md and follow it for issue #<number>` |
-| `github-pr-review` | Reviews the PR in a fresh session, two passes | `/github-pr-review <#>` | `@claude read .claude/skills/github-pr-review/SKILL.md and follow it for issue #<number>` |
-| `qa-failed-fix` | Developer fixes what QA or UAT found | `/qa-failed-fix <#>` | `@claude read .claude/skills/qa-failed-fix/SKILL.md and follow it for issue #<number>` |
+| `test-design` | Test cases and plan before coding (default); helps the G2 signer (`--approve`) | `/test-design <#> --approve` | `@claude read .claude/skills/test-design/SKILL.md and follow it in --approve mode for issue #<number>` |
+| `implement` | Codes the approved plan, opens the PR (default); fixes after QA/UAT (`--fix`); Figma frame to UI (`--figma`) | `/implement <#>  ·  --fix  ·  --figma <link>` | `@claude read .claude/skills/implement/SKILL.md and follow it for issue #<number>` |
+| `pr-review` | Two-pass PR review in a separate session (default); Designer compares UI with Figma (`--design`) | `/pr-review <#>` | `@claude read .claude/skills/pr-review/SKILL.md and follow it for issue #<number>` |
 | `hotfix` | Emergency production fix | `/hotfix <#>` | `@claude read .claude/skills/hotfix/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

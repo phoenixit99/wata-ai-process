@@ -13,11 +13,11 @@ Một lần cho mỗi dự án, khoảng 1–2 tuần, trước sprint 1. Mục 
 | Designer | Xây dựng và mô tả **design system** ở dạng AI đọc được (màu, font, khoảng cách, component, quy tắc layout, nguyên tắc UX); chuẩn bị brief mẫu | `docs/design-system.md` |
 | AI Enablement | Cấu hình MCP (GitHub, Figma, Playwright); thử nghiệm và chọn công cụ để AI tạo/ghi thiết kế vào Figma; hướng dẫn team dùng skill | `.mcp.json`, ghi chú công cụ |
 | PO/BA | Chuẩn bị backlog ban đầu theo template; đồng ý DoR/DoD | Backlog đầu tiên |
-| AI | Dựng khung monorepo, CI, template issue/PR (`install.sh`); bản nháp coding standard; kiểm tra checklist (`sprint0-setup`) | Repository, báo cáo Sprint 0 |
+| AI | Dựng khung monorepo, CI, template issue/PR (`install.sh`); bản nháp coding standard; kiểm tra checklist (`install.sh --check`) | Repository, báo cáo Sprint 0 |
 
 ## Checklist
 
-Chạy `/sprint0-setup` để kiểm tra tự động phần làm được bằng lệnh. Từng bước cài đặt chi tiết ở
+Chạy `install.sh --check` để kiểm tra tự động phần làm được bằng lệnh. Từng bước cài đặt chi tiết ở
 [hướng dẫn cài đặt](setup-guide.md).
 
 - [ ] Bộ quy trình đã cài, `process_version` khớp

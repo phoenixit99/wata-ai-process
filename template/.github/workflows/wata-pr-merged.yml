@@ -1,5 +1,5 @@
 # Khi con người merge PR (cổng G4), chuyển issue được "Refs #<số>" sang status:uat.
-# Dùng token GitHub App để label mới kích hoạt skill uat-checklist.
+# Dùng token GitHub App để label mới kích hoạt skill uat.
 name: wata-pr-merged
 
 on:

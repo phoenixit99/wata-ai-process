@@ -14,7 +14,7 @@ for the AI are in the [agent contract](/en/contract).
 | Version | Main changes |
 |---|---|
 | 1.4 | The [Scrum process](/en/scrum) joins the same process set: UI design approval is a G2 condition for UI stories; WIP limits for the review and QA queues; `size:*` and `human-code` labels; AI Enablement (process owner), Security and customer roles; [Definition of Done](/en/definition-of-done); 7 skills for Scrum events. |
-| 1.3 | Every role has its own skills (adds `plan-approval`, `design-review`, `qa-manual-session`, `uat-run`, `release-plan`); the skill catalog is the single source, with a consistency checker. |
+| 1.3 | Every role has its own skills (adds `test-design --approve`, `pr-review --design`, `qa --manual`, `uat --run`, `sprint release`); the skill catalog is the single source, with a consistency checker. |
 | 1.2 | Adds the PM role, Step 0 (feature analysis), UAT, the hotfix flow, risk tiers, RACI, SLAs for human queues, role guides. Steps 7 and 8 are explicitly human work. Status is held in `status:*` labels. |
 | 1.1 | 11 improvements: review in a separate session, test design before code, human gates G2/G3, Needs human and Blocked states, R11, server-side guardrails, shared contract, prompt-injection rule, API backward compatibility, honest QA reporting, company-wide adoption. |
 | 1.0 | First version (16-10-2026). |
@@ -112,23 +112,23 @@ human work; the AI only prepares material.
 
 | Step | Who leads | Skill | Trigger | Output |
 |---|---|---|---|---|
-| 0. Feature analysis | BA + Tech Lead | `feature-analysis` | issue `type:epic` | `## Feature analysis`, proposed child issues |
-| 1. Create issue | PO/BA, AI drafts | `github-issue-create` | on demand | well-formed issue body, `status:backlog` |
-| 2. Triage | AI | `github-issue-triage` | `status:backlog` | `## Triage: PASS/FAIL/BLOCKED` |
-| 3. Test design + plan | AI drafts, people approve | `qa-test-cases` | `status:test-design` | `## Test design: PASS/FAIL` |
-| 3. Gate G2 | Tech Lead, Dev, QA | `plan-approval` | on demand | `## Plan approval` |
-| 4. Code + PR | AI | `github-issue-implement` | `status:ready-to-dev` | PR, `## Build write-up` |
-| 5. Code review | AI, fresh session | `github-pr-review` | `status:in-review` | `## Code review: PASS/FAIL/HOLD` |
-| 5. Design review | Designer | `design-review` | on demand | `## Design review: OK/CHANGES` |
-| 6. QA | AI | `e2e-playwright` | `status:qa` | `## QA report: PASS/FAIL/PENDING` |
-| 6. Manual/mobile QA | QA | `qa-manual-session` | on demand | `## QA manual results` |
-| 6b. Fix after QA/UAT | Dev + AI | `qa-failed-fix` | developer | `## QA fix` |
-| 7. Refutation (G3) | Reviewer | `refutation-brief` prepares | `status:qa-passed` | `## Refutation brief` |
-| 8. Merge (G4) | Tech Lead | `merge-readiness` checks | on demand | `## Merge readiness` |
-| 9. UAT (G5) | PO | `uat-checklist` prepares | `status:uat` | `## UAT checklist` |
-| 9. Acceptance | PO | `uat-run` | on demand | `## UAT: ACCEPTED/REJECTED` |
-| Release | PM, Tech Lead | `release-plan` | on demand | release plan (no issue comment) |
-| Reporting | PM | `status-report` | on demand | weekly report (no issue comment) |
+| 0. Feature analysis | BA + Tech Lead | `refine` | issue `type:epic` | `## Feature analysis`, proposed child issues |
+| 1. Create issue | PO/BA, AI drafts | `issue-create` | on demand | well-formed issue body, `status:backlog` |
+| 2. Triage | AI | `triage` | `status:backlog` | `## Triage: PASS/FAIL/BLOCKED` |
+| 3. Test design + plan | AI drafts, people approve | `test-design` | `status:test-design` | `## Test design: PASS/FAIL` |
+| 3. Gate G2 | Tech Lead, Dev, QA | `test-design --approve` | on demand | `## Plan approval` |
+| 4. Code + PR | AI | `implement` | `status:ready-to-dev` | PR, `## Build write-up` |
+| 5. Code review | AI, fresh session | `pr-review` | `status:in-review` | `## Code review: PASS/FAIL/HOLD` |
+| 5. Design review | Designer | `pr-review --design` | on demand | `## Design review: OK/CHANGES` |
+| 6. QA | AI | `qa` | `status:qa` | `## QA report: PASS/FAIL/PENDING` |
+| 6. Manual/mobile QA | QA | `qa --manual` | on demand | `## QA manual results` |
+| 6b. Fix after QA/UAT | Dev + AI | `implement --fix` | developer | `## QA fix` |
+| 7. Refutation (G3) | Reviewer | `merge-gate` prepares | `status:qa-passed` | `## Refutation brief` |
+| 8. Merge (G4) | Tech Lead | `merge-gate --merge` checks | on demand | `## Merge readiness` |
+| 9. UAT (G5) | PO | `uat` prepares | `status:uat` | `## UAT checklist` |
+| 9. Acceptance | PO | `uat --run` | on demand | `## UAT: ACCEPTED/REJECTED` |
+| Release | PM, Tech Lead | `sprint release` | on demand | release plan (no issue comment) |
+| Reporting | PM | `sprint report` | on demand | weekly report (no issue comment) |
 
 ### Step 0: Feature analysis (for large work)
 
@@ -154,7 +154,7 @@ human work; the AI only prepares material.
 - IDs `TC-<issue>-<n>`, priority P1–P3, type `auto` / `manual` / `mobile`.
 - A table **criterion → files to change → test case**, the blast radius, and what is deliberately out of scope.
 - The test-case table is saved in `e2e/test-cases/<issue>.md` and summarised on the issue.
-- **Gate G2:** the Tech Lead/Dev approves the plan and QA approves the test cases (skill `plan-approval` helps); UI stories need `## Design approval: APPROVED` (Designer + PO/customer, skill `ui-design-brief`). Then **a person** applies `status:ready-to-dev`.
+- **Gate G2:** the Tech Lead/Dev approves the plan and QA approves the test cases (skill `test-design --approve` helps); UI stories need `## Design approval: APPROVED` (Designer + PO/customer, skill `design-brief`). Then **a person** applies `status:ready-to-dev`.
 - Stories labelled `human-code` are coded by a person; the agent does not run implement.
 
 ### Step 4: Code and pull request
@@ -168,19 +168,19 @@ human work; the AI only prepares material.
 
 - A new session, never the one that wrote the code. Two passes: read the diff against the checklist; **try to refute the write-up**.
 - Nine criteria: acceptance criteria, correctness, coding standard, contract (including **backward compatibility with older mobile app versions**), security, tests, performance, design, verification (build ran on the head commit, claims have evidence).
-- A Designer can run `design-review`; "must fix" items count as Major.
+- A Designer can run `pr-review --design`; "must fix" items count as Major.
 - Blocker/Major → `status:in-progress`. At most 3 rounds, then `status:needs-human`. Pass → `status:qa`.
 
 ### Step 6: QA
 
 - The AI writes and runs Playwright for `auto` cases; test names start with the test-case ID.
 - Failures are classified: test defect, product defect, environment problem. Tests are never weakened to go green when the product is wrong.
-- `manual` and `mobile` cases: QA runs them with `qa-manual-session`, which records `## QA manual results`. **QA passes when automation passes and every P1 manual/mobile case has passed.** If manual results are missing, the AI posts `## QA report: PENDING`.
+- `manual` and `mobile` cases: QA runs them with `qa --manual`, which records `## QA manual results`. **QA passes when automation passes and every P1 manual/mobile case has passed.** If manual results are missing, the AI posts `## QA report: PENDING`.
 - Three-part footer: run / read only / still a claim.
 
 ### Step 6b: Fix after QA or UAT
 
-- `status:qa-failed`: the AI tried 3 rounds without success; **a developer** fixes it (optionally with `qa-failed-fix`).
+- `status:qa-failed`: the AI tried 3 rounds without success; **a developer** fixes it (optionally with `implement --fix`).
 - `status:uat-failed`: the PO did not accept; fix exactly what the PO listed.
 - After the fix → `status:in-review`, reviewed again in a fresh session.
 
@@ -192,13 +192,13 @@ human work; the AI only prepares material.
 
 ### Step 8: Merge (G4)
 
-- The Tech Lead runs `merge-readiness`: CI green on the head commit, CODEOWNERS approval, all PASS headings present.
+- The Tech Lead runs `merge-gate --merge`: CI green on the head commit, CODEOWNERS approval, all PASS headings present.
 - A person merges. Branch protection blocks anything that is missing. The issue moves to `status:uat` (it is not closed).
 
 ### Step 9: UAT (G5)
 
 - After the staging deploy, the AI drafts `## UAT checklist` from the criteria in user language.
-- The PO checks on staging (skill `uat-run` walks through it), comments `## UAT: ACCEPTED` and applies `status:done` (closes the issue), or `## UAT: REJECTED` with what failed and applies `status:uat-failed`.
+- The PO checks on staging (skill `uat --run` walks through it), comments `## UAT: ACCEPTED` and applies `status:done` (closes the issue), or `## UAT: REJECTED` with what failed and applies `status:uat-failed`.
 - Something the criteria never mentioned is a **new issue**, not a UAT failure.
 
 ### Hotfix flow
@@ -287,7 +287,7 @@ recorded in a comment and is final.
 | Escaped defects | Bugs after merge | Effectiveness of the whole process |
 | AI cost | Token cost / issue | Cost efficiency |
 
-Skill `status-report` compiles these weekly for the PM. Reference targets (lead time down ≥ 40% after 3 sprints, review wait < 1 day, fail-to-dev < 20%, first-round review pass ≥ 60%, ≥ 80% of AC automated) are in [Scrum process section 8](/en/scrum).
+Skill `sprint report` compiles these weekly for the PM. Reference targets (lead time down ≥ 40% after 3 sprints, review wait < 1 day, fail-to-dev < 20%, first-round review pass ≥ 60%, ≥ 80% of AC automated) are in [Scrum process section 8](/en/scrum).
 
 ## 12. Company-wide adoption
 

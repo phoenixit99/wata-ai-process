@@ -112,14 +112,22 @@ def role_section(role, lang):
                 "Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng lệnh ở cột 3; trên GitHub, "
                 "comment câu ở cột 4 (dùng được cả khi skill không được nạp sẵn).", "",
                 "| Skill | Dùng khi | Claude Code | GitHub |", "|---|---|---|---|"]
-        gh = "`@claude đọc .claude/skills/{n}/SKILL.md và làm theo cho issue #<số>`"
+        gh = "`@claude đọc .claude/skills/{n}/SKILL.md và làm theo{m} cho issue #<số>`"
+        mode_word = " chế độ {f}"
     else:
         head = ["## Your skills", "",
                 "Generated from `skills/catalog.json`. In Claude Code use the command in column 3; on GitHub, "
                 "comment the sentence in column 4 (works even if skills are not preloaded).", "",
                 "| Skill | Purpose | Claude Code | GitHub |", "|---|---|---|---|"]
-        gh = "`@claude read .claude/skills/{n}/SKILL.md and follow it for issue #<number>`"
-    rows = [f"| `{s['name']}` | {s['summary'][lang]} | `/{s['name']} <#>` | {gh.format(n=s['name'])} |" for s in mine]
+        gh = "`@claude read .claude/skills/{n}/SKILL.md and follow it{m} for issue #<number>`"
+        mode_word = " in {f} mode"
+    rows = []
+    for s in mine:
+        usage = s.get("usage_by_role", {}).get(role) or s.get("usage") or f"/{s['name']} <#>"
+        # Cờ chế độ duy nhất của vai trò (vd --run cho PO) cũng phải có trong câu gọi trên GitHub.
+        flags = [w for w in usage.split() if w.startswith("--")]
+        m = mode_word.format(f=flags[0]) if len(flags) == 1 else ""
+        rows.append(f"| `{s['name']}` | {s['summary'][lang]} | `{usage}` | {gh.format(n=s['name'], m=m)} |")
     return "\n".join(head + rows)
 
 

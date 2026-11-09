@@ -7,9 +7,9 @@ the business rules.
 
 | When | You do | Tool | Done when |
 |---|---|---|---|
-| A large feature (epic) | Open an epic issue; run (or ask a developer to run) `/feature-analysis <number>`, or comment `@claude analyse this epic with the feature-analysis skill` | GitHub / Claude Code | `## Feature analysis` exists |
+| A large feature (epic) | Open an epic issue; run (or ask a developer to run) `/refine <number>`, or comment `@claude analyse this epic with the refine skill` | GitHub / Claude Code | `## Feature analysis` exists |
 | After the analysis | Agree the direction, API contract and child issues with the PO and Tech Lead | GitHub comments | PO and Tech Lead agree |
-| Child issues | Use `/github-issue-create` or the template; link back to the epic ("Part of #<epic>") | GitHub / Claude Code | Issue has full criteria; the PO applies `status:backlog` (G1) |
+| Child issues | Use `/issue-create` or the template; link back to the epic ("Part of #<epic>") | GitHub / Claude Code | Issue has full criteria; the PO applies `status:backlog` (G1) |
 | `status:fail-to-dev` on business rules | Fill the gaps listed by triage | GitHub | Within SLA |
 | `## Needs human` about business rules | Answer and give the reason | GitHub | — |
 | When delegated by the PO | Sign gate G1 for the PO | GitHub | — |
@@ -24,8 +24,8 @@ the business rules.
 ## Using Claude Code (recommended for BAs)
 
 ```
-/feature-analysis 120        # analyse epic #120
-/github-issue-create <text>  # draft a child issue
+/refine 120        # analyse epic #120
+/issue-create <text>  # draft a child issue
 /dev-pipeline                # today's work queue
 ```
 
@@ -35,7 +35,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 
 | Event | Your part |
 |---|---|
-| Refinement | Clarify business rules, split stories, propose AC (`backlog-refinement`) |
+| Refinement | Clarify business rules, split stories, propose AC (`refine --batch`) |
 | Planning | Explain stories to the team |
 | Sprint Review | Capture feedback, prepare new stories |
 
@@ -47,7 +47,6 @@ Generated from `skills/catalog.json`. In Claude Code use the command in column 3
 | Skill | Purpose | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Routes by status label; per-role work queue | `/dev-pipeline <#>` | `@claude read .claude/skills/dev-pipeline/SKILL.md and follow it for issue #<number>` |
-| `feature-analysis` | Analyses an epic: challenge, two architectures, proposed child issues | `/feature-analysis <#>` | `@claude read .claude/skills/feature-analysis/SKILL.md and follow it for issue #<number>` |
-| `github-issue-create` | Drafts a well-formed issue from plain language | `/github-issue-create <#>` | `@claude read .claude/skills/github-issue-create/SKILL.md and follow it for issue #<number>` |
-| `backlog-refinement` | Batch refinement: split stories, size S–XL, human-code flag | `/backlog-refinement <#>` | `@claude read .claude/skills/backlog-refinement/SKILL.md and follow it for issue #<number>` |
+| `issue-create` | Drafts a well-formed issue from plain language | `/issue-create <#>` | `@claude read .claude/skills/issue-create/SKILL.md and follow it for issue #<number>` |
+| `refine` | Epic analysis (default); batch refinement, S–XL sizes, human-code flag (`--batch`) | `/refine <#>` | `@claude read .claude/skills/refine/SKILL.md and follow it for issue #<number>` |
 <!-- role-skills:end -->

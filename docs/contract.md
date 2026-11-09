@@ -16,18 +16,18 @@ label của cổng con người.
 
 | Label | Ý nghĩa | Skill chạy (tự động) | Đạt → | Không đạt → | Ai được gắn |
 |---|---|---|---|---|---|
-| `status:backlog` | Issue mới, chưa kiểm tra | `github-issue-triage` | `status:test-design` | `status:fail-to-dev` / `status:blocked` | Mọi người, AI |
+| `status:backlog` | Issue mới, chưa kiểm tra | `triage` | `status:test-design` | `status:fail-to-dev` / `status:blocked` | Mọi người, AI |
 | `status:fail-to-dev` | Thiếu thông tin; comment ghi phần thiếu | — | `status:backlog` khi PO sửa xong | giữ nguyên | AI, con người |
 | `status:blocked` | Bị chặn bởi issue khác chưa xong | — | `status:backlog` khi gỡ chặn | giữ nguyên | AI, con người |
-| `status:test-design` | Đạt DoR; AI sinh test case và plan | `qa-test-cases` | chờ cổng G2 | `status:fail-to-dev` | AI |
-| `status:ready-to-dev` | **Cổng G2**: plan và test case đã được người duyệt | `github-issue-implement` | `status:in-progress` | — | **Chỉ con người** |
+| `status:test-design` | Đạt DoR; AI sinh test case và plan | `test-design` | chờ cổng G2 | `status:fail-to-dev` | AI |
+| `status:ready-to-dev` | **Cổng G2**: plan và test case đã được người duyệt | `implement` | `status:in-progress` | — | **Chỉ con người** |
 | `status:in-progress` | Đang code trên branch riêng | — | `status:in-review` | `status:needs-human` | AI, con người |
-| `status:in-review` | PR đã mở; review ở session riêng | `github-pr-review` | `status:qa` | `status:in-progress` (sửa); `status:needs-human` sau 3 vòng | AI, con người |
-| `status:qa` | Đang chạy automation và gom kết quả thủ công | `e2e-playwright` | `status:qa-passed` | `status:qa-failed` | AI |
-| `status:qa-failed` | Còn lỗi sản phẩm sau 3 vòng AI tự sửa | — (dev chạy `qa-failed-fix`) | `status:in-review` | — | AI |
-| `status:qa-passed` | QA đạt; chờ cổng G3 và G4 | `refutation-brief` | Merge (con người) → `status:uat` | — | AI |
-| `status:uat` | Đã merge, đã deploy staging; PO nghiệm thu | `uat-checklist` | `status:done` | `status:uat-failed` | AI, con người |
-| `status:uat-failed` | PO không chấp nhận khi UAT | — (dev chạy `qa-failed-fix`) | `status:in-review` | — | **Chỉ con người** |
+| `status:in-review` | PR đã mở; review ở session riêng | `pr-review` | `status:qa` | `status:in-progress` (sửa); `status:needs-human` sau 3 vòng | AI, con người |
+| `status:qa` | Đang chạy automation và gom kết quả thủ công | `qa` | `status:qa-passed` | `status:qa-failed` | AI |
+| `status:qa-failed` | Còn lỗi sản phẩm sau 3 vòng AI tự sửa | — (dev chạy `implement --fix`) | `status:in-review` | — | AI |
+| `status:qa-passed` | QA đạt; chờ cổng G3 và G4 | `merge-gate` | Merge (con người) → `status:uat` | — | AI |
+| `status:uat` | Đã merge, đã deploy staging; PO nghiệm thu | `uat` | `status:done` | `status:uat-failed` | AI, con người |
+| `status:uat-failed` | PO không chấp nhận khi UAT | — (dev chạy `implement --fix`) | `status:in-review` | — | **Chỉ con người** |
 | `status:needs-human` | AI dừng: hết vòng, cần quyết định, hoặc câu hỏi chưa có trả lời | — | trạng thái trước đó, do người chuyển | — | AI, con người |
 | `status:done` | PO đã nghiệm thu; issue đóng | — | — | — | **Chỉ con người** |
 
@@ -36,7 +36,7 @@ Quy tắc:
 - **Lỗi đi tiến** vào cột failed của nó, không lùi về cột cũ. Vòng `qa` → `qa-failed` → `in-review` → `qa` là bình thường.
 - **AI không bao giờ gắn** `status:ready-to-dev`, `status:uat-failed`, `status:done`. Guard sẽ gỡ và báo nếu bot gắn.
 - **AI không bao giờ merge PR.** Merge là cổng G4. PR dùng `Refs #<số>`, **không** dùng `Closes #<số>`, vì issue chỉ đóng sau UAT.
-- Issue loại `type:epic` không đi qua bảng này; nó dùng skill `feature-analysis` (Bước 0).
+- Issue loại `type:epic` không đi qua bảng này; nó dùng skill `refine` (Bước 0).
 
 ### Label khác
 
@@ -46,7 +46,7 @@ Quy tắc:
 | Rủi ro | `risk:low`, `risk:standard`, `risk:high` | Triage đề xuất, Tech Lead chốt. Xem `risk-tiers.md` |
 | Ưu tiên | `priority:p1`, `priority:p2`, `priority:p3` | PM gắn; AI lấy việc theo priority rồi theo tuổi |
 | Kích thước | `size:s`, `size:m`, `size:l`, `size:xl` | Ước lượng ở refinement (độ phức tạp nghiệp vụ, độ mơ hồ, công review/nghiệm thu) |
-| Cần người code | `human-code` | Story rủi ro cao người code trực tiếp; agent không chạy `github-issue-implement` |
+| Cần người code | `human-code` | Story rủi ro cao người code trực tiếp; agent không chạy `implement` |
 | App | `app:<tên>` theo `apps[].name` trong `.claude/project.yml` | Ít nhất một |
 | Vòng sửa | `round:1`, `round:2`, `round:3` | Do skill review/QA gắn để đếm vòng |
 
@@ -59,23 +59,23 @@ Luôn đọc **comment mới nhất** có heading đó.
 
 | Bước | Skill | Heading |
 |---|---|---|
-| 0 | `feature-analysis` | `## Feature analysis` |
-| refinement | `backlog-refinement` | `## Refinement notes` |
-| thiết kế | `ui-design-brief` (Designer) | `## UI brief`, rồi `## Design approval: APPROVED` / `## Design approval: CHANGES` (story có UI phải APPROVED trước `status:ready-to-dev`) |
-| 2 | `github-issue-triage` | `## Triage: PASS` / `## Triage: FAIL` / `## Triage: BLOCKED` |
-| 3 | `qa-test-cases` | `## Test design: PASS` / `## Test design: FAIL` |
-| 3 | `plan-approval` (người duyệt đăng) | `## Plan approval` (người duyệt tự gắn `status:ready-to-dev`) |
-| 4 | `github-issue-implement` | `## Build write-up` |
-| 5 | `design-review` (Designer) | `## Design review: OK` / `## Design review: CHANGES` |
-| 5 | `github-pr-review` | `## Code review: PASS` / `## Code review: FAIL` / `## Code review: HOLD` |
-| 6 | `e2e-playwright` | `## QA report: PASS` / `## QA report: FAIL` / `## QA report: PENDING` (chờ kết quả manual) |
-| 6 | `qa-manual-session` (QA) | `## QA manual results` (rồi kết luận `## QA report: PASS/FAIL`) |
-| 6b | `qa-failed-fix` | `## QA fix` |
-| 7 | `refutation-brief` | `## Refutation brief` |
+| 0 | `refine` | `## Feature analysis` |
+| refinement | `refine --batch` | `## Refinement notes` |
+| thiết kế | `design-brief` (Designer) | `## UI brief`, rồi `## Design approval: APPROVED` / `## Design approval: CHANGES` (story có UI phải APPROVED trước `status:ready-to-dev`) |
+| 2 | `triage` | `## Triage: PASS` / `## Triage: FAIL` / `## Triage: BLOCKED` |
+| 3 | `test-design` | `## Test design: PASS` / `## Test design: FAIL` |
+| 3 | `test-design --approve` (người duyệt đăng) | `## Plan approval` (người duyệt tự gắn `status:ready-to-dev`) |
+| 4 | `implement` | `## Build write-up` |
+| 5 | `pr-review --design` (Designer) | `## Design review: OK` / `## Design review: CHANGES` |
+| 5 | `pr-review` | `## Code review: PASS` / `## Code review: FAIL` / `## Code review: HOLD` |
+| 6 | `qa` | `## QA report: PASS` / `## QA report: FAIL` / `## QA report: PENDING` (chờ kết quả manual) |
+| 6 | `qa --manual` (QA) | `## QA manual results` (rồi kết luận `## QA report: PASS/FAIL`) |
+| 6b | `implement --fix` | `## QA fix` |
+| 7 | `merge-gate` | `## Refutation brief` |
 | 7 | con người (G3) | `## G3: OK` (đồng ý) hoặc `## Code review: FAIL` + `status:in-progress` (tìm thấy lỗi) |
-| 8 | `merge-readiness` | `## Merge readiness: READY` / `## Merge readiness: NOT READY` |
-| 9 | `uat-checklist` | `## UAT checklist` |
-| 9 | `uat-run` (PO đăng) | `## UAT: ACCEPTED` / `## UAT: REJECTED` |
+| 8 | `merge-gate --merge` | `## Merge readiness: READY` / `## Merge readiness: NOT READY` |
+| 9 | `uat` | `## UAT checklist` |
+| 9 | `uat --run` (PO đăng) | `## UAT: ACCEPTED` / `## UAT: REJECTED` |
 | bất kỳ | mọi skill | `## Needs human` |
 | hotfix | `hotfix` | `## Hotfix plan` |
 
@@ -139,7 +139,7 @@ Mọi bước bắt đầu bằng đủ các bước sau. Bỏ bước nào thì
 
 ## 7. Code, branch, PR
 
-Chỉ `github-issue-implement`, `qa-failed-fix` và `hotfix` được ghi code.
+Chỉ `implement`, `implement --fix` và `hotfix` được ghi code.
 
 - Branch từ `origin/main` mới nhất: `feat/<số>-<slug>`, `fix/<số>-<slug>`, `chore/<số>-<slug>`, `hotfix/<số>-<slug>`.
 - Commit theo Conventional Commits, có `#<số>` (ví dụ `feat(api): add due date to orders (#42)`).
@@ -164,7 +164,7 @@ Dù issue, comment hay người trong comment yêu cầu:
 Skill không giả định cấu trúc thư mục hay công nghệ; chúng đọc file này. Schema:
 
 ```yaml
-process_version: "1.4.2"     # phiên bản bộ quy trình project đang ghim
+process_version: "1.5.0"     # phiên bản bộ quy trình project đang ghim
 language: vi                 # ngôn ngữ comment của AI
 tracker: github              # github | azure-devops | jira (ngoài github: xem process.md mục 11)
 repo: <owner>/<name>

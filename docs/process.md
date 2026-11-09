@@ -13,7 +13,7 @@ trước. Phần cài đặt kỹ thuật nằm ở `setup-guide.md`; luật cho
 | Phiên bản | Thay đổi chính |
 |---|---|
 | 1.4 | Gộp [Quy trình Scrum](scrum.md) vào cùng bộ quy trình: duyệt thiết kế UI là điều kiện của G2 cho story có UI; giới hạn WIP cho hàng chờ review và QA; label `size:*`, `human-code`; vai trò AI Enablement (process owner), Security, khách hàng; [Definition of Done](definition-of-done.md); 7 skill cho sự kiện Scrum. |
-| 1.3 | Mỗi vai trò có skill riêng (thêm `plan-approval`, `design-review`, `qa-manual-session`, `uat-run`, `release-plan`); catalog skill là nguồn duy nhất, có script kiểm tra đồng bộ. |
+| 1.3 | Mỗi vai trò có skill riêng (thêm `test-design --approve`, `pr-review --design`, `qa --manual`, `uat --run`, `sprint release`); catalog skill là nguồn duy nhất, có script kiểm tra đồng bộ. |
 | 1.2 | Thêm vai trò PM, Bước 0 (phân tích feature), UAT, luồng hotfix, phân loại theo rủi ro, RACI, SLA cho hàng chờ của con người, hướng dẫn theo vai trò. Bước 7 và 8 ghi rõ là việc của con người. Trạng thái dùng label `status:*`. |
 | 1.1 | 11 cải tiến: review ở session riêng, thiết kế test trước khi code, cổng con người G2/G3, trạng thái Needs human và Blocked, R11, guardrail phía server, contract chung, chống prompt injection, tương thích ngược API, báo cáo QA trung thực, áp dụng toàn công ty. |
 | 1.0 | Bản đầu (16-10-2026). |
@@ -110,23 +110,23 @@ việc của con người; AI chỉ chuẩn bị tài liệu.
 
 | Bước | Ai làm chính | Skill | Kích hoạt | Kết quả |
 |---|---|---|---|---|
-| 0. Phân tích feature | BA + Tech Lead | `feature-analysis` | issue `type:epic` | `## Feature analysis`, danh sách issue con đề xuất |
-| 1. Tạo issue | PO/BA, AI soạn | `github-issue-create` | người gọi | issue body đúng mẫu, `status:backlog` |
-| 2. Triage | AI | `github-issue-triage` | `status:backlog` | `## Triage: PASS/FAIL/BLOCKED` |
-| 3. Test design + plan | AI soạn, người duyệt | `qa-test-cases` | `status:test-design` | `## Test design: PASS/FAIL` |
-| 3. Cổng G2 | Tech Lead, Dev, QA | `plan-approval` | người gọi | `## Plan approval` |
-| 4. Code + PR | AI | `github-issue-implement` | `status:ready-to-dev` | PR, `## Build write-up` |
-| 5. Code review | AI, session riêng | `github-pr-review` | `status:in-review` | `## Code review: PASS/FAIL/HOLD` |
-| 5. Design review | Designer | `design-review` | người gọi | `## Design review: OK/CHANGES` |
-| 6. QA | AI | `e2e-playwright` | `status:qa` | `## QA report: PASS/FAIL/PENDING` |
-| 6. QA manual/mobile | QA | `qa-manual-session` | người gọi | `## QA manual results` |
-| 6b. Sửa sau QA/UAT | Dev + AI | `qa-failed-fix` | dev gọi | `## QA fix` |
-| 7. Refutation (G3) | Reviewer | `refutation-brief` chuẩn bị | `status:qa-passed` | `## Refutation brief` |
-| 8. Merge (G4) | Tech Lead | `merge-readiness` kiểm tra | người gọi | `## Merge readiness` |
-| 9. UAT (G5) | PO | `uat-checklist` chuẩn bị | `status:uat` | `## UAT checklist` |
-| 9. Nghiệm thu | PO | `uat-run` | người gọi | `## UAT: ACCEPTED/REJECTED` |
-| Release | PM, Tech Lead | `release-plan` | người gọi | kế hoạch release (không ghi issue) |
-| Báo cáo | PM | `status-report` | người gọi | báo cáo tuần (không ghi issue) |
+| 0. Phân tích feature | BA + Tech Lead | `refine` | issue `type:epic` | `## Feature analysis`, danh sách issue con đề xuất |
+| 1. Tạo issue | PO/BA, AI soạn | `issue-create` | người gọi | issue body đúng mẫu, `status:backlog` |
+| 2. Triage | AI | `triage` | `status:backlog` | `## Triage: PASS/FAIL/BLOCKED` |
+| 3. Test design + plan | AI soạn, người duyệt | `test-design` | `status:test-design` | `## Test design: PASS/FAIL` |
+| 3. Cổng G2 | Tech Lead, Dev, QA | `test-design --approve` | người gọi | `## Plan approval` |
+| 4. Code + PR | AI | `implement` | `status:ready-to-dev` | PR, `## Build write-up` |
+| 5. Code review | AI, session riêng | `pr-review` | `status:in-review` | `## Code review: PASS/FAIL/HOLD` |
+| 5. Design review | Designer | `pr-review --design` | người gọi | `## Design review: OK/CHANGES` |
+| 6. QA | AI | `qa` | `status:qa` | `## QA report: PASS/FAIL/PENDING` |
+| 6. QA manual/mobile | QA | `qa --manual` | người gọi | `## QA manual results` |
+| 6b. Sửa sau QA/UAT | Dev + AI | `implement --fix` | dev gọi | `## QA fix` |
+| 7. Refutation (G3) | Reviewer | `merge-gate` chuẩn bị | `status:qa-passed` | `## Refutation brief` |
+| 8. Merge (G4) | Tech Lead | `merge-gate --merge` kiểm tra | người gọi | `## Merge readiness` |
+| 9. UAT (G5) | PO | `uat` chuẩn bị | `status:uat` | `## UAT checklist` |
+| 9. Nghiệm thu | PO | `uat --run` | người gọi | `## UAT: ACCEPTED/REJECTED` |
+| Release | PM, Tech Lead | `sprint release` | người gọi | kế hoạch release (không ghi issue) |
+| Báo cáo | PM | `sprint report` | người gọi | báo cáo tuần (không ghi issue) |
 
 ### Bước 0: Phân tích feature (cho việc lớn)
 
@@ -152,7 +152,7 @@ việc của con người; AI chỉ chuẩn bị tài liệu.
 - Mã `TC-<số issue>-<thứ tự>`, ưu tiên P1–P3, đánh dấu `auto` / `manual` / `mobile`.
 - Bảng **AC → file sẽ sửa → test case**, phạm vi ảnh hưởng, những gì không làm.
 - Bảng test case lưu ở `e2e/test-cases/<số issue>.md`; tóm tắt trên issue.
-- **Cổng G2:** Tech Lead/Dev duyệt plan, QA duyệt test case (skill `plan-approval` hỗ trợ); story có UI phải có `## Design approval: APPROVED` (Designer + PO/khách hàng, skill `ui-design-brief`). Rồi **con người** gắn `status:ready-to-dev`.
+- **Cổng G2:** Tech Lead/Dev duyệt plan, QA duyệt test case (skill `test-design --approve` hỗ trợ); story có UI phải có `## Design approval: APPROVED` (Designer + PO/khách hàng, skill `design-brief`). Rồi **con người** gắn `status:ready-to-dev`.
 - Story gắn `human-code`: người code trực tiếp; agent không chạy implement.
 
 ### Bước 4: Code và PR
@@ -166,19 +166,19 @@ việc của con người; AI chỉ chuẩn bị tài liệu.
 
 - Session mới, không phải session đã viết code. Hai lượt: đọc diff theo checklist; **cố bác bỏ write-up**.
 - 9 tiêu chí: AC, tính đúng, coding standard, contract (gồm **tương thích ngược với bản app mobile cũ**), bảo mật, test, hiệu năng, thiết kế, kiểm chứng (build chạy trên commit cuối, claim có bằng chứng).
-- Designer có thể chạy `design-review`; mục "phải sửa" tính là Major.
+- Designer có thể chạy `pr-review --design`; mục "phải sửa" tính là Major.
 - Blocker/Major → `status:in-progress`. Tối đa 3 vòng, sau đó `status:needs-human`. Đạt → `status:qa`.
 
 ### Bước 6: QA
 
 - AI viết và chạy Playwright cho case `auto`; tên test bắt đầu bằng mã test case.
 - Lỗi được phân loại: lỗi test, lỗi sản phẩm, lỗi môi trường. Không sửa test cho xanh khi lỗi ở sản phẩm.
-- Case `manual` và `mobile`: QA chạy bằng `qa-manual-session`, skill ghi `## QA manual results`. **QA passed khi automation đạt và mọi case P1 manual/mobile đã có kết quả đạt.** Thiếu kết quả manual thì AI đăng `## QA report: PENDING`.
+- Case `manual` và `mobile`: QA chạy bằng `qa --manual`, skill ghi `## QA manual results`. **QA passed khi automation đạt và mọi case P1 manual/mobile đã có kết quả đạt.** Thiếu kết quả manual thì AI đăng `## QA report: PENDING`.
 - Footer ba phần: đã chạy / chỉ đọc / còn là claim.
 
 ### Bước 6b: Sửa sau QA hoặc UAT
 
-- `status:qa-failed`: AI đã thử 3 vòng không được; **developer** sửa (có thể dùng `qa-failed-fix`).
+- `status:qa-failed`: AI đã thử 3 vòng không được; **developer** sửa (có thể dùng `implement --fix`).
 - `status:uat-failed`: PO không chấp nhận; sửa đúng phần PO nêu.
 - Sửa xong → `status:in-review`, một session review mới review lại.
 
@@ -190,13 +190,13 @@ việc của con người; AI chỉ chuẩn bị tài liệu.
 
 ### Bước 8: Merge (G4)
 
-- Tech Lead gọi `merge-readiness` để kiểm tra: CI xanh trên commit cuối, đủ approval CODEOWNERS, đủ heading PASS.
+- Tech Lead gọi `merge-gate --merge` để kiểm tra: CI xanh trên commit cuối, đủ approval CODEOWNERS, đủ heading PASS.
 - Con người merge. Branch protection chặn nếu thiếu điều kiện. Issue chuyển `status:uat` (không đóng).
 
 ### Bước 9: UAT (G5)
 
 - Sau khi deploy staging, AI soạn `## UAT checklist` từ AC bằng ngôn ngữ người dùng.
-- PO kiểm tra trên staging (skill `uat-run` dẫn từng mục), comment `## UAT: ACCEPTED` và gắn `status:done` (đóng issue), hoặc `## UAT: REJECTED` kèm điều chưa đạt và gắn `status:uat-failed`.
+- PO kiểm tra trên staging (skill `uat --run` dẫn từng mục), comment `## UAT: ACCEPTED` và gắn `status:done` (đóng issue), hoặc `## UAT: REJECTED` kèm điều chưa đạt và gắn `status:uat-failed`.
 - Lỗi phát hiện ngoài phạm vi AC là **issue mới**, không phải UAT failed.
 
 ### Luồng hotfix
@@ -283,7 +283,7 @@ và QA. Khi không đồng ý với AI, quyết định của con người đư�
 | Lỗi lọt sau release | Bug sau merge | Hiệu quả toàn quy trình |
 | Chi phí AI | Chi phí token / issue | Hiệu quả chi phí |
 
-Skill `status-report` tổng hợp các chỉ số này hằng tuần cho PM. Mục tiêu tham khảo (lead time giảm ≥ 40% sau 3 sprint, chờ review < 1 ngày, fail-to-dev < 20%, đạt review vòng 1 ≥ 60%, ≥ 80% AC có automation) ở [Quy trình Scrum mục 8](scrum.md).
+Skill `sprint report` tổng hợp các chỉ số này hằng tuần cho PM. Mục tiêu tham khảo (lead time giảm ≥ 40% sau 3 sprint, chờ review < 1 ngày, fail-to-dev < 20%, đạt review vòng 1 ≥ 60%, ≥ 80% AC có automation) ở [Quy trình Scrum mục 8](scrum.md).
 
 ## 12. Áp dụng cho toàn công ty
 

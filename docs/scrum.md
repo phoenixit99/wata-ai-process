@@ -35,16 +35,16 @@ Sprint gồm 10 bước liên tiếp. Màu thể hiện hướng chuyển dịch
 
 | # | Bước | Người | AI | Effort | Skill |
 |---|---|---|---|---|---|
-| 1 | Khám phá và viết yêu cầu | PO/BA | Soạn story, gợi ý AC | Tăng | `github-issue-create`, `feature-analysis` |
-| 2 | Refinement và kiểm tra DoR | PO + Tech Lead | Triage tự động, tách story, ước lượng nháp | Tăng | `backlog-refinement`, `github-issue-triage` |
-| 3 | Sprint Planning | Cả team | Số liệu năng lực review/QA | Giữ | `sprint-planning` |
-| 4 | Thiết kế UI và kiến trúc; thiết kế test | Designer duyệt UI, Tech Lead chốt kiến trúc, QA duyệt test case | Brief UI, phương án, thiết kế test | Giảm | `ui-design-brief`, `qa-test-cases`, `plan-approval` |
-| 5 | Lập trình và unit test | Dev giao việc, giám sát | Code, test | Giảm mạnh | `github-issue-implement` |
-| 6 | Code review | Người duyệt cuối | Review vòng 1 ở session riêng | Tăng | `github-pr-review`, `design-review` |
-| 7 | QA và automation | QA duyệt, test khám phá, thiết bị thật | Chạy automation theo test case đã thiết kế | Giảm | `e2e-playwright`, `qa-manual-session` |
-| 8 | CI/CD và triển khai | Phê duyệt merge và release | Kiểm tra tự động, release note | Giảm | `refutation-brief`, `merge-readiness`, `release-plan` |
-| 9 | Sprint Review và UAT | PO, khách hàng | Tài liệu demo, phản hồi thành story | Tăng | `uat-checklist`, `uat-run`, `sprint-review` |
-| 10 | Retrospective | Cả team | Số liệu, lỗi AI lặp lại | Giữ | `sprint-retro` |
+| 1 | Khám phá và viết yêu cầu | PO/BA | Soạn story, gợi ý AC | Tăng | `issue-create`, `refine` |
+| 2 | Refinement và kiểm tra DoR | PO + Tech Lead | Triage tự động, tách story, ước lượng nháp | Tăng | `refine --batch`, `triage` |
+| 3 | Sprint Planning | Cả team | Số liệu năng lực review/QA | Giữ | `sprint plan` |
+| 4 | Thiết kế UI và kiến trúc; thiết kế test | Designer duyệt UI, Tech Lead chốt kiến trúc, QA duyệt test case | Brief UI, phương án, thiết kế test | Giảm | `design-brief`, `test-design`, `test-design --approve` |
+| 5 | Lập trình và unit test | Dev giao việc, giám sát | Code, test | Giảm mạnh | `implement` |
+| 6 | Code review | Người duyệt cuối | Review vòng 1 ở session riêng | Tăng | `pr-review`, `pr-review --design` |
+| 7 | QA và automation | QA duyệt, test khám phá, thiết bị thật | Chạy automation theo test case đã thiết kế | Giảm | `qa`, `qa --manual` |
+| 8 | CI/CD và triển khai | Phê duyệt merge và release | Kiểm tra tự động, release note | Giảm | `merge-gate`, `merge-gate --merge`, `sprint release` |
+| 9 | Sprint Review và UAT | PO, khách hàng | Tài liệu demo, phản hồi thành story | Tăng | `uat`, `uat --run`, `sprint review` |
+| 10 | Retrospective | Cả team | Số liệu, lỗi AI lặp lại | Giữ | `sprint retro` |
 
 **[Đã thống nhất]** Test case được thiết kế ở bước 4, **trước khi code** (bản 1.0 đặt ở bước QA). Test bám theo
 yêu cầu thay vì bám theo code AI vừa viết; QA ở bước 7 duyệt kết quả và test khám phá.
@@ -106,13 +106,13 @@ Tham chiếu sprint 2 tuần. Team có thể rút sprint xuống 1 tuần khi lu
 
 | Sự kiện | Truyền thống | Có AI | Ghi chú | Skill |
 |---|---|---|---|---|
-| Sprint Planning | 4 giờ | 3–4 giờ | Lập kế hoạch theo năng lực review/QA | `sprint-planning` |
-| Daily Scrum | 15 phút | 15 phút | Bảng từ label thay báo cáo; tập trung vào việc bị chặn | `daily-scrum` |
-| Backlog Refinement | ≤ 10% sprint | 20–25% sprint | Tăng mạnh nhất | `backlog-refinement` |
-| Sprint Review | 2 giờ | 2–3 giờ | Nhiều tính năng cần demo hơn | `sprint-review` |
-| Retrospective | 1,5 giờ | 1,5 giờ | Thêm phần cải tiến skill/standard | `sprint-retro` |
+| Sprint Planning | 4 giờ | 3–4 giờ | Lập kế hoạch theo năng lực review/QA | `sprint plan` |
+| Daily Scrum | 15 phút | 15 phút | Bảng từ label thay báo cáo; tập trung vào việc bị chặn | `sprint daily` |
+| Backlog Refinement | ≤ 10% sprint | 20–25% sprint | Tăng mạnh nhất | `refine --batch` |
+| Sprint Review | 2 giờ | 2–3 giờ | Nhiều tính năng cần demo hơn | `sprint review` |
+| Retrospective | 1,5 giờ | 1,5 giờ | Thêm phần cải tiến skill/standard | `sprint retro` |
 | Review queue (mới) | — | 2 khung/ngày | Khung giờ cố định để duyệt PR (`sprint.review_slots`), tránh tồn đọng | — |
-| Duyệt thiết kế (mới) | — | 30–60 phút/nhóm story | PO + Designer + khách hàng, trong 1–2 ngày đầu sprint | `ui-design-brief` |
+| Duyệt thiết kế (mới) | — | 30–60 phút/nhóm story | PO + Designer + khách hàng, trong 1–2 ngày đầu sprint | `design-brief` |
 
 ## 6. Quy trình chi tiết theo giai đoạn
 
@@ -129,7 +129,7 @@ Scrum truyền thống.
 | Con người làm | Tech Lead: kiến trúc, coding standard. PM: label, board, CI, quyền truy cập. Security: chính sách dữ liệu, token, phạm vi quyền của AI. Designer: design system, brief mẫu. AI Enablement: skill, MCP |
 | AI làm | Dựng khung monorepo, CI, template issue/PR (`install.sh`); bản nháp coding standard; thiết lập công cụ AI tạo/ghi thiết kế vào Figma (công cụ do team thử nghiệm và chọn) |
 | Đầu ra | Repository, skill, coding standard, design system, DoR/DoD, MCP (GitHub, Figma, Playwright) |
-| Cổng chất lượng | Tech Lead và Security ký bộ chuẩn và quyền truy cập; Designer duyệt design system. Kiểm tra bằng `sprint0-setup` |
+| Cổng chất lượng | Tech Lead và Security ký bộ chuẩn và quyền truy cập; Designer duyệt design system. Kiểm tra bằng `install.sh --check` |
 
 **Effort: tăng.** Giai đoạn mới (khoảng 1–2 tuần), đầu tư một lần, dùng lại cho các sprint sau.
 
@@ -141,7 +141,7 @@ Scrum truyền thống.
 |---|---|
 | Đầu vào | Nhu cầu khách hàng, biên bản họp |
 | Con người làm | PO/BA: làm việc với khách, quyết định giá trị và ưu tiên, chốt AC. Designer: mô tả yêu cầu giao diện (brief UI) |
-| AI làm | Soạn story theo mẫu từ biên bản; đề xuất AC dạng Given/When/Then, chỉ ra trường hợp biên còn thiếu; tách story lớn (`github-issue-create`, `feature-analysis`) |
+| AI làm | Soạn story theo mẫu từ biên bản; đề xuất AC dạng Given/When/Then, chỉ ra trường hợp biên còn thiếu; tách story lớn (`issue-create`, `refine`) |
 | Đầu ra | Story ở `status:backlog` có Description, AC, Design, app bị ảnh hưởng |
 | Cổng chất lượng | Cổng G1: PO xác nhận story đủ các mục bắt buộc |
 
@@ -156,7 +156,7 @@ Scrum truyền thống.
 |---|---|
 | Đầu vào | Story ở `status:backlog` |
 | Con người làm | PO + Tech Lead: trả lời câu hỏi, chốt phạm vi, đánh giá rủi ro, chốt size và cờ `human-code`. PO bổ sung story bị Fail to dev |
-| AI làm | Triage tự động theo R1–R11; chuyển `test-design` hoặc `fail-to-dev` kèm câu chữ đề xuất; đề xuất tách story, ước lượng S/M/L/XL (`backlog-refinement`) |
+| AI làm | Triage tự động theo R1–R11; chuyển `test-design` hoặc `fail-to-dev` kèm câu chữ đề xuất; đề xuất tách story, ước lượng S/M/L/XL (`refine --batch`) |
 | Đầu ra | Danh sách story sẵn sàng, có `size:*` |
 | Cổng chất lượng | Đạt toàn bộ tiêu chí DoR bắt buộc |
 
@@ -171,7 +171,7 @@ Scrum truyền thống.
 |---|---|
 | Đầu vào | Story sẵn sàng, số liệu các sprint trước |
 | Con người làm | Cả team: chọn story, cam kết Sprint Goal. Tech Lead: xác định story cần người code trực tiếp (`human-code`) |
-| AI làm | Số liệu: lead time, số PR mỗi người review được, tỉ lệ Fail to dev; gợi ý chia nhỏ hoặc gom story (`sprint-planning`) |
+| AI làm | Số liệu: lead time, số PR mỗi người review được, tỉ lệ Fail to dev; gợi ý chia nhỏ hoặc gom story (`sprint plan`) |
 | Đầu ra | Sprint Backlog (milestone), Sprint Goal |
 | Cổng chất lượng | Tổng khối lượng không vượt năng lực review, QA và nghiệm thu của team |
 
@@ -185,15 +185,15 @@ Scrum truyền thống.
 |---|---|
 | Đầu vào | Story trong sprint, brief UI, design system |
 | Con người làm | Designer: viết brief, duyệt và tinh chỉnh Figma, kiểm tra UX và khả năng tiếp cận. PO + khách hàng: chọn và xác nhận phương án giao diện. Tech Lead: kiến trúc, contract API, mô hình dữ liệu; duyệt plan. QA: duyệt test case |
-| AI làm | Brief UI và 2–3 phương án theo design system, đủ trạng thái bình thường/lỗi/rỗng/đang tải (`ui-design-brief`); phương án kỹ thuật; test case và bảng AC → file → test (`qa-test-cases`) |
+| AI làm | Brief UI và 2–3 phương án theo design system, đủ trạng thái bình thường/lỗi/rỗng/đang tải (`design-brief`); phương án kỹ thuật; test case và bảng AC → file → test (`test-design`) |
 | Đầu ra | Frame Figma đã duyệt (`## Design approval: APPROVED`) gắn vào story; thiết kế kỹ thuật ngắn; bảng test case |
-| Cổng chất lượng | **Cổng G2**: Designer và khách xác nhận UI (story có UI), Tech Lead duyệt plan, QA duyệt test case (`plan-approval`), rồi người gắn `status:ready-to-dev` |
+| Cổng chất lượng | **Cổng G2**: Designer và khách xác nhận UI (story có UI), Tech Lead duyệt plan, QA duyệt test case (`test-design --approve`), rồi người gắn `status:ready-to-dev` |
 
 **Effort: giảm khoảng 25%.** AI tạo bản thiết kế và phương án; Designer chuyển từ vẽ từng màn hình sang mô tả,
 duyệt và tinh chỉnh. Quyết định kiến trúc vẫn do người.
 
 **[Đã thống nhất]** Duyệt thiết kế là **điều kiện của cổng G2** cho story có UI: không code khi Figma chưa được
-duyệt. `design-review` sau khi code chỉ để đối chiếu, không thay buổi duyệt này.
+duyệt. `pr-review --design` sau khi code chỉ để đối chiếu, không thay buổi duyệt này.
 
 ### 6.6 Lập trình và unit test
 
@@ -203,7 +203,7 @@ duyệt. `design-review` sau khi code chỉ để đối chiếu, không thay bu
 |---|---|
 | Đầu vào | Story `status:ready-to-dev`, coding standard, Figma đã duyệt, thiết kế kỹ thuật, bảng test case |
 | Con người làm | Developer: giao việc cho AI, theo dõi, xử lý phần AI làm sai hoặc phần phức tạp; chịu trách nhiệm cuối cùng về code. Story `human-code`: người code |
-| AI làm | Tạo branch, code và unit test theo bảng test case, chạy lint/typecheck/build; mở PR liên kết story (`github-issue-implement`) |
+| AI làm | Tạo branch, code và unit test theo bảng test case, chạy lint/typecheck/build; mở PR liên kết story (`implement`) |
 | Đầu ra | Pull Request kèm bảng đối chiếu AC |
 | Cổng chất lượng | CI xanh: lint, typecheck, unit test, build |
 
@@ -217,7 +217,7 @@ duyệt. `design-review` sau khi code chỉ để đối chiếu, không thay bu
 |---|---|
 | Đầu vào | Pull Request |
 | Con người làm | Reviewer/Tech Lead: duyệt cuối, tập trung nghiệp vụ, kiến trúc, bảo mật; quyết định chấp nhận hoặc yêu cầu sửa. Duyệt trong các khung giờ review cố định |
-| AI làm | Review vòng 1 **trong session riêng** theo 9 tiêu chí, comment theo dòng (`github-pr-review`). Blocker/Major trả về để AI sửa **ở session implement**, rồi một session review mới review lại (tối đa 3 vòng) |
+| AI làm | Review vòng 1 **trong session riêng** theo 9 tiêu chí, comment theo dòng (`pr-review`). Blocker/Major trả về để AI sửa **ở session implement**, rồi một session review mới review lại (tối đa 3 vòng) |
 | Đầu ra | PR được duyệt, story chuyển QA |
 | Cổng chất lượng | Không còn Blocker/Major; người duyệt cuối đã approve |
 
@@ -234,8 +234,8 @@ session đã viết code là session tệ nhất để review chính code đó.
 | Hạng mục | Nội dung |
 |---|---|
 | Đầu vào | PR đã qua review, bảng test case đã duyệt ở bước 6.5 |
-| Con người làm | QA: bổ sung kịch bản nghiệp vụ, test khám phá, test UX, test trên thiết bị thật (mobile) bằng `qa-manual-session` |
-| AI làm | Viết và chạy automation Playwright cho các test case `auto`; phân loại lỗi (test, sản phẩm, môi trường); lỗi sản phẩm trả về bước lập trình (tối đa 3 vòng); báo cáo lên PR (`e2e-playwright`) |
+| Con người làm | QA: bổ sung kịch bản nghiệp vụ, test khám phá, test UX, test trên thiết bị thật (mobile) bằng `qa --manual` |
+| AI làm | Viết và chạy automation Playwright cho các test case `auto`; phân loại lỗi (test, sản phẩm, môi trường); lỗi sản phẩm trả về bước lập trình (tối đa 3 vòng); báo cáo lên PR (`qa`) |
 | Đầu ra | Automation test, báo cáo QA passed/failed |
 | Cổng chất lượng | Mọi AC có ít nhất 1 test; automation xanh; mọi case P1 manual/mobile đạt |
 
@@ -250,7 +250,7 @@ sang duyệt và khám phá. Độ phủ automation tăng. Hàng chờ QA có gi
 |---|---|
 | Đầu vào | PR QA passed |
 | Con người làm | Tech Lead: refutation (G3) và merge (G4). PM/Tech Lead: phê duyệt release production |
-| AI làm | CI chạy toàn bộ kiểm tra; brief cho G3 (`refutation-brief`), kiểm tra trước merge (`merge-readiness`); kế hoạch release và release note (`release-plan`) |
+| AI làm | CI chạy toàn bộ kiểm tra; brief cho G3 (`merge-gate`), kiểm tra trước merge (`merge-gate --merge`); kế hoạch release và release note (`sprint release`) |
 | Đầu ra | Bản build trên staging/production, release note |
 | Cổng chất lượng | Chỉ con người được merge và phê duyệt release |
 
@@ -264,7 +264,7 @@ sang duyệt và khám phá. Độ phủ automation tăng. Hàng chờ QA có gi
 |---|---|
 | Đầu vào | Increment trên staging |
 | Con người làm | PO + khách hàng: demo, nghiệm thu, phản hồi. PO: cập nhật backlog theo phản hồi |
-| AI làm | UAT checklist (`uat-checklist`), dẫn PO nghiệm thu (`uat-run`); tài liệu demo, tóm tắt thay đổi; chuyển phản hồi thành story mới (`sprint-review`) |
+| AI làm | UAT checklist (`uat`), dẫn PO nghiệm thu (`uat --run`); tài liệu demo, tóm tắt thay đổi; chuyển phản hồi thành story mới (`sprint review`) |
 | Đầu ra | Tính năng được nghiệm thu (cổng G5), backlog cập nhật |
 | Cổng chất lượng | Khách hàng/PO chấp nhận theo AC |
 
@@ -279,7 +279,7 @@ trước với khách về thời gian phản hồi.
 |---|---|
 | Đầu vào | Số liệu sprint, các lỗi AI lặp lại |
 | Con người làm | Cả team: đánh giá, chọn hành động cải tiến. AI Enablement: cập nhật skill, coding standard, DoR |
-| AI làm | Tổng hợp số liệu và các lỗi lặp lại từ comment review/QA/UAT (`sprint-retro`) |
+| AI làm | Tổng hợp số liệu và các lỗi lặp lại từ comment review/QA/UAT (`sprint retro`) |
 | Đầu ra | Hành động cải tiến; issue/PR sửa skill (repo trung tâm) hoặc standard (repo project) |
 | Cổng chất lượng | Mỗi lỗi AI lặp lại ≥ 2 lần phải có hành động sửa skill hoặc standard |
 
@@ -355,7 +355,7 @@ năng lực BA, review và kiến trúc hơn, và ít năng lực code thuần h
 | Chi phí AI mỗi story | Token/license chia theo story | Theo dõi xu hướng |
 
 Danh sách chỉ số đầy đủ (gồm thời gian chờ con người, tỉ lệ Needs human, lỗi G3 bắt được, UAT rejected) ở
-[quy trình phát triển mục 11](process.md). `status-report` và `sprint-retro` tính các chỉ số này.
+[quy trình phát triển mục 11](process.md). `sprint report` và `sprint retro` tính các chỉ số này.
 
 ## 9. Rủi ro và kiểm soát
 

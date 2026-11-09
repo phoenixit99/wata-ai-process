@@ -21,9 +21,9 @@ khâu yêu cầu và refinement ([Scrum mục 7](../scrum.md)); PM theo dõi đ�
 
 | Khi | Bạn làm | Công cụ |
 |---|---|---|
-| Sprint 0 | Cấu hình MCP (GitHub, Figma, Playwright); chọn công cụ AI tạo Figma; kiểm tra setup; hướng dẫn team dùng skill | `/sprint0-setup` |
+| Sprint 0 | Cấu hình MCP (GitHub, Figma, Playwright); chọn công cụ AI tạo Figma; kiểm tra setup; hướng dẫn team dùng skill | `install.sh --check` |
 | Hằng ngày | Theo dõi `status:needs-human` và lỗi workflow agent; xử lý cấu hình hỏng | GitHub Actions |
-| Retrospective | Tổng hợp lỗi AI lặp lại; mỗi lỗi ≥ 2 lần phải có hành động sửa skill, coding standard hoặc DoR | `/sprint-retro` |
+| Retrospective | Tổng hợp lỗi AI lặp lại; mỗi lỗi ≥ 2 lần phải có hành động sửa skill, coding standard hoặc DoR | `/sprint retro` |
 | Khi cần sửa skill | Mở issue/PR trên repo trung tâm; skill thuộc lõi, không sửa thẳng trong `.claude/skills/` của project | Repo trung tâm |
 | Nâng phiên bản quy trình | Đọc CHANGELOG, chạy `install.sh --upgrade`, cập nhật `process_version` | `scripts/install.sh` |
 | Chi phí AI | Cùng PM theo dõi chi phí token, điều chỉnh `max_turns_per_run` | `project.yml` |
@@ -51,8 +51,8 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 
 | Sự kiện | Việc của bạn |
 |---|---|
-| Sprint 0 | MCP, công cụ Figma, skill, hướng dẫn team (`sprint0-setup`) |
-| Retro | Lỗi AI lặp lại thành hành động sửa skill/standard (`sprint-retro`) |
+| Sprint 0 | MCP, công cụ Figma, skill, hướng dẫn team (`install.sh --check`) |
+| Retro | Lỗi AI lặp lại thành hành động sửa skill/standard (`sprint retro`) |
 
 <!-- role-skills:start -->
 ## Skill của bạn
@@ -62,6 +62,5 @@ Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng l�
 | Skill | Dùng khi | Claude Code | GitHub |
 |---|---|---|---|
 | `dev-pipeline` | Định tuyến theo label; bảng việc theo vai trò | `/dev-pipeline <#>` | `@claude đọc .claude/skills/dev-pipeline/SKILL.md và làm theo cho issue #<số>` |
-| `sprint0-setup` | Kiểm tra checklist Sprint 0 của dự án | `/sprint0-setup <#>` | `@claude đọc .claude/skills/sprint0-setup/SKILL.md và làm theo cho issue #<số>` |
-| `sprint-retro` | Số liệu sprint, lỗi AI lặp lại thành đề xuất sửa skill | `/sprint-retro <#>` | `@claude đọc .claude/skills/sprint-retro/SKILL.md và làm theo cho issue #<số>` |
+| `sprint` | Sự kiện Scrum: `plan`, `daily`, `review`, `retro`, `report`, `release` | `/sprint plan|daily|review|retro|report|release` | `@claude đọc .claude/skills/sprint/SKILL.md và làm theo cho issue #<số>` |
 <!-- role-skills:end -->

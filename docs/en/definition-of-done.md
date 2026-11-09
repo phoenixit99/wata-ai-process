@@ -13,7 +13,7 @@ commitment; together with the [Definition of Ready](/en/process) (R1–R11) it f
 | D6 | Gate G3 passed (except `risk:low`) | Tech Lead/Reviewer | `## G3: OK` |
 | D7 | The UI matches the approved Figma frame | Designer | `## Design approval: APPROVED`, `## Design review: OK` (UI stories) |
 | D8 | Changed APIs stay compatible with supported mobile app versions | Reviewer | Contract section of `## Code review` |
-| D9 | "Owed before release" items are done (migrations, env vars, configuration) | Tech Lead | `## Build write-up`, `release-plan` |
+| D9 | "Owed before release" items are done (migrations, env vars, configuration) | Tech Lead | `## Build write-up`, `sprint release` |
 | D10 | Merged and deployed to staging | Tech Lead | PR merged, deploy record |
 | D11 | The PO (and the customer when needed) accepted against the AC | PO | `## UAT: ACCEPTED` |
 | D12 | User docs/README/release notes updated when behaviour changed | Dev, PO | PR or release notes |
@@ -24,4 +24,4 @@ commitment; together with the [Definition of Ready](/en/process) (R1–R11) it f
 **Not Done:** merged but not accepted; accepted but release prerequisites not done; "works on my machine"; tests
 skipped or weakened to go green.
 
-`merge-readiness` checks D1–D9 before gate G4; `uat-run` records D11.
+`merge-gate --merge` checks D1–D9 before gate G4; `uat --run` records D11.

@@ -1,5 +1,50 @@
 # Changelog
 
+## 1.5.0 — 2026-11-09
+
+**Gộp 27 skill thành 13.** Mỗi skill ứng với một bước hoặc một cổng; việc phụ của bước là một chế độ. Heading,
+label và luồng trạng thái **không đổi**, nên contract, guard và chỉ số giữ nguyên.
+
+- Lệnh cần nhớ: `/dev-pipeline <issue>` (Dev, Tech Lead), `/sprint <sự kiện>` (PM), `@claude` trên GitHub (PO, BA,
+  QA, Designer; `wata-mention` giờ có chỉ dẫn chọn skill theo trạng thái issue).
+- `--auto` (do `wata-agent` gọi) chỉ chạy chế độ mặc định; chế độ của con người (`--approve`, `--merge`, `--run`,
+  `--manual`, `--design`, `--fix`, `--figma`, `--batch`) từ chối khi có `--auto`.
+- Kiểm tra Sprint 0 chuyển thành `scripts/install.sh <repo> --check` (S1–S15, chỉ đọc, không in secret).
+- `install.sh --upgrade` xoá thư mục skill đã bỏ trong `.claude/skills/` của project.
+- `check-consistency.py` báo lỗi nếu tên skill cũ còn xuất hiện; catalog có trường `retired` và `usage`.
+- Security có skill riêng là `merge-gate` (được hỏi ở G3 cho `risk:high`).
+
+**Cần làm khi nâng cấp:** tên skill trong `workflow_dispatch` của `wata-agent` đã đổi (ví dụ
+`github-issue-implement` → `implement`); script hoặc thói quen gọi tay theo tên cũ phải đổi.
+
+| Tên cũ | Lời gọi mới |
+|---|---|
+| `github-issue-create` | `issue-create` |
+| `github-issue-triage` | `triage` |
+| `feature-analysis` | `refine` |
+| `backlog-refinement` | `refine --batch` |
+| `qa-test-cases` | `test-design` |
+| `plan-approval` | `test-design --approve` |
+| `github-issue-implement` | `implement` |
+| `qa-failed-fix` | `implement --fix` |
+| `figma-to-code` | `implement --figma` |
+| `github-pr-review` | `pr-review` |
+| `design-review` | `pr-review --design` |
+| `e2e-playwright` | `qa` |
+| `qa-manual-session` | `qa --manual` |
+| `refutation-brief` | `merge-gate` |
+| `merge-readiness` | `merge-gate --merge` |
+| `uat-checklist` | `uat` |
+| `uat-run` | `uat --run` |
+| `ui-design-brief` | `design-brief` |
+| `sprint-planning` | `sprint plan` |
+| `daily-scrum` | `sprint daily` |
+| `sprint-review` | `sprint review` |
+| `sprint-retro` | `sprint retro` |
+| `status-report` | `sprint report` |
+| `release-plan` | `sprint release` |
+| `sprint0-setup` | `install.sh --check` |
+
 ## 1.4.2 — 2026-11-09
 
 - **Không còn issue nằm im ở trạng thái của AI.** `wata-agent` thêm bước chạy sau mọi lần chạy skill: nếu skill

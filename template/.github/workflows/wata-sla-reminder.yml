@@ -61,7 +61,7 @@ jobs:
                 .sort((a, b) => rank(a) - rank(b) || new Date(a.created_at) - new Date(b.created_at));
               for (const i of waiting.slice(0, free)) {
                 await github.rest.actions.createWorkflowDispatch({ ...repo, workflow_id: 'wata-agent.yml',
-                  ref: cfg.default_branch || 'main', inputs: { issue: String(i.number), skill: 'github-issue-implement' } });
+                  ref: cfg.default_branch || 'main', inputs: { issue: String(i.number), skill: 'implement' } });
               }
               return;
             }
