@@ -1,4 +1,5 @@
-# 1. Nhắc người phụ trách khi issue nằm ở hàng chờ của con người quá SLA (mỗi sáng ngày làm việc).
+# 1. Nhắc người phụ trách khi issue nằm ở hàng chờ của con người quá SLA, và khi PR chờ người review
+#    quá sla_hours.review (mỗi sáng ngày làm việc).
 # 2. Gọi implement cho issue ready-to-dev đang chờ khi WIP còn chỗ, theo priority (mỗi giờ).
 # SLA tính theo giờ đồng hồ, chưa trừ ngày nghỉ (đơn giản hoá; điều chỉnh nếu cần).
 name: wata-sla-reminder
@@ -88,4 +89,30 @@ jobs:
                 summary.push(`#${i.number} ${q.label} ${Math.round(h)}h`);
               }
             }
+            // Review của người (nút thắt chính theo Quy trình Scrum mục 6.7). Không phải một status:*:
+            // AI review PASS thì issue sang status:qa ngay, còn người duyệt trên PR (CODEOWNERS, chặn ở G4).
+            // Vì vậy đo trên PR: từ lúc PR mở (không phải draft) đến khi có approve. Khớp chỉ số "Review wait".
+            if (sla.review) {
+              const prs = await github.paginate(github.rest.pulls.list, { ...repo, state: 'open', per_page: 100 });
+              // Chỉ PR của quy trình (body có "Refs #", contract bắt buộc); bỏ Dependabot và PR ngoài quy trình.
+              for (const pr of prs.filter(p => !p.draft && /Refs #\d+/.test(p.body || ''))) {
+                const h = (Date.now() - new Date(pr.created_at)) / 36e5;
+                if (h < sla.review) continue;
+                const reviews = await github.paginate(github.rest.pulls.listReviews,
+                  { ...repo, pull_number: pr.number, per_page: 100 });
+                const latest = {};   // trạng thái mới nhất của từng người review (bỏ COMMENTED)
+                for (const r of reviews) if (r.user && r.state !== 'COMMENTED') latest[r.user.login] = r.state;
+                const states = Object.values(latest);
+                if (states.includes('APPROVED')) continue;
+                if (states.includes('CHANGES_REQUESTED')) continue;   // đang chờ tác giả sửa, không phải chờ người review
+                const requested = (pr.requested_reviewers || []).map(u => u.login);
+                const owners = requested.length ? requested : (people.tech_lead || []);
+                await github.rest.issues.createComment({ ...repo, issue_number: pr.number, body:
+                  `${at(owners)} PR đã mở ${Math.round(h)} giờ chưa được duyệt, quá SLA review ${sla.review} giờ. ` +
+                  `Việc cần làm: review và approve hoặc yêu cầu sửa (khung review cố định: ` +
+                  `${((cfg.sprint || {}).review_slots || []).join(', ') || 'chưa đặt'}). ${at(people.pm)}` });
+                summary.push(`PR #${pr.number} chờ review ${Math.round(h)}h`);
+              }
+            }
+
             core.summary.addHeading('Quá SLA').addList(summary.length ? summary : ['Không có']).write();

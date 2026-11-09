@@ -1,7 +1,7 @@
 # Cấu hình project cho bộ quy trình WATA AI Agent.
 # Schema đầy đủ: docs/agents/contract.md mục 9. Tech Lead và PM điền trước khi bật agent.
 
-process_version: "1.4.1"
+process_version: "1.4.2"
 language: vi
 tracker: github
 repo: <owner>/<repo>
@@ -79,6 +79,7 @@ limits:            # ĐỀ XUẤT — team chốt trước pilot
 sla_hours:         # ĐỀ XUẤT — team chốt trước pilot (giờ làm việc)
   fail_to_dev: 24
   plan_approval: 8
+  review: 8                   # PR mở → người approve (mục tiêu "Review wait < 1 ngày làm việc")
   needs_human: 8
   merge_decision: 8
   uat: 48

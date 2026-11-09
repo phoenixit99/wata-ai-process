@@ -1,6 +1,6 @@
 {
   "name": "wata-ai-process",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "description": "WATA Software — AI Agent software development process (bilingual docs site)",
   "type": "module",
