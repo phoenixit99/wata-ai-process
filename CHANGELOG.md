@@ -1,5 +1,13 @@
 # Changelog
 
+## Chưa phát hành
+
+- **Cài bằng một lệnh:** vào thư mục project, chạy `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash`
+  (`-s -- --upgrade`, `-s -- --check`; ghim phiên bản bằng `WATA_REF=<tag>`). Không cần clone repo quy trình.
+- `install.sh` tự điền `repo:` trong `.claude/project.yml` từ `git remote origin` khi còn placeholder `<owner>/<repo>`.
+- Sửa `install.sh --check`: khi `gh` đã đăng nhập nhưng không đọc được label/secret của repo, script dừng ở S6
+  thay vì chạy hết S7–S15.
+
 ## 1.5.0 — 2026-11-09
 
 **Gộp 27 skill thành 13.** Mỗi skill ứng với một bước hoặc một cổng; việc phụ của bước là một chế độ. Heading,

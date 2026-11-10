@@ -4,7 +4,7 @@ layout: home
 hero:
   name: AI Agent Software Development Process
   text: From issue to UAT, the AI does the repetitive work and people make the decisions
-  tagline: WATA Software · For every project · Version 1.4
+  tagline: WATA Software · For every project · Version 1.5
   actions:
     - theme: brand
       text: Read the process

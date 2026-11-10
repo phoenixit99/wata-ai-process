@@ -54,6 +54,7 @@ wata-ai-process/
 │   ├── .claude/{settings.json, project.yml}
 │   └── .github/{ISSUE_TEMPLATE/, workflows/, labels.yml, CODEOWNERS, pull_request_template.md}
 ├── scripts/
+│   ├── bootstrap.sh                Cài bằng một lệnh (curl | bash), gọi install.sh
 │   ├── install.sh                  Cài / nâng cấp vào một project
 │   ├── setup-labels.sh             Tạo bộ label trên GitHub
 │   ├── gen-effort-chart.py         Sinh biểu đồ effort cho trang Scrum
@@ -108,11 +109,16 @@ Bảng dưới sinh tự động từ [`skills/catalog.json`](skills/catalog.jso
 
 ## Cài vào một project
 
+Vào thư mục repo project, dán một lệnh:
+
 ```bash
-scripts/install.sh <đường-dẫn-repo-project>
-scripts/setup-labels.sh <owner>/<repo> <đường-dẫn-repo-project>/.claude/project.yml
+curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash
 ```
-Sau đó làm theo [`docs/setup-guide.md`](docs/setup-guide.md). Nâng cấp: `scripts/install.sh <repo> --upgrade`.
+Nâng cấp: thêm `-s -- --upgrade` sau `bash`; kiểm tra Sprint 0: `-s -- --check`; ghim phiên bản: `WATA_REF=v1.5.0 bash`.
+Lệnh gọi `scripts/install.sh` (vẫn chạy trực tiếp được: `scripts/install.sh <repo> [--upgrade|--check]`) và tự điền
+`repo:` trong `.claude/project.yml` từ `git remote origin`. Sau đó mở Claude Code **từ thư mục project** để nạp skill,
+tạo label bằng `scripts/setup-labels.sh <owner>/<repo> <repo>/.claude/project.yml` (sửa `apps` trước, vì label `app:*`
+lấy từ đó), rồi làm theo [`docs/setup-guide.md`](docs/setup-guide.md).
 
 Khi nâng cấp, script chỉ ghi đè **lớp lõi**: skill, `docs/agents/*`, `.github/workflows/wata-*.yml`,
 `.github/labels.yml` (nơi chứa tên label, heading, luật chuyển trạng thái; phải cùng phiên bản). **Lớp

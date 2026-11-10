@@ -7,7 +7,7 @@ function sidebarVi() {
     {
       text: 'Quy trình phát triển',
       items: [
-        { text: 'Quy trình phát triển v1.4', link: '/process' },
+        { text: 'Quy trình phát triển v1.5', link: '/process' },
         { text: 'RACI theo trạng thái', link: '/raci' },
         { text: 'Phân loại rủi ro', link: '/risk-tiers' },
         { text: 'Viết Acceptance Criteria', link: '/writing-acceptance-criteria' },
@@ -60,7 +60,7 @@ function sidebarEn() {
     {
       text: 'Development process',
       items: [
-        { text: 'Development process v1.4', link: '/en/process' },
+        { text: 'Development process v1.5', link: '/en/process' },
         { text: 'RACI by status', link: '/en/raci' },
         { text: 'Risk tiers', link: '/en/risk-tiers' },
         { text: 'Writing acceptance criteria', link: '/en/writing-acceptance-criteria' },

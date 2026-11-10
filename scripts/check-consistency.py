@@ -108,6 +108,23 @@ versions = {
 if len(set(versions.values())) != 1:
     err(f"phiên bản lệch: {versions}")
 
+# 7b. Phiên bản hiển thị trên website (gõ tay) phải khớp VERSION.
+full = versions["VERSION"]; short = ".".join(full.split(".")[:2])
+site = {
+    "docs/index.md": rf"Phiên bản {re.escape(short)}\b",
+    "docs/en/index.md": rf"Version {re.escape(short)}\b",
+    "docs/process.md": rf"^# .*— v{re.escape(short)}$",
+    "docs/en/process.md": rf"^# .*— v{re.escape(short)}$",
+}
+for f, pat in site.items():
+    if not re.search(pat, read(f), re.M):
+        err(f"{f}: phiên bản hiển thị chưa là {short}")
+cfg = read("docs/.vitepress/config.mts")
+for pat in (rf"Quy trình phát triển v{re.escape(short)}'", rf"Development process v{re.escape(short)}'",
+            rf"Phiên bản {re.escape(full)}'", rf"Version {re.escape(full)}'"):
+    if not re.search(pat, cfg):
+        err(f"docs/.vitepress/config.mts: thiếu '{pat}' (phiên bản hiển thị chưa khớp {full})")
+
 # 8. Label dùng ở bất kỳ đâu phải có trong labels.yml.
 defined = set(re.findall(r'name: "([^"]+)"', read("template/.github/labels.yml")))
 for p in list((ROOT / "skills").rglob("*.md")) + list((ROOT / "template").rglob("*")) + list((ROOT / "docs").rglob("*.md")):
