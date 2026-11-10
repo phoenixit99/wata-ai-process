@@ -11,11 +11,23 @@ Dành cho Tech Lead và PM của project. Làm theo thứ tự; mỗi mục có 
 
 ## 1. Cài bộ quy trình vào repo
 
+Vào thư mục repo project và dán **một lệnh**:
+
 ```bash
-git clone https://github.com/phoenixit99/wata-ai-process ~/wata-ai-process      # một lần
 cd <project-repo>
-~/wata-ai-process/scripts/install.sh .                     # copy template, skill, contract
+curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash
 ```
+Lệnh tải bản quy trình mới nhất vào thư mục tạm, copy template, skill, contract vào repo, tự điền `repo:` trong
+`.claude/project.yml` từ `git remote origin`, rồi xoá thư mục tạm. Cần `git`, `curl`, `tar`, `python3`.
+
+- Nâng cấp: `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash -s -- --upgrade`
+- Kiểm tra Sprint 0: `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash -s -- --check`
+- Ghim phiên bản (khuyên dùng cho project đang chạy): thêm `WATA_REF=v1.5.0` trước `bash`, ví dụ `... | WATA_REF=v1.5.0 bash`
+- Đã clone repo quy trình: `~/wata-ai-process/scripts/install.sh .` vẫn dùng được như trước
+
+Sau khi cài, **mở Claude Code từ chính thư mục project** (`cd <project-repo> && claude`) thì mới gọi được `/issue-create`,
+`/dev-pipeline`... Mở từ thư mục khác sẽ báo `Unknown command`.
+
 Script **không ghi đè** file cấu hình đã có (in ra danh sách bỏ qua); so sánh và gộp tay các file đó. `--upgrade` chỉ ghi đè lớp lõi (skill, `docs/agents/*`, workflow `wata-*.yml`, `labels.yml`).
 
 Kiểm tra: có `.claude/skills/triage/SKILL.md`, `docs/agents/contract.md`, `.github/workflows/wata-agent.yml`.

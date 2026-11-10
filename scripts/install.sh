@@ -63,13 +63,13 @@ if [ "$MODE" = "--check" ]; then
   grep -q '<TÊN PROJECT>\|<lệnh>' CLAUDE.md 2>/dev/null && bad S6 "CLAUDE.md" "còn placeholder (Tech Lead)" || ok S6 "CLAUDE.md đã điền"
   if $has_gh && [ -n "$repo" ]; then
     want=$(sed -n 's/^ *- *name: *"\([^"]*\)".*/\1/p' .github/labels.yml | sort)
-    have=$(gh label list --repo "$repo" --limit 300 --json name --jq '.[].name' 2>/dev/null | sort)
+    have=$(gh label list --repo "$repo" --limit 300 --json name --jq '.[].name' 2>/dev/null | sort || true)
     lack=$(comm -23 <(echo "$want") <(echo "$have") | tr '\n' ' ')
     [ -z "$lack" ] && ok S7 "Label đủ" || bad S7 "Label" "thiếu: $lack(PM: scripts/setup-labels.sh)"
     prot=$(gh api "repos/$repo/branches/main/protection" 2>/dev/null || true)
     echo "$prot" | grep -q '"require_code_owner_reviews":true' && echo "$prot" | grep -q '"required_status_checks"' \
       && ok S8 "Branch protection trên main" || bad S8 "Branch protection" "cần PR, CODEOWNERS, required checks, cấm force-push (Tech Lead, Security)"
-    secrets=$(gh secret list --repo "$repo" 2>/dev/null | awk '{print $1}'); vars=$(gh variable list --repo "$repo" 2>/dev/null | awk '{print $1}')
+    secrets=$(gh secret list --repo "$repo" 2>/dev/null | awk '{print $1}' || true); vars=$(gh variable list --repo "$repo" 2>/dev/null | awk '{print $1}' || true)
     s10=""; for n in WATA_APP_PRIVATE_KEY ANTHROPIC_API_KEY; do echo "$secrets" | grep -qx "$n" || s10="$s10 secret:$n"; done
     echo "$vars" | grep -qx WATA_APP_ID || s10="$s10 var:WATA_APP_ID"
     [ -z "$s10" ] && ok S10 "GitHub App và secret (chỉ kiểm tên)" || bad S10 "GitHub App/secret" "thiếu${s10} (Security)"
@@ -120,6 +120,17 @@ while IFS= read -r -d '' f; do
   rel="${f#$SRC/template/}"
   if is_core_template "$rel"; then place "$f" "$DEST/$rel" core; else place "$f" "$DEST/$rel" config; fi
 done < <(find "$SRC/template" -type f -print0)
+
+# Điền repo: <owner>/<repo> từ remote origin trên GitHub. Chỉ thay placeholder, không đụng giá trị đã điền.
+yml="$DEST/.claude/project.yml"
+if [ -f "$yml" ] && grep -q '^repo: *<owner>/<repo>' "$yml"; then
+  url="$(git -C "$DEST" remote get-url origin 2>/dev/null || true)"
+  slug="$(printf '%s' "$url" | sed -nE 's#^(git@github\.com:|ssh://git@github\.com/|https://github\.com/)([^/]+/[^/]+)$#\2#p' | sed 's/\.git$//')"
+  if [ -n "$slug" ]; then
+    sed -i.bak "s#^repo: *<owner>/<repo>#repo: $slug#" "$yml" && rm -f "$yml.bak"
+    echo "  ~ .claude/project.yml: repo: $slug (từ git remote origin)"
+  fi
+fi
 
 echo "Coding standards (bản khởi đầu, project tự chỉnh):"
 for f in "$SRC"/docs/coding-standards/*.md; do

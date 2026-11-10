@@ -11,11 +11,24 @@ For a project's Tech Lead and PM. Work through it in order; every section says h
 
 ## 1. Install the process into the repo
 
+Go to the project repo and paste **one command**:
+
 ```bash
-git clone https://github.com/phoenixit99/wata-ai-process ~/wata-ai-process   # once
 cd <project-repo>
-~/wata-ai-process/scripts/install.sh .                                        # templates, skills, contract
+curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash
 ```
+It downloads the latest process into a temporary folder, copies the templates, skills and contract into the repo,
+fills `repo:` in `.claude/project.yml` from `git remote origin`, then deletes the temporary folder. Needs `git`,
+`curl`, `tar` and `python3`.
+
+- Upgrade: `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash -s -- --upgrade`
+- Sprint 0 check: `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash -s -- --check`
+- Pin a version (recommended for a running project): put `WATA_REF=v1.5.0` before `bash`, e.g. `... | WATA_REF=v1.5.0 bash`
+- Already cloned the process repo: `~/wata-ai-process/scripts/install.sh .` still works
+
+After installing, **start Claude Code from the project folder itself** (`cd <project-repo> && claude`) so that
+`/issue-create`, `/dev-pipeline`... are available. Started from another folder, they show `Unknown command`.
+
 The script **never overwrites** configuration files that already exist (it lists what it skipped);
 compare and merge those by hand. `--upgrade` overwrites only the core layer (skills, `docs/agents/*`,
 `wata-*.yml` workflows, `labels.yml`).
