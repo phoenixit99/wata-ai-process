@@ -13,11 +13,11 @@ one-off investment is reused in every later sprint ([Scrum process, section 6.1]
 | Designer | Build and describe the **design system** in a form the AI can read (colours, fonts, spacing, components, layout rules, UX principles); prepare a sample brief | `docs/design-system.md` |
 | AI Enablement | Configure MCP (GitHub, Figma, Playwright); trial and choose the tool for AI to create/write designs in Figma; coach the team on skills | `.mcp.json`, tool notes |
 | PO/BA | Prepare the initial backlog from the template; agree DoR/DoD | First backlog |
-| AI | Scaffold the monorepo, CI, issue/PR templates (`install.sh`); draft coding standards; check the checklist (`install.sh --check`) | Repository, Sprint 0 report |
+| AI | Scaffold the monorepo, CI, issue/PR templates (one-line install); draft coding standards; check the checklist (`--check`) | Repository, Sprint 0 report |
 
 ## Checklist
 
-Run `install.sh --check` to check automatically what commands can check. Detailed installation steps are in the
+Run the install command with `--check` to check automatically what commands can check. Detailed installation steps are in the
 [setup guide](/en/setup-guide).
 
 - [ ] Process installed, `process_version` matches

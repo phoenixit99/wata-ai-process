@@ -40,7 +40,7 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 
 | Sự kiện | Việc của bạn |
 |---|---|
-| Sprint 0 | Kiến trúc, coding standard, branch protection, CODEOWNERS (`install.sh --check`) |
+| Sprint 0 | Kiến trúc, coding standard, branch protection, CODEOWNERS ([`--check`](/setup-guide)) |
 | Refinement | Đánh giá rủi ro kỹ thuật, chốt size và cờ `human-code` (`refine --batch`) |
 | Planning | Xác định story cần người code; kiểm năng lực review |
 | Trong sprint | Kiến trúc, G2, G3, G4; giữ khung giờ review cố định |

@@ -164,7 +164,7 @@ cho nội bộ, bật Deployment Protection trong cài đặt project trên Verc
 | Tài liệu quy trình, vai trò, contract | Hoàn chỉnh v1.2, chờ team review |
 | Skill (13) | Viết xong; đồng bộ với catalog (`scripts/check-consistency.py` xanh); **chưa chạy trên repo thật** |
 | Workflow GitHub Actions | Viết xong. Đã kiểm: YAML parse được; logic định tuyến của `wata-agent` chạy giả lập 10 tình huống (gh/yq giả). **Chưa** chạy actionlint/shellcheck (máy không có) và **chưa chạy trên GitHub** |
-| `install.sh`, `setup-labels.sh` | `install.sh` đã chạy thử trên repo trống (cài, nâng cấp, mọi đường dẫn tài liệu skill tham chiếu đều tồn tại). `setup-labels.sh`: đã thử phần đọc file, chưa gọi `gh` thật |
+| `install.sh`, `setup-labels.sh` | `install.sh` đã chạy thử trên repo trống (cài, nâng cấp, mọi đường dẫn tài liệu skill tham chiếu đều tồn tại). `setup-labels.sh`: đã chạy thật bằng `gh` trên một repo project (tạo đủ label). `bootstrap.sh`: đã chạy thật `curl … | bash` từ `main` trên repo trống |
 | Cần đối chiếu trước khi bật | Action có nạp `.claude/skills` khi chạy bằng `@claude` không (tài liệu không nói; đã có câu gọi dự phòng); định dạng `.claude-plugin/*.json`; địa chỉ Figma MCP trong `.mcp.json`; `yq` có sẵn trên runner (đúng với runner GitHub-hosted theo hiểu biết hiện tại, chưa kiểm) |
 | Coding standard | Bản khởi đầu, Tech Lead từng project chỉnh |
 | SLA, WIP, ngân sách AI, ngưỡng rủi ro | **Đề xuất**, team chốt trước pilot |

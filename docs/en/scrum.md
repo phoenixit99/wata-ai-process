@@ -126,9 +126,9 @@ traditional Scrum.
 |---|---|
 | Input | Contract, overall scope, tech stack |
 | People | Tech Lead: architecture, coding standards. PM: labels, board, CI, access. Security: data policy, tokens, AI permissions. Designer: design system, sample brief. AI Enablement: skills, MCP |
-| AI | Scaffolds the monorepo, CI, issue/PR templates (`install.sh`); drafts coding standards; sets up the tool for AI to create/write designs in Figma (tool chosen by the team after trials) |
+| AI | Scaffolds the monorepo, CI, issue/PR templates (one-line install); drafts coding standards; sets up the tool for AI to create/write designs in Figma (tool chosen by the team after trials) |
 | Output | Repository, skills, coding standards, design system, DoR/DoD, MCP (GitHub, Figma, Playwright) |
-| Gate | Tech Lead and Security sign off standards and access; Designer approves the design system. Checked with `install.sh --check` |
+| Gate | Tech Lead and Security sign off standards and access; Designer approves the design system. Checked with [`--check`](/en/setup-guide) |
 
 **Effort: up.** A new stage (about 1–2 weeks), a one-off investment reused in later sprints.
 

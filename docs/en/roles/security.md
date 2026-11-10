@@ -8,7 +8,7 @@ and whenever permissions or data change.
 | When | You do | Evidence |
 |---|---|---|
 | Sprint 0 | Approve the data policy: what data may go to the AI (no real customer data in prompts), the AI clause in the contract | Approval record |
-| Sprint 0 | Approve the GitHub App's permissions (minimal, no branch-protection bypass), MCP tokens (fine-grained, project repo only), secrets | `install.sh --check` items S8, S10, S13 |
+| Sprint 0 | Approve the GitHub App's permissions (minimal, no branch-protection bypass), MCP tokens (fine-grained, project repo only), secrets | [`--check`](/en/setup-guide) items S8, S10, S13 |
 | `risk:high` stories | Consulted at gates G2 and G3 for auth, payments, personal data | Issue comments |
 | Regularly | Spot-check approved PRs; review app and token permissions; rotate secrets | Review notes |
 | Incidents | Revoke tokens/secrets, pause the agent workflow, coordinate the hotfix | `type:hotfix` issue |
@@ -25,7 +25,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 
 | Event | Your part |
 |---|---|
-| Sprint 0 | Approve data policy, GitHub App permissions, tokens (`install.sh --check`) |
+| Sprint 0 | Approve data policy, GitHub App permissions, tokens ([`--check`](/en/setup-guide)) |
 | During the sprint | Consulted on `risk:high` stories at G2/G3 |
 
 <!-- role-skills:start -->
