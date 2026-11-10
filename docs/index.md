@@ -47,11 +47,11 @@ features:
 | PO | [Hướng dẫn PO](/roles/po), [Viết AC](/writing-acceptance-criteria) | `issue-create`, `uat --run` |
 | BA | [Hướng dẫn BA](/roles/ba) | `refine`, `issue-create` |
 | PM | [Hướng dẫn PM](/roles/pm), [RACI](/raci) | `sprint report`, `sprint release` |
-| Designer | [Hướng dẫn Designer](/roles/designer) | `pr-review --design` |
+| Designer | [Hướng dẫn Designer](/roles/designer) | `design-brief`, `pr-review --design` |
 | Developer | [Hướng dẫn Dev](/roles/dev) | `implement`, `implement --fix` |
 | Tech Lead | [Hướng dẫn Tech Lead](/roles/tech-lead), [Cài đặt](/setup-guide) | `test-design --approve`, `merge-gate --merge`, `hotfix` |
 | QA | [Hướng dẫn QA](/roles/qa) | `test-design --approve`, `qa --manual` |
-| AI Enablement | [Hướng dẫn AI Enablement](/roles/ai-enablement) | `sprint retro`, `install.sh --check` |
-| Security | [Hướng dẫn Security](/roles/security) | `merge-gate`, `install.sh --check` |
+| AI Enablement | [Hướng dẫn AI Enablement](/roles/ai-enablement) | `sprint retro`, [`--check`](/setup-guide) |
+| Security | [Hướng dẫn Security](/roles/security) | `merge-gate`, [`--check`](/setup-guide) |
 
 Mọi vai trò đều dùng được `dev-pipeline` để xem việc của mình hôm nay.

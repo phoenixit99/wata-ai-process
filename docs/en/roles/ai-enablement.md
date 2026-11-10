@@ -22,11 +22,11 @@ requirements and refinement ([Scrum section 7](/en/scrum)); the PM makes sure th
 
 | When | You do | Tool |
 |---|---|---|
-| Sprint 0 | Configure MCP (GitHub, Figma, Playwright); choose the AI Figma tool; check the setup; coach the team on skills | `install.sh --check` |
+| Sprint 0 | Configure MCP (GitHub, Figma, Playwright); choose the AI Figma tool; check the setup; coach the team on skills | [`--check`](/en/setup-guide) |
 | Daily | Watch `status:needs-human` and agent workflow failures; fix broken configuration | GitHub Actions |
 | Retrospective | Compile repeated AI errors; every error seen ≥ 2 times gets an action fixing a skill, coding standard or DoR | `/sprint retro` |
 | A skill needs fixing | Open an issue/PR on the central repo; skills are core, never edited directly in the project's `.claude/skills/` | Central repo |
-| Upgrading the process | Read the CHANGELOG, run `install.sh --upgrade`, update `process_version` | `scripts/install.sh` |
+| Upgrading the process | Read the CHANGELOG, run the install command with `--upgrade`, update `process_version` | [Setup](/en/setup-guide) |
 | AI cost | Track token cost with the PM, adjust `max_turns_per_run` | `project.yml` |
 
 ## Metrics
@@ -52,7 +52,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 
 | Event | Your part |
 |---|---|
-| Sprint 0 | MCP, Figma tool, skills, team coaching (`install.sh --check`) |
+| Sprint 0 | MCP, Figma tool, skills, team coaching ([`--check`](/en/setup-guide)) |
 | Retro | Turn repeated AI errors into skill/standard fixes (`sprint retro`) |
 
 <!-- role-skills:start -->

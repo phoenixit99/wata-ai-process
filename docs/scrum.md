@@ -127,9 +127,9 @@ Scrum truyền thống.
 |---|---|
 | Đầu vào | Hợp đồng, phạm vi tổng thể, stack công nghệ |
 | Con người làm | Tech Lead: kiến trúc, coding standard. PM: label, board, CI, quyền truy cập. Security: chính sách dữ liệu, token, phạm vi quyền của AI. Designer: design system, brief mẫu. AI Enablement: skill, MCP |
-| AI làm | Dựng khung monorepo, CI, template issue/PR (`install.sh`); bản nháp coding standard; thiết lập công cụ AI tạo/ghi thiết kế vào Figma (công cụ do team thử nghiệm và chọn) |
+| AI làm | Dựng khung monorepo, CI, template issue/PR (lệnh cài một dòng); bản nháp coding standard; thiết lập công cụ AI tạo/ghi thiết kế vào Figma (công cụ do team thử nghiệm và chọn) |
 | Đầu ra | Repository, skill, coding standard, design system, DoR/DoD, MCP (GitHub, Figma, Playwright) |
-| Cổng chất lượng | Tech Lead và Security ký bộ chuẩn và quyền truy cập; Designer duyệt design system. Kiểm tra bằng `install.sh --check` |
+| Cổng chất lượng | Tech Lead và Security ký bộ chuẩn và quyền truy cập; Designer duyệt design system. Kiểm tra bằng [`--check`](/setup-guide) |
 
 **Effort: tăng.** Giai đoạn mới (khoảng 1–2 tuần), đầu tư một lần, dùng lại cho các sprint sau.
 

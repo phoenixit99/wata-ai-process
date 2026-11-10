@@ -40,7 +40,7 @@ Nhịp sprint và sự kiện: [Quy trình Scrum](../scrum.md).
 
 | Sự kiện | Việc của bạn |
 |---|---|
-| Sprint 0 | Label, board, CI, quyền truy cập, số liệu nền (`install.sh --check`) |
+| Sprint 0 | Label, board, CI, quyền truy cập, số liệu nền ([`--check`](/setup-guide)) |
 | Planning | Tính năng lực theo review/QA, chốt phạm vi (`sprint plan`) |
 | Daily | Bảng việc bị chặn và hàng chờ (`sprint daily`) |
 | Review | Tài liệu demo cùng PO (`sprint review`) |

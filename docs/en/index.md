@@ -47,11 +47,11 @@ features:
 | PO | [PO guide](/en/roles/po), [Writing AC](/en/writing-acceptance-criteria) | `issue-create`, `uat --run` |
 | BA | [BA guide](/en/roles/ba) | `refine`, `issue-create` |
 | PM | [PM guide](/en/roles/pm), [RACI](/en/raci) | `sprint report`, `sprint release` |
-| Designer | [Designer guide](/en/roles/designer) | `pr-review --design` |
+| Designer | [Designer guide](/en/roles/designer) | `design-brief`, `pr-review --design` |
 | Developer | [Developer guide](/en/roles/dev) | `implement`, `implement --fix` |
 | Tech Lead | [Tech Lead guide](/en/roles/tech-lead), [Setup](/en/setup-guide) | `test-design --approve`, `merge-gate --merge`, `hotfix` |
 | QA | [QA guide](/en/roles/qa) | `test-design --approve`, `qa --manual` |
-| AI Enablement | [AI Enablement guide](/en/roles/ai-enablement) | `sprint retro`, `install.sh --check` |
-| Security | [Security guide](/en/roles/security) | `merge-gate`, `install.sh --check` |
+| AI Enablement | [AI Enablement guide](/en/roles/ai-enablement) | `sprint retro`, [`--check`](/en/setup-guide) |
+| Security | [Security guide](/en/roles/security) | `merge-gate`, [`--check`](/en/setup-guide) |
 
 Every role can use `dev-pipeline` to see today's work.

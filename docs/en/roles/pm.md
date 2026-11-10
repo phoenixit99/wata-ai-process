@@ -39,7 +39,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 
 | Event | Your part |
 |---|---|
-| Sprint 0 | Labels, board, CI, access, baseline numbers (`install.sh --check`) |
+| Sprint 0 | Labels, board, CI, access, baseline numbers ([`--check`](/en/setup-guide)) |
 | Planning | Compute capacity from review/QA, agree scope (`sprint plan`) |
 | Daily | Blocked work and queues (`sprint daily`) |
 | Review | Demo notes with the PO (`sprint review`) |

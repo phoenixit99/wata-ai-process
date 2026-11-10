@@ -41,7 +41,7 @@ Sprint cadence and events: [Scrum process](/en/scrum).
 
 | Event | Your part |
 |---|---|
-| Sprint 0 | Architecture, coding standards, branch protection, CODEOWNERS (`install.sh --check`) |
+| Sprint 0 | Architecture, coding standards, branch protection, CODEOWNERS ([`--check`](/en/setup-guide)) |
 | Refinement | Assess technical risk, decide size and the `human-code` flag (`refine --batch`) |
 | Planning | Identify stories a person must code; check review capacity |
 | During the sprint | Architecture, G2, G3, G4; keep the fixed review slots |

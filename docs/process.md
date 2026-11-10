@@ -36,16 +36,16 @@ duyệt plan (G2), refutation (G3), merge (G4), nghiệm thu UAT (G5).
 ## 2. Cấu trúc
 
 Bộ quy trình nằm ở repo trung tâm `wata-ai-process` (repo này). Mỗi project cài bộ quy trình
-vào repo của mình bằng `scripts/install.sh`. Cấu trúc tham chiếu của một project:
+vào repo của mình bằng một lệnh (xem [Cài đặt](setup-guide.md)). Cấu trúc tham chiếu của một project:
 
 ```
 <project>/
 ├── apps/{web,admin,api,mobile}/   Code từng app
 ├── packages/shared/               Contract dùng chung
 ├── e2e/                           Playwright + bảng test case
-├── docs/agents/contract.md        Bản sao contract (do install.sh copy)
+├── docs/agents/contract.md        Bản sao contract (do lệnh cài copy)
 ├── .claude/
-│   ├── skills/                    Skill của quy trình (do install.sh copy, ghim phiên bản)
+│   ├── skills/                    Skill của quy trình (do lệnh cài copy, ghim phiên bản)
 │   ├── project.yml                Cấu hình project
 │   └── settings.json              permissions.deny: lớp chặn dự phòng
 ├── .github/                       Issue/PR template, CODEOWNERS, labels, workflow

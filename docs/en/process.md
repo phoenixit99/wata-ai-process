@@ -38,14 +38,14 @@ UAT acceptance (G5).
 ## 2. Structure
 
 The process lives in the central repository `wata-ai-process` (this site's source). Each project
-installs it with `scripts/install.sh`. Reference layout of a project:
+installs it with one command (see [Setup](setup-guide.md)). Reference layout of a project:
 
 ```
 <project>/
 ├── apps/{web,admin,api,mobile}/   App code
 ├── packages/shared/               Shared contract (types)
 ├── e2e/                           Playwright + test-case tables
-├── docs/agents/                   Contract and process docs (copied by install.sh)
+├── docs/agents/                   Contract and process docs (copied by the installer)
 ├── .claude/
 │   ├── skills/                    Process skills (copied, version-pinned)
 │   ├── project.yml                Project configuration
