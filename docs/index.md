@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Quy trình phát triển dự án với AI Agent
   text: Từ issue đến UAT, AI làm việc lặp lại, con người ra quyết định
-  tagline: WATA Software · Áp dụng cho mọi project · Phiên bản 1.4
+  tagline: WATA Software · Áp dụng cho mọi project · Phiên bản 1.5
   actions:
     - theme: brand
       text: Đọc quy trình

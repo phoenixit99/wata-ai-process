@@ -1,4 +1,4 @@
-# AI Agent Software Development Process — v1.4
+# AI Agent Software Development Process — v1.5
 
 WATA Software · Internal document · English translation of the canonical Vietnamese process ([Tiếng Việt](/process)).
 

@@ -1,4 +1,4 @@
-# Quy trình phát triển dự án sử dụng AI Agent — v1.4
+# Quy trình phát triển dự án sử dụng AI Agent — v1.5
 
 WATA Software · Tài liệu nội bộ · Bản gốc (canonical) của quy trình.
 
