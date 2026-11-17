@@ -2,56 +2,42 @@
 layout: home
 
 hero:
-  name: Quy trình phát triển dự án với AI Agent
-  text: Từ issue đến UAT, AI làm việc lặp lại, con người ra quyết định
-  tagline: WATA Software · Áp dụng cho mọi project · Phiên bản 1.5
+  name: Quy trình phát triển dự án sử dụng AI Agent
+  text: Từ GitHub Issue đến Pull Request, Code Review, QA và Automation Test
+  tagline: WATA Software · Tài liệu nội bộ · Phiên bản 1.0
   actions:
     - theme: brand
       text: Đọc quy trình
       link: /process
     - theme: alt
-      text: Tôi là... (hướng dẫn theo vai trò)
-      link: /roles/po
+      text: Quy trình Scrum
+      link: /scrum
     - theme: alt
       text: Danh mục skill
       link: /skills
-    - theme: alt
-      text: Quy trình Scrum
-      link: /scrum
 
   image:
     src: /wata-logo.png
     alt: WATA Software
 
 features:
-  - title: Scrum ứng dụng AI
-    details: Sprint 10 bước, sự kiện và timebox mới, lập kế hoạch theo năng lực review/QA, effort dịch chuyển từ thực thi sang yêu cầu, quyết định và nghiệm thu.
-  - title: 5 cổng con người
-    details: PO xác nhận yêu cầu (G1), Tech Lead và QA duyệt plan (G2), reviewer phản biện (G3), Tech Lead merge (G4), PO nghiệm thu (G5). AI không bao giờ tự qua cổng.
-  - title: 13 skill, ba lệnh cần nhớ
-    details: Dev gọi /dev-pipeline, PM gọi /sprint, các vai trò khác comment @claude trên GitHub; AI tự chọn đúng skill theo trạng thái issue. Một catalog duy nhất giữ mọi thứ đồng bộ.
+  - title: Monorepo
+    details: Toàn bộ source code của một project (web, admin, API, mobile) nằm trong một repository duy nhất; AI Agent nhìn thấy toàn bộ hệ thống trong một lần.
   - title: Label là nguồn sự thật
-    details: Mỗi issue đúng một label status:*. Nhìn label là biết việc đang ở đâu, ai đang xử lý, và bước tự động nào sẽ chạy tiếp.
-  - title: Test trước, code sau
-    details: Test case được thiết kế từ Acceptance Criteria trước khi có code. Review chạy ở session riêng để AI không tự đồng ý với chính mình.
-  - title: Guardrail phía server
-    details: Branch protection, CODEOWNERS, required checks và workflow guard. Lời dặn trong prompt chỉ là lớp dự phòng.
-  - title: Báo cáo trung thực
-    details: Mọi báo cáo của AI tách rõ điều đã chạy, điều chỉ đọc, và điều còn là claim. Không báo kết quả không tận mắt thấy.
+    details: Mỗi issue luôn có đúng một label trạng thái, từ Backlog đến QA passed. Nhìn label là biết công việc đang ở đâu, ai đang xử lý.
+  - title: Definition of Ready
+    details: AI chỉ code khi issue đạt đủ 10 điều kiện; nếu không, issue chuyển sang Fail to dev kèm phần còn thiếu và gợi ý cách viết lại.
+  - title: 8 skill
+    details: github-issue-create, github-issue-triage, github-issue-implement, github-pr-review, qa-test-cases, e2e-playwright, figma-to-code, dev-pipeline; cùng coding standard riêng cho Next.js, NestJS, Flutter.
+  - title: Merge chỉ do con người
+    details: Con người viết yêu cầu, xác nhận phạm vi và merge code. Giới hạn 3 vòng cho review và automation, sau đó dừng và báo người.
 ---
 
-## Bắt đầu theo vai trò
+## Bắt đầu
 
-| Bạn là | Đọc trước | Skill chính |
-|---|---|---|
-| PO | [Hướng dẫn PO](/roles/po), [Viết AC](/writing-acceptance-criteria) | `issue-create`, `uat --run` |
-| BA | [Hướng dẫn BA](/roles/ba) | `refine`, `issue-create` |
-| PM | [Hướng dẫn PM](/roles/pm), [RACI](/raci) | `sprint report`, `sprint release` |
-| Designer | [Hướng dẫn Designer](/roles/designer) | `design-brief`, `pr-review --design` |
-| Developer | [Hướng dẫn Dev](/roles/dev) | `implement`, `implement --fix` |
-| Tech Lead | [Hướng dẫn Tech Lead](/roles/tech-lead), [Cài đặt](/setup-guide) | `test-design --approve`, `merge-gate --merge`, `hotfix` |
-| QA | [Hướng dẫn QA](/roles/qa) | `test-design --approve`, `qa --manual` |
-| AI Enablement | [Hướng dẫn AI Enablement](/roles/ai-enablement) | `sprint retro`, [`--check`](/setup-guide) |
-| Security | [Hướng dẫn Security](/roles/security) | `merge-gate`, [`--check`](/setup-guide) |
-
-Mọi vai trò đều dùng được `dev-pipeline` để xem việc của mình hôm nay.
+| Bạn muốn | Đọc |
+|---|---|
+| Hiểu quy trình | [Quy trình phát triển](/process), [Quy trình Scrum](/scrum) |
+| Viết issue tốt | [Viết Acceptance Criteria](/writing-acceptance-criteria) |
+| Cài cho project | [Cài đặt](/setup-guide) |
+| Viết hoặc sửa skill | [Contract cho AI](/contract), [Danh mục skill](/skills) |

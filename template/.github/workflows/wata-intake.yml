@@ -1,0 +1,48 @@
+# Bước 1 và Bước 2 của quy trình (docs/agents/process.md mục 6):
+#   - Issue mới: tự động nhận label Backlog, loại công việc (từ issue template) và app liên quan
+#     (từ mục "Affected apps").
+#   - Issue Fail to dev được kiểm tra lại tự động sau khi người viết cập nhật: chuyển lại Backlog,
+#     wata-agent chạy github-issue-triage.
+# Dùng token GitHub App để label mới kích hoạt wata-agent.
+name: wata-intake
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    if: github.event.sender.type != 'Bot'
+    steps:
+      - id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.WATA_APP_ID }}
+          private-key: ${{ secrets.WATA_APP_PRIVATE_KEY }}
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const STATUS = ['Backlog', 'Fail to dev', 'Ready to dev', 'In progress', 'In review',
+                            'QA', 'QA passed', 'QA failed'];
+            const issue = context.payload.issue;
+            const issue_number = issue.number;
+            const labels = issue.labels.map(l => l.name);
+
+            if (context.payload.action === 'opened') {
+              // App liên quan: các ô được chọn trong mục "### Affected apps" của issue form.
+              const m = (issue.body || '').match(/### Affected apps\s+([\s\S]*?)(?:\n### |$)/);
+              const apps = m ? [...m[1].matchAll(/- \[[xX]\] *([A-Za-z0-9_-]+)/g)].map(a => a[1]) : [];
+              const add = apps.filter(a => !labels.includes(a));
+              if (!labels.some(l => STATUS.includes(l))) add.push('Backlog');
+              if (add.length) await github.rest.issues.addLabels({ ...context.repo, issue_number, labels: add });
+              return;
+            }
+
+            // edited: chỉ khi nội dung (body/tiêu đề) đổi và issue đang Fail to dev.
+            const changed = context.payload.changes && (context.payload.changes.body || context.payload.changes.title);
+            if (changed && labels.includes('Fail to dev')) {
+              await github.rest.issues.removeLabel({ ...context.repo, issue_number, name: 'Fail to dev' });
+              await github.rest.issues.addLabels({ ...context.repo, issue_number, labels: ['Backlog'] });
+            }

@@ -1,108 +1,91 @@
 # Project setup guide
 
-For a project's Tech Lead and PM. Work through it in order; every section says how to check it.
-
-## 0. Prerequisites
-
-- [ ] The client's contract and data policy **allow AI** on the source code and test data
-- [ ] The repo is on GitHub (in an organisation), with admin rights to configure branch protection, secrets and a GitHub App
-- [ ] The repo should be private. If public, `wata-agent` only runs for issues opened by OWNER/MEMBER/COLLABORATOR, but review the GitHub App's permissions anyway
-- [ ] Baseline numbers recorded for the last 1–2 sprints (lead time, bugs after release) for comparison after the pilot
+For the project's Tech Lead and PM. The setup implements the [process](process.md) (version 1.0): monorepo
+structure, MCP, skills, status labels, coding standards in each app's folder, CI, merge by people only.
 
 ## 1. Install the process into the repo
 
-Go to the project repo and paste **one command**:
+Go to the project repo folder and paste **one command**:
 
 ```bash
 cd <project-repo>
 curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash
 ```
-It downloads the latest process into a temporary folder, copies the templates, skills and contract into the repo,
-fills `repo:` in `.claude/project.yml` from `git remote origin`, then deletes the temporary folder. Needs `git`,
-`curl`, `tar` and `python3`.
 
-- Upgrade: `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash -s -- --upgrade`
-- Sprint 0 check: `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash -s -- --check`
-- Pin a version (recommended for a running project): put `WATA_REF=v1.5.0` before `bash`, e.g. `... | WATA_REF=v1.5.0 bash`
-- Already cloned the process repo: `~/wata-ai-process/scripts/install.sh .` still works
+It downloads the process into a temp folder, copies the templates, skills and contract into the repo, fills
+`repo:` in `.claude/project.yml` from `git remote origin`, then removes the temp folder. Needs `git`, `curl`,
+`tar`, `python3`.
 
-After installing, **start Claude Code from the project folder itself** (`cd <project-repo> && claude`) so that
-`/issue-create`, `/dev-pipeline`... are available. Started from another folder, they show `Unknown command`.
+- Upgrade: `... | bash -s -- --upgrade`
+- Check the configuration: `... | bash -s -- --check`
+- Pin a version: `... | WATA_REF=v1.0.0 bash`
+- Already cloned the process repo: `~/wata-ai-process/scripts/install.sh .`
 
-The script **never overwrites** configuration files that already exist (it lists what it skipped);
-compare and merge those by hand. `--upgrade` overwrites only the core layer (skills, `docs/agents/*`,
-`wata-*.yml` workflows, `labels.yml`).
+After installing, **open Claude Code from the project folder** (`cd <project-repo> && claude`) so that
+`/github-issue-create`, `/dev-pipeline`... are available.
 
-Check: `.claude/skills/triage/SKILL.md`, `docs/agents/contract.md` and `.github/workflows/wata-agent.yml` exist.
+Result in the project repo:
+
+```
+<project>/
+├── apps/<app>/CODING_STANDARD.md   nextjs- / nestjs- / flutter-coding-standard, by the app's stack
+├── .claude/skills/                 the 8 process skills
+├── .claude/project.yml             project configuration
+├── .mcp.json                       GitHub, Figma, Playwright
+├── .github/                        issue/PR templates, labels.yml, CI workflow, wata-agent, wata-intake
+├── docs/agents/                    process, contract (pinned copies)
+└── CLAUDE.md                       general instructions for the AI Agent
+```
+
+The script **never overwrites** existing configuration files (it lists what it skipped). `--upgrade` only
+overwrites the core layer (skills, `docs/agents/*`, `wata-*.yml` workflows, `labels.yml`) and removes skill folders
+that are no longer part of the process.
 
 ## 2. Fill in the configuration
 
-- [ ] `.claude/project.yml`: `repo`, `apps` (paths, stack, lint/typecheck/test/build commands that really work), `e2e`, `people`, `sla_hours`, `limits`
-- [ ] `CLAUDE.md`: project description, how to run locally, known pitfalls
-- [ ] Coding standards: adjust the copies in `docs/coding-standards/` (paths declared in `apps[].standard`)
+- [ ] `.claude/project.yml`: `repo`, `apps` (paths, stack, lint/typecheck/test/build commands that really run), `e2e`, `people`
+- [ ] Coding standards: each app has `apps/<app>/CODING_STANDARD.md` (starter copied by stack); the Tech Lead adapts it
+- [ ] `CLAUDE.md`: project description, how to run locally
 - [ ] `.github/CODEOWNERS`: replace `@<org>/...` with real teams
-- [ ] `.github/ISSUE_TEMPLATE/*.yml`: the app checkboxes match `project.yml`
+- [ ] `.github/ISSUE_TEMPLATE/*.yml`: the app list under Affected apps matches `project.yml`
 
-Check: run every command in `apps[].commands` locally; all of them work.
+## 3. GitHub App for the agent
 
-## 3. GitHub App for the agent (required)
+Events created with `GITHUB_TOKEN` **do not trigger new workflows**. If the agent changed labels with
+`GITHUB_TOKEN`, the next step would never run. So the agent uses a GitHub App token.
 
-Events created with the default `GITHUB_TOKEN` **do not start new workflow runs** (except
-`workflow_dispatch` and `repository_dispatch`). If the agent changed labels with `GITHUB_TOKEN`, the
-next step would never run and nothing would report an error. So the agent uses a GitHub App token.
-([GitHub Docs](https://docs.github.com/en/actions/concepts/security/github_token))
-
-- [ ] Create a GitHub App at organisation level (one app shared by all projects is enough) with minimal permissions:
-      Contents: read & write · Issues: read & write · Pull requests: read & write · Metadata: read ·
-      Actions: read. **No** Administration permission, and not on any branch-protection bypass list.
+- [ ] Create a GitHub App (minimum permissions: Contents, Issues, Pull requests: read & write; Metadata, Actions:
+      read). Do not let the app bypass branch protection.
 - [ ] Install the app on the project repo
-- [ ] Repo variable `WATA_APP_ID`. Repo secrets `WATA_APP_PRIVATE_KEY`, `ANTHROPIC_API_KEY`
+- [ ] Repo variable `WATA_APP_ID`; repo secrets `WATA_APP_PRIVATE_KEY`, `ANTHROPIC_API_KEY`
+- [ ] Add toolchain setup (Node/pnpm, Flutter, Playwright) to `wata-agent.yml` at `TODO(project)`
 
-Check: open a test issue and apply `status:backlog`; `wata-agent` runs triage, and when triage applies
-`status:test-design` a new `wata-agent` run appears.
+Check: create a test issue from a template; it gets the `Backlog` label, `wata-agent` runs `github-issue-triage`
+and moves the issue to `Ready to dev` or `Fail to dev`.
 
-## 4. Check the Claude Code workflows
-
-- [ ] The input names (`prompt`, `anthropic_api_key`, `github_token`, `claude_args`) were checked against
-      `action.yml` of `anthropics/claude-code-action`. Re-check when upgrading the action.
-- [ ] Try `@claude` on an issue: if the AI does not recognise a skill name, use the fallback sentence
-      `@claude read .claude/skills/<skill>/SKILL.md and follow it for issue #<number>` (listed on every role page).
-- [ ] Add toolchain setup (Node/pnpm, Flutter, Playwright) to `wata-agent.yml` where it says `TODO(project)`
-- [ ] Skills are installed in `.claude/skills/`, so they are called directly as `/triage`. If
-      you use the plugin form instead of copying, skill names get the `wata:` prefix and the workflow `prompt` must change accordingly.
-
-## 5. Labels and board
+## 4. Labels
 
 ```bash
-~/wata-ai-process/scripts/setup-labels.sh <owner>/<repo>
+~/wata-ai-process/scripts/setup-labels.sh <owner>/<repo> .claude/project.yml
 ```
-- [ ] The `status:*`, `type:*`, `risk:*`, `priority:*`, `round:*` and `app:*` labels exist
-- [ ] (Optional) A GitHub Projects board for viewing, columns by `status:*` label. The board is a view; labels are the source of truth
 
-## 6. Server-side guardrails (required)
+- [ ] 8 status labels: `Backlog`, `Fail to dev`, `Ready to dev`, `In progress`, `In review`, `QA`, `QA passed`, `QA failed`
+- [ ] Work type labels: `feature`, `bug`, `chore`; app labels from `apps[].name`
+- [ ] (Optional) a board for the Manager to track progress; labels are the source of truth
 
-On the `main` branch (Settings → Branches or Rulesets):
+## 5. GitHub-side controls
 
-- [ ] Require a pull request before merging
-- [ ] Require approvals, with **Require review from Code Owners**
-- [ ] Dismiss stale approvals when new commits are pushed
-- [ ] Required status checks: the jobs in `ci.yml`
-- [ ] Block force-pushes and branch deletion
-- [ ] The agent's GitHub App cannot bypass
+Per process section 9: no push to main, no force-push; only people merge; CI blocks failing PRs.
 
-Check: try pushing straight to `main` with the app's token → rejected.
+- [ ] Branch protection on `main`: pull request required, CODEOWNERS approval
+- [ ] Required status checks: the jobs in `ci.yml` (lint, test, build, automation)
+- [ ] No force-push, no branch deletion; the agent's GitHub App cannot bypass
 
-## 7. Each person's machine
+## 6. Each person's machine
 
-- [ ] Install Claude Code; open the repo; `/dev-pipeline` shows the work queue
-- [ ] Environment variable `GITHUB_MCP_TOKEN` (fine-grained PAT, this repo only) for the GitHub MCP
-- [ ] Figma MCP: enable the Dev Mode MCP server in Figma Desktop. The address in `.mcp.json`
-      (`http://127.0.0.1:3845/mcp`) should be checked against current Figma documentation
+- [ ] Install Claude Code; open the repo; run `/dev-pipeline`
+- [ ] `GITHUB_MCP_TOKEN`: fine-grained Personal Access Token limited to the project repo
+- [ ] Figma MCP: Figma OAuth login, or Figma Desktop (Dev Mode). Check the address in `.mcp.json`
 - [ ] `gh auth login` (skills use the `gh` CLI)
 
-## 8. Pilot
-
-1. Week one: only triage and test design (remove the other branches from the `case` in `wata-agent.yml`, or run interactively).
-2. Enable implement and review once G2 runs smoothly.
-3. Enable QA and UAT.
-4. After 2–4 weeks: `/sprint report 30`, compare with the baseline, run a retro, send skill improvements back to the central repo.
+Full check: `curl -fsSL .../bootstrap.sh | bash -s -- --check`.

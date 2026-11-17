@@ -5,8 +5,7 @@ Chạy:  python3 -I scripts/sync-skills.py
 Sinh:
   - khối header "> **Vai trò:** ..." trong mỗi skills/<name>/SKILL.md
   - bảng skill trong README.md (giữa <!-- skills:start --> và <!-- skills:end -->)
-  - mục "Skill của bạn" / "Your skills" trong docs/roles/*.md và docs/en/roles/*.md
-  - docs/skills.md và docs/en/skills.md (danh mục skill)
+  - docs/skills.md và docs/en/skills.md (danh mục skill và coding standard)
 Sau đó chạy scripts/check-consistency.py để kiểm tra.
 """
 import json
@@ -105,43 +104,6 @@ def sync_readme():
     write_if_changed(p, text)
 
 
-def role_section(role, lang):
-    mine = [s for s in CAT["skills"] if role in s["roles"]]
-    if lang == "vi":
-        head = ["## Skill của bạn", "",
-                "Sinh tự động từ `skills/catalog.json`. Gọi trong Claude Code bằng lệnh ở cột 3; trên GitHub, "
-                "comment câu ở cột 4 (dùng được cả khi skill không được nạp sẵn).", "",
-                "| Skill | Dùng khi | Claude Code | GitHub |", "|---|---|---|---|"]
-        gh = "`@claude đọc .claude/skills/{n}/SKILL.md và làm theo{m} cho issue #<số>`"
-        mode_word = " chế độ {f}"
-    else:
-        head = ["## Your skills", "",
-                "Generated from `skills/catalog.json`. In Claude Code use the command in column 3; on GitHub, "
-                "comment the sentence in column 4 (works even if skills are not preloaded).", "",
-                "| Skill | Purpose | Claude Code | GitHub |", "|---|---|---|---|"]
-        gh = "`@claude read .claude/skills/{n}/SKILL.md and follow it{m} for issue #<number>`"
-        mode_word = " in {f} mode"
-    rows = []
-    for s in mine:
-        usage = s.get("usage_by_role", {}).get(role) or s.get("usage") or f"/{s['name']} <#>"
-        # Cờ chế độ duy nhất của vai trò (vd --run cho PO) cũng phải có trong câu gọi trên GitHub.
-        flags = [w for w in usage.split() if w.startswith("--")]
-        m = mode_word.format(f=flags[0]) if len(flags) == 1 else ""
-        rows.append(f"| `{s['name']}` | {s['summary'][lang]} | `{usage}` | {gh.format(n=s['name'], m=m)} |")
-    return "\n".join(head + rows)
-
-
-def sync_role_docs():
-    for lang, base in (("vi", ROOT / "docs/roles"), ("en", ROOT / "docs/en/roles")):
-        for role in CAT["roles"]:
-            p = base / f"{role}.md"
-            if not p.exists():
-                continue
-            text = p.read_text(encoding="utf-8")
-            text = replace_block(text, "<!-- role-skills:start -->", "<!-- role-skills:end -->", role_section(role, lang))
-            write_if_changed(p, text)
-
-
 def sync_catalog_pages():
     pages = {
         "vi": (ROOT / "docs/skills.md", "# Danh mục skill",
@@ -161,17 +123,27 @@ def sync_catalog_pages():
         role_head = "## Theo vai trò" if lang == "vi" else "## By role"
         all_head = "## Tất cả skill" if lang == "vi" else "## All skills"
         col = "| Vai trò | Skill |" if lang == "vi" else "| Role | Skills |"
+        if lang == "vi":
+            cs_head, cs_lead, cs_col = ("## Coding standard", "Coding standard riêng cho từng công nghệ, đặt trong thư mục "
+                                        "của mỗi app (`apps/<app>/CODING_STANDARD.md`). AI bắt buộc đọc trước khi code và "
+                                        "dùng khi review.", "| Tên | App | Bản khởi đầu |")
+        else:
+            cs_head, cs_lead, cs_col = ("## Coding standards", "One coding standard per technology, placed in each app's "
+                                        "folder (`apps/<app>/CODING_STANDARD.md`). The AI must read it before coding and "
+                                        "uses it when reviewing.", "| Name | Apps | Starter |")
+        cs_rows = [f"| `{c['name']}` | {c['apps']} | [`{c['source']}`]({REPO_URL}/{c['source']}) |"
+                   for c in CAT["coding_standards"]]
         body = "\n".join([
             "<!-- Sinh tự động bởi scripts/sync-skills.py. Không sửa tay. -->", "",
-            title, "", lead, "", role_head, "", col, "|---|---|", *by_role, "", all_head, "",
-            skills_table(lang, f"{REPO_URL}/skills/"), ""])
+            title, "", lead, "", all_head, "", skills_table(lang, f"{REPO_URL}/skills/"), "",
+            cs_head, "", cs_lead, "", cs_col, "|---|---|---|", *cs_rows, "",
+            role_head, "", col, "|---|---|", *by_role, ""])
         write_if_changed(path, body)
 
 
 def run_all():
     sync_skill_headers()
     sync_readme()
-    sync_role_docs()
     sync_catalog_pages()
 
 

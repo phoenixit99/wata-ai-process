@@ -3,10 +3,10 @@
 #
 #   curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash
 #   curl -fsSL .../bootstrap.sh | bash -s -- --upgrade     # nâng cấp
-#   curl -fsSL .../bootstrap.sh | bash -s -- --check       # kiểm tra Sprint 0
+#   curl -fsSL .../bootstrap.sh | bash -s -- --check       # kiểm tra cấu hình
 #
 # Biến môi trường:
-#   WATA_REF=v1.5.0   cài từ tag/nhánh cụ thể (mặc định: main). Nên ghim tag cho ổn định.
+#   WATA_REF=v1.0.0   cài từ tag/nhánh cụ thể (mặc định: main). Nên ghim tag cho ổn định.
 #   WATA_SRC=/path    dùng bản repo quy trình có sẵn trên máy, không tải (để thử nghiệm).
 #
 # Script tải repo quy trình vào thư mục tạm, chạy scripts/install.sh "$PWD" <chế độ>, rồi xoá thư mục tạm.

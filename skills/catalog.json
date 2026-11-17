@@ -1,53 +1,27 @@
 {
-  "version": "1.5.0",
+  "version": "1.0.0",
+  "process_version": "1.0",
   "roles": [
     "po",
     "ba",
-    "pm",
     "designer",
     "dev",
     "tech-lead",
-    "qa",
-    "ai-enablement",
-    "security"
+    "qa"
   ],
   "_fields": {
-    "step": "bước dev (0–9, 6b, hotfix) hoặc sự kiện Scrum (sprint-0, refinement, design, planning, daily, review, retro); '-' nếu dùng ở mọi bước",
-    "roles": "vai trò tự gọi skill này",
+    "step": "bước trong docs/process.md mục 6 (1–7); '-' nếu dùng cho cả luồng",
+    "roles": "vai trò tự gọi skill này (rỗng: AI chạy tự động)",
     "mode": "interactive | auto | both",
-    "triggers": "label kích hoạt tự động trong wata-agent (rỗng nếu chỉ gọi tay)",
+    "triggers": "label trạng thái kích hoạt tự động trong wata-agent (rỗng nếu chỉ gọi tay)",
     "writes": "heading skill đăng (phải có trong docs/contract.md mục 2)",
     "reads": "heading của bước khác mà skill đọc làm đầu vào",
-    "usage": "cách gọi hiển thị ở trang vai trò (mặc định: /<name> <#>)",
-    "retired": "tên skill cũ → lời gọi mới; install.sh --upgrade xoá thư mục cũ, check-consistency cấm tên cũ",
-    "usage_by_role": "cách gọi theo vai trò (chế độ của vai trò đó) ở trang vai trò; ưu tiên hơn usage"
+    "coding_standards": "coding standard theo công nghệ (PDF mục 3.2 và 7): nguồn trong repo này, cài vào apps/<app>/CODING_STANDARD.md",
+    "retired": "tên skill của bản 1.2–1.5 không còn trong quy trình 1.0 → skill thay thế; install.sh --upgrade xoá thư mục cũ"
   },
   "skills": [
     {
-      "name": "dev-pipeline",
-      "step": "-",
-      "roles": [
-        "po",
-        "ba",
-        "pm",
-        "designer",
-        "dev",
-        "tech-lead",
-        "qa",
-        "ai-enablement",
-        "security"
-      ],
-      "mode": "interactive",
-      "triggers": [],
-      "writes": [],
-      "reads": [],
-      "summary": {
-        "vi": "Định tuyến theo label; bảng việc theo vai trò",
-        "en": "Routes by status label; per-role work queue"
-      }
-    },
-    {
-      "name": "issue-create",
+      "name": "github-issue-create",
       "step": "1",
       "roles": [
         "po",
@@ -57,308 +31,172 @@
       "triggers": [],
       "writes": [],
       "reads": [
-        "## Triage: FAIL",
-        "## Feature analysis"
+        "## Triage: Fail to dev"
       ],
       "summary": {
-        "vi": "Soạn issue đúng mẫu từ ngôn ngữ tự nhiên",
-        "en": "Drafts a well-formed issue from plain language"
+        "vi": "Tạo issue đúng mẫu (Description, Acceptance Criteria, Design), vào Backlog",
+        "en": "Creates a well-formed issue (Description, Acceptance Criteria, Design) in Backlog"
       }
     },
     {
-      "name": "refine",
-      "step": "0, refinement",
-      "roles": [
-        "po",
-        "ba",
-        "tech-lead"
-      ],
-      "mode": "both",
-      "triggers": [
-        "type:epic"
-      ],
-      "writes": [
-        "## Feature analysis",
-        "## Refinement notes"
-      ],
-      "reads": [
-        "## Triage: FAIL"
-      ],
-      "summary": {
-        "vi": "Phân tích epic (mặc định); refinement hàng loạt, size S–XL, cờ human-code (`--batch`)",
-        "en": "Epic analysis (default); batch refinement, S–XL sizes, human-code flag (`--batch`)"
-      },
-      "usage_by_role": {
-        "po": "/refine --batch",
-        "tech-lead": "/refine --batch"
-      }
-    },
-    {
-      "name": "triage",
+      "name": "github-issue-triage",
       "step": "2",
       "roles": [],
       "mode": "both",
       "triggers": [
-        "status:backlog"
+        "Backlog"
       ],
       "writes": [
-        "## Triage: PASS",
-        "## Triage: FAIL",
-        "## Triage: BLOCKED"
+        "## Triage: Ready to dev",
+        "## Triage: Fail to dev"
       ],
       "reads": [],
       "summary": {
-        "vi": "Kiểm tra Definition of Ready R1–R11",
-        "en": "Checks Definition of Ready R1–R11"
+        "vi": "Kiểm tra issue được giao theo Definition of Ready → Ready to dev hoặc Fail to dev",
+        "en": "Checks assigned issues against the Definition of Ready → Ready to dev or Fail to dev"
       }
     },
     {
-      "name": "design-brief",
-      "step": "design",
-      "roles": [
-        "designer"
-      ],
-      "mode": "interactive",
-      "triggers": [],
-      "writes": [
-        "## UI brief",
-        "## Design approval: APPROVED",
-        "## Design approval: CHANGES"
-      ],
-      "reads": [
-        "## Refinement notes"
-      ],
-      "summary": {
-        "vi": "Brief UI từ design system, phương án giao diện, duyệt thiết kế trước khi code",
-        "en": "UI brief from the design system, options, design approval before coding"
-      }
-    },
-    {
-      "name": "test-design",
+      "name": "github-issue-implement",
       "step": "3",
-      "roles": [
-        "dev",
-        "tech-lead",
-        "qa"
-      ],
-      "mode": "both",
-      "triggers": [
-        "status:test-design"
-      ],
-      "writes": [
-        "## Test design: PASS",
-        "## Test design: FAIL",
-        "## Plan approval"
-      ],
-      "reads": [
-        "## Triage: PASS",
-        "## Refinement notes",
-        "## UI brief",
-        "## Design approval: APPROVED"
-      ],
-      "summary": {
-        "vi": "Test case và plan trước khi code (mặc định); hỗ trợ người ký G2 (`--approve`)",
-        "en": "Test cases and plan before coding (default); helps the G2 signer (`--approve`)"
-      },
-      "usage_by_role": {
-        "tech-lead": "/test-design <#> --approve",
-        "dev": "/test-design <#> --approve",
-        "qa": "/test-design <#> --approve"
-      }
-    },
-    {
-      "name": "implement",
-      "step": "4, 6b",
       "roles": [
         "dev"
       ],
       "mode": "both",
       "triggers": [
-        "status:ready-to-dev",
-        "status:in-progress"
+        "Ready to dev",
+        "In progress"
       ],
       "writes": [
-        "## Build write-up",
-        "## Needs human",
-        "## QA fix"
+        "## Implementation"
       ],
       "reads": [
-        "## Test design: PASS",
-        "## Plan approval",
-        "## Code review: FAIL",
-        "## QA report: FAIL",
-        "## Design approval: APPROVED",
-        "## UAT: REJECTED"
+        "## Triage: Ready to dev",
+        "## Code review: FAIL"
       ],
       "summary": {
-        "vi": "Code theo plan, mở PR (mặc định); sửa sau QA/UAT (`--fix`); frame Figma thành UI (`--figma`)",
-        "en": "Codes the approved plan, opens the PR (default); fixes after QA/UAT (`--fix`); Figma frame to UI (`--figma`)"
-      },
-      "usage_by_role": {
-        "dev": "/implement <#>  ·  --fix  ·  --figma <link>"
+        "vi": "Tạo branch, code theo coding standard, viết unit test, mở Pull Request",
+        "en": "Creates a branch, codes to the coding standard, writes unit tests, opens a Pull Request"
       }
     },
     {
-      "name": "pr-review",
-      "step": "5",
+      "name": "github-pr-review",
+      "step": "4",
       "roles": [
-        "designer",
         "dev",
         "tech-lead"
       ],
       "mode": "both",
       "triggers": [
-        "status:in-review"
+        "In review"
       ],
       "writes": [
         "## Code review: PASS",
-        "## Code review: FAIL",
-        "## Code review: HOLD",
-        "## Design review: OK",
-        "## Design review: CHANGES"
+        "## Code review: FAIL"
       ],
       "reads": [
-        "## Test design: PASS",
-        "## Build write-up"
+        "## Implementation"
       ],
       "summary": {
-        "vi": "Review PR ở session riêng, hai lượt (mặc định); Designer so UI với Figma (`--design`)",
-        "en": "Two-pass PR review in a separate session (default); Designer compares UI with Figma (`--design`)"
-      },
-      "usage_by_role": {
-        "designer": "/pr-review <#> --design"
+        "vi": "Review PR theo Acceptance Criteria và coding standard, comment trên từng dòng",
+        "en": "Reviews the PR against the Acceptance Criteria and coding standard, with line comments"
       }
     },
     {
-      "name": "qa",
+      "name": "qa-test-cases",
+      "step": "5",
+      "roles": [
+        "qa"
+      ],
+      "mode": "both",
+      "triggers": [
+        "QA"
+      ],
+      "writes": [
+        "## Test cases"
+      ],
+      "reads": [
+        "## Implementation",
+        "## Code review: PASS"
+      ],
+      "summary": {
+        "vi": "Sinh test case (positive, negative, biên, trạng thái) từ Acceptance Criteria",
+        "en": "Generates test cases (positive, negative, boundary, state) from the Acceptance Criteria"
+      }
+    },
+    {
+      "name": "e2e-playwright",
       "step": "6",
       "roles": [
         "qa"
       ],
       "mode": "both",
       "triggers": [
-        "status:qa"
+        "QA"
       ],
       "writes": [
-        "## QA report: PASS",
-        "## QA report: FAIL",
-        "## QA report: PENDING",
-        "## QA manual results"
+        "## Automation report: QA passed",
+        "## Automation report: QA failed"
       ],
       "reads": [
-        "## Test design: PASS",
-        "## Build write-up"
+        "## Test cases"
       ],
       "summary": {
-        "vi": "Automation và kết luận QA (mặc định); QA test manual/mobile (`--manual`)",
-        "en": "Automation and QA verdict (default); manual/mobile testing by QA (`--manual`)"
-      },
-      "usage_by_role": {
-        "qa": "/qa <#> --manual"
+        "vi": "Viết và chạy automation test, phân loại lỗi, báo cáo kết quả lên PR",
+        "en": "Writes and runs automation tests, classifies failures, reports results on the PR"
       }
     },
     {
-      "name": "merge-gate",
-      "step": "7–8",
+      "name": "figma-to-code",
+      "step": "3",
       "roles": [
-        "tech-lead",
-        "security"
-      ],
-      "mode": "both",
-      "triggers": [
-        "status:qa-passed"
-      ],
-      "writes": [
-        "## Refutation brief",
-        "## Merge readiness: READY",
-        "## Merge readiness: NOT READY"
-      ],
-      "reads": [
-        "## Build write-up",
-        "## Code review: PASS",
-        "## QA report: PASS",
-        "## G3: OK"
-      ],
-      "summary": {
-        "vi": "Refutation brief cho G3 (mặc định); kiểm tra trước merge G4 (`--merge`)",
-        "en": "Refutation brief for G3 (default); pre-merge check for G4 (`--merge`)"
-      },
-      "usage_by_role": {
-        "tech-lead": "/merge-gate <#>  ·  --merge"
-      }
-    },
-    {
-      "name": "uat",
-      "step": "9",
-      "roles": [
-        "po"
-      ],
-      "mode": "both",
-      "triggers": [
-        "status:uat"
-      ],
-      "writes": [
-        "## UAT checklist",
-        "## UAT: ACCEPTED",
-        "## UAT: REJECTED"
-      ],
-      "reads": [
-        "## QA report: PASS"
-      ],
-      "summary": {
-        "vi": "Checklist UAT cho PO (mặc định); PO nghiệm thu, soạn kết luận (`--run`)",
-        "en": "UAT checklist for the PO (default); PO acceptance and verdict (`--run`)"
-      },
-      "usage_by_role": {
-        "po": "/uat <#> --run"
-      }
-    },
-    {
-      "name": "hotfix",
-      "step": "hotfix",
-      "roles": [
-        "tech-lead",
+        "designer",
         "dev"
       ],
       "mode": "interactive",
       "triggers": [],
-      "writes": [
-        "## Hotfix plan"
-      ],
+      "writes": [],
       "reads": [],
       "summary": {
-        "vi": "Sửa khẩn cấp production",
-        "en": "Emergency production fix"
+        "vi": "Lấy thiết kế từ Figma, chuyển thành code theo chuẩn từng app, đối chiếu UI",
+        "en": "Reads the Figma design, turns it into code per app standard, compares the UI"
       }
     },
     {
-      "name": "sprint",
-      "step": "planning, daily, review, retro",
+      "name": "dev-pipeline",
+      "step": "-",
       "roles": [
-        "po",
-        "pm",
-        "tech-lead",
-        "ai-enablement"
+        "dev",
+        "tech-lead"
       ],
       "mode": "interactive",
       "triggers": [],
       "writes": [],
-      "reads": [
-        "## Refinement notes",
-        "## Needs human",
-        "## UAT: ACCEPTED",
-        "## Build write-up",
-        "## Code review: FAIL",
-        "## QA report: FAIL",
-        "## UAT: REJECTED",
-        "## Merge readiness: READY",
-        "## UAT checklist"
-      ],
+      "reads": [],
       "summary": {
-        "vi": "Sự kiện Scrum: `plan`, `daily`, `review`, `retro`, `report`, `release`",
-        "en": "Scrum events: `plan`, `daily`, `review`, `retro`, `report`, `release`"
-      },
-      "usage": "/sprint plan|daily|review|retro|report|release"
+        "vi": "Chạy toàn bộ luồng trên cho các issue được giao",
+        "en": "Runs the whole flow above for the assigned issues"
+      }
+    }
+  ],
+  "coding_standards": [
+    {
+      "name": "nextjs-coding-standard",
+      "stack": "nextjs",
+      "apps": "web, admin",
+      "source": "docs/coding-standards/nextjs-coding-standard.md"
+    },
+    {
+      "name": "nestjs-coding-standard",
+      "stack": "nestjs",
+      "apps": "api",
+      "source": "docs/coding-standards/nestjs-coding-standard.md"
+    },
+    {
+      "name": "flutter-coding-standard",
+      "stack": "flutter",
+      "apps": "mobile",
+      "source": "docs/coding-standards/flutter-coding-standard.md"
     }
   ],
   "role_names": {
@@ -370,16 +208,12 @@
       "vi": "BA",
       "en": "BA"
     },
-    "pm": {
-      "vi": "PM",
-      "en": "PM"
-    },
     "designer": {
       "vi": "Designer",
       "en": "Designer"
     },
     "dev": {
-      "vi": "Dev",
+      "vi": "Developer",
       "en": "Developer"
     },
     "tech-lead": {
@@ -389,41 +223,38 @@
     "qa": {
       "vi": "QA",
       "en": "QA"
-    },
-    "ai-enablement": {
-      "vi": "AI Enablement",
-      "en": "AI Enablement"
-    },
-    "security": {
-      "vi": "Security",
-      "en": "Security"
     }
   },
   "retired": {
-    "github-issue-create": "issue-create",
-    "github-issue-triage": "triage",
-    "feature-analysis": "refine",
-    "backlog-refinement": "refine --batch",
-    "qa-test-cases": "test-design",
-    "plan-approval": "test-design --approve",
-    "github-issue-implement": "implement",
-    "qa-failed-fix": "implement --fix",
-    "figma-to-code": "implement --figma",
-    "github-pr-review": "pr-review",
-    "design-review": "pr-review --design",
-    "e2e-playwright": "qa",
-    "qa-manual-session": "qa --manual",
-    "refutation-brief": "merge-gate",
-    "merge-readiness": "merge-gate --merge",
-    "uat-checklist": "uat",
-    "uat-run": "uat --run",
-    "ui-design-brief": "design-brief",
-    "sprint-planning": "sprint plan",
-    "daily-scrum": "sprint daily",
-    "sprint-review": "sprint review",
-    "sprint-retro": "sprint retro",
-    "status-report": "sprint report",
-    "release-plan": "sprint release",
-    "sprint0-setup": "install.sh --check"
+    "issue-create": "github-issue-create",
+    "triage": "github-issue-triage",
+    "implement": "github-issue-implement",
+    "pr-review": "github-pr-review",
+    "test-design": "qa-test-cases",
+    "qa": "e2e-playwright",
+    "refine": "(bỏ)",
+    "design-brief": "(bỏ)",
+    "merge-gate": "(bỏ)",
+    "uat": "(bỏ)",
+    "hotfix": "(bỏ)",
+    "sprint": "(bỏ)",
+    "feature-analysis": "(bỏ)",
+    "backlog-refinement": "(bỏ)",
+    "plan-approval": "(bỏ)",
+    "qa-failed-fix": "(bỏ)",
+    "design-review": "github-pr-review",
+    "qa-manual-session": "(bỏ)",
+    "refutation-brief": "(bỏ)",
+    "merge-readiness": "(bỏ)",
+    "uat-checklist": "(bỏ)",
+    "uat-run": "(bỏ)",
+    "ui-design-brief": "(bỏ)",
+    "sprint-planning": "(bỏ)",
+    "daily-scrum": "(bỏ)",
+    "sprint-review": "(bỏ)",
+    "sprint-retro": "(bỏ)",
+    "status-report": "(bỏ)",
+    "release-plan": "(bỏ)",
+    "sprint0-setup": "(bỏ)"
   }
 }
