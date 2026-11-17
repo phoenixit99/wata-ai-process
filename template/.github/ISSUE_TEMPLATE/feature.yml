@@ -1,13 +1,13 @@
 name: Tính năng
 description: Yêu cầu một tính năng hoặc thay đổi hành vi. AI sẽ triage theo Definition of Ready.
 title: "[feature] <thay đổi gì, cụ thể>"
-labels: ["type:feature", "status:backlog"]
+labels: ["feature", "Backlog"]
 body:
   - type: markdown
     attributes:
       value: |
         Viết theo hướng dẫn `docs/agents/writing-acceptance-criteria.md`. Không chắc cách viết?
-        Tạo issue với mô tả ngắn rồi comment `@claude soạn lại issue này theo mẫu`.
+        Dùng skill `/github-issue-create` trong Claude Code để AI soạn issue theo mẫu.
   - type: textarea
     id: description
     attributes:

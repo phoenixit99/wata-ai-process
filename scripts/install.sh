@@ -3,7 +3,7 @@
 #
 #   scripts/install.sh <project-dir>            cài lần đầu: không ghi đè file đã có
 #   scripts/install.sh <project-dir> --upgrade  nâng cấp: ghi đè lớp lõi, xoá skill đã bỏ
-#   scripts/install.sh <project-dir> --check    kiểm tra Sprint 0 (S1–S15, docs/sprint-0.md); chỉ đọc
+#   scripts/install.sh <project-dir> --check    kiểm tra cấu hình project; chỉ đọc
 #
 # Lớp lõi (thuộc repo trung tâm, ghi đè khi --upgrade):
 #   .claude/skills/*, docs/agents/* (contract + tài liệu quy trình),
@@ -12,7 +12,7 @@
 # Lớp cấu hình (thuộc project, không bao giờ ghi đè):
 #   .claude/project.yml, .claude/settings.json, CLAUDE.md, .mcp.json, .github/CODEOWNERS,
 #   .github/ISSUE_TEMPLATE/*, .github/pull_request_template.md, .github/workflows/ci.yml,
-#   docs/coding-standards/*
+#   apps/<app>/CODING_STANDARD.md (coding standard đặt trong thư mục của mỗi app)
 #   — khi nâng cấp, so sánh tay với template mới.
 set -euo pipefail
 
@@ -30,67 +30,39 @@ UPGRADE=false
 case "$MODE" in install|--upgrade|--check) ;; *) echo "Lỗi: tham số không hợp lệ '$MODE'." >&2; exit 1 ;; esac
 
 # ---------------------------------------------------------------------------------------------
-# --check: checklist Sprint 0 (thay skill kiểm tra Sprint 0 trước v1.5.0). Chỉ đọc, không in giá trị secret.
-# Mục cần người trả lời (S3, S13, S14, S15) được liệt kê để Tech Lead/PM/Security xác nhận.
+# --check: kiểm tra cấu hình project đã đủ cho quy trình (chỉ đọc, không in giá trị secret).
 # ---------------------------------------------------------------------------------------------
 if [ "$MODE" = "--check" ]; then
   cd "$DEST"
-  pass=0; fail=0; ask=0
-  ok()   { printf '  [OK]   %-4s %s\n' "$1" "$2"; pass=$((pass+1)); }
-  bad()  { printf '  [THIẾU] %-4s %s  → %s\n' "$1" "$2" "$3"; fail=$((fail+1)); }
-  need() { printf '  [HỎI]  %-4s %s  → %s\n' "$1" "$2" "$3"; ask=$((ask+1)); }
-  has_gh=false; command -v gh >/dev/null && gh auth status >/dev/null 2>&1 && has_gh=true
+  pass=0; fail=0
+  ok()  { printf '  [OK]    %-3s %s\n' "$1" "$2"; pass=$((pass+1)); }
+  bad() { printf '  [THIẾU] %-3s %s  → %s\n' "$1" "$2" "$3"; fail=$((fail+1)); }
   repo=$(sed -n 's/^repo: *//p' .claude/project.yml 2>/dev/null | tr -d '"')
-  echo "Sprint 0 — $(basename "$DEST") — $(date +%Y-%m-%d)"
-  $has_gh || echo "  (gh chưa đăng nhập: S7, S8, S10 không kiểm được bằng lệnh)"
+  echo "Kiểm tra cấu hình — $(basename "$DEST") — $(date +%Y-%m-%d)"
 
   pinned=$(sed -n 's/^process_version: *"\{0,1\}\([^"]*\)"\{0,1\}.*/\1/p' .claude/project.yml 2>/dev/null)
   installed=$(cat docs/agents/VERSION 2>/dev/null || true)
-  [ -n "$installed" ] && [ "$installed" = "$pinned" ] && ok S1 "Quy trình v$installed đã cài, khớp project.yml" \
-    || bad S1 "Phiên bản quy trình" "docs/agents/VERSION='$installed', process_version='$pinned' (Tech Lead)"
-  if grep -qE '<owner>|<repo>' .claude/project.yml 2>/dev/null; then bad S2 "project.yml" "còn <owner>/<repo> (Tech Lead, PM)"
-  elif grep -qE '^\s+(po|tech_lead|qa|pm): \[\]' .claude/project.yml; then bad S2 "project.yml" "people.* còn trống (PM)"
-  else ok S2 "project.yml đã điền"; fi
-  need S3 "Lệnh lint/typecheck/test/build chạy được" "Tech Lead chạy thử từng lệnh trong apps[].commands"
+  [ -n "$installed" ] && [ "$installed" = "$pinned" ] && ok C1 "Bộ quy trình v$installed đã cài, khớp project.yml" \
+    || bad C1 "Phiên bản" "docs/agents/VERSION='$installed', process_version='$pinned'"
+  grep -qE '<owner>|<repo>' .claude/project.yml 2>/dev/null && bad C2 "project.yml" "còn <owner>/<repo>" || ok C2 "project.yml đã điền repo"
   missing_std=""
-  for f in $(sed -n 's/^ *standard: *//p' .claude/project.yml 2>/dev/null | sort -u); do
-    [ -f "$f" ] || missing_std="$missing_std $f"; grep -q "Bản khởi đầu" "$f" 2>/dev/null && missing_std="$missing_std $f(chưa chỉnh)"
+  for f in $(sed -n 's/^ *standard: *\([^ #]*\).*/\1/p' .claude/project.yml 2>/dev/null | sort -u); do
+    [ -f "$f" ] || missing_std="$missing_std $f"
   done
-  [ -z "$missing_std" ] && ok S4 "Coding standard cho từng app" || bad S4 "Coding standard" "${missing_std# } (Tech Lead)"
-  ds=$(sed -n 's/^design_system: *\([^ #]*\).*/\1/p' .claude/project.yml 2>/dev/null)
-  if [ -n "$ds" ] && [ -f "$ds" ] && ! grep -qE '<[^>]*>' "$ds"; then ok S5 "Design system ($ds)"
-  else bad S5 "Design system" "${ds:-chưa khai báo} thiếu hoặc còn phần mẫu <...> (Designer)"; fi
-  grep -q '<TÊN PROJECT>\|<lệnh>' CLAUDE.md 2>/dev/null && bad S6 "CLAUDE.md" "còn placeholder (Tech Lead)" || ok S6 "CLAUDE.md đã điền"
-  if $has_gh && [ -n "$repo" ]; then
-    want=$(sed -n 's/^ *- *name: *"\([^"]*\)".*/\1/p' .github/labels.yml | sort)
+  [ -z "$missing_std" ] && ok C3 "Coding standard trong thư mục từng app" || bad C3 "Coding standard" "thiếu:${missing_std}"
+  grep -q '<TÊN PROJECT>\|<lệnh>' CLAUDE.md 2>/dev/null && bad C4 "CLAUDE.md" "còn placeholder" || ok C4 "CLAUDE.md đã điền"
+  if [ -f .mcp.json ] && grep -qi github .mcp.json && grep -qi figma .mcp.json && grep -qi playwright .mcp.json; then ok C5 "MCP: GitHub, Figma, Playwright"
+  else bad C5 "MCP" ".mcp.json thiếu GitHub/Figma/Playwright"; fi
+  if command -v gh >/dev/null && gh auth status >/dev/null 2>&1 && [ -n "$repo" ] && [ "${repo#*<}" = "$repo" ]; then
+    want=$(sed -n 's/^ *- *{name: *"\([^"]*\)".*/\1/p' .github/labels.yml | sort)
     have=$(gh label list --repo "$repo" --limit 300 --json name --jq '.[].name' 2>/dev/null | sort || true)
-    lack=$(comm -23 <(echo "$want") <(echo "$have") | tr '\n' ' ')
-    [ -z "$lack" ] && ok S7 "Label đủ" || bad S7 "Label" "thiếu: $lack(PM: scripts/setup-labels.sh)"
-    prot=$(gh api "repos/$repo/branches/main/protection" 2>/dev/null || true)
-    echo "$prot" | grep -q '"require_code_owner_reviews":true' && echo "$prot" | grep -q '"required_status_checks"' \
-      && ok S8 "Branch protection trên main" || bad S8 "Branch protection" "cần PR, CODEOWNERS, required checks, cấm force-push (Tech Lead, Security)"
-    secrets=$(gh secret list --repo "$repo" 2>/dev/null | awk '{print $1}' || true); vars=$(gh variable list --repo "$repo" 2>/dev/null | awk '{print $1}' || true)
-    s10=""; for n in WATA_APP_PRIVATE_KEY ANTHROPIC_API_KEY; do echo "$secrets" | grep -qx "$n" || s10="$s10 secret:$n"; done
-    echo "$vars" | grep -qx WATA_APP_ID || s10="$s10 var:WATA_APP_ID"
-    [ -z "$s10" ] && ok S10 "GitHub App và secret (chỉ kiểm tên)" || bad S10 "GitHub App/secret" "thiếu${s10} (Security)"
+    lack=$(comm -23 <(echo "$want") <(echo "$have") | tr '\n' ',')
+    [ -z "$lack" ] && ok C6 "Label trạng thái và loại công việc đủ" || bad C6 "Label" "thiếu: ${lack%,} (chạy scripts/setup-labels.sh)"
   else
-    need S7 "Label" "gh chưa đăng nhập hoặc thiếu repo trong project.yml"
-    need S8 "Branch protection" "kiểm trên GitHub (Tech Lead, Security)"
-    need S10 "GitHub App và secret" "kiểm tên trên GitHub (Security)"
+    bad C6 "Label" "gh chưa đăng nhập hoặc thiếu repo; không kiểm được"
   fi
-  grep -q '@<org>' .github/CODEOWNERS 2>/dev/null && bad S9 "CODEOWNERS" "còn @<org>/... (Tech Lead)" \
-    || { [ -f .github/CODEOWNERS ] && ok S9 "CODEOWNERS" || bad S9 "CODEOWNERS" "chưa có file (Tech Lead)"; }
-  if ls .github/workflows/wata-*.yml >/dev/null 2>&1 && ! grep -q 'TODO(project)' .github/workflows/wata-agent.yml; then ok S11 "Workflow wata-* và toolchain"
-  else bad S11 "Workflow" "thiếu wata-*.yml hoặc còn bước TODO(project) trong wata-agent.yml (Tech Lead)"; fi
-  if [ -f .mcp.json ] && grep -qi github .mcp.json && grep -qi figma .mcp.json && grep -qi playwright .mcp.json; then ok S12 "MCP: GitHub, Figma, Playwright"
-  else bad S12 "MCP" ".mcp.json thiếu GitHub/Figma/Playwright (AI Enablement)"; fi
-  need S13 "Chính sách dữ liệu" "hợp đồng cho phép dùng AI; không đưa dữ liệu thật vào prompt (Security, PM)"
-  need S14 "DoR/DoD" "team đã đọc và đồng ý docs/agents/definition-of-done.md và R1–R11 (PM)"
-  need S15 "Số liệu nền" "lead time và lỗi sau release của 1–2 sprint gần nhất đã ghi (PM)"
-
   echo
-  echo "Kết quả: $pass đạt, $fail thiếu, $ask cần người xác nhận."
-  [ "$fail" -eq 0 ] && echo "Sẵn sàng cho sprint 1 khi các mục HỎI đã được xác nhận." || echo "Chưa sẵn sàng: còn $fail mục thiếu."
+  echo "Kết quả: $pass đạt, $fail thiếu."
   [ "$fail" -eq 0 ]; exit $?
 fi
 skipped=()
@@ -132,10 +104,29 @@ if [ -f "$yml" ] && grep -q '^repo: *<owner>/<repo>' "$yml"; then
   fi
 fi
 
-echo "Coding standards (bản khởi đầu, project tự chỉnh):"
-for f in "$SRC"/docs/coding-standards/*.md; do
-  place "$f" "$DEST/docs/coding-standards/$(basename "$f")" config
-done
+echo "Coding standard (bản khởi đầu, đặt trong thư mục của mỗi app; Tech Lead chỉnh):"
+# Mỗi app trong .claude/project.yml nhận <stack>-coding-standard tại đường dẫn apps[].standard.
+while IFS=$'\t' read -r stack std; do
+  srcf="$SRC/docs/coding-standards/$stack-coding-standard.md"
+  if [ -f "$srcf" ] && [ -n "$std" ]; then place "$srcf" "$DEST/$std" config
+  else echo "  ! không có coding standard khởi đầu cho stack '$stack' ($std)"; fi
+done < <(python3 -I - "$DEST/.claude/project.yml" <<'PY'
+import re, sys
+apps, in_apps = [], False
+for line in open(sys.argv[1], encoding="utf-8"):
+    if re.match(r"^apps:\s*$", line):
+        in_apps = True; continue
+    if in_apps and re.match(r"^\S", line):
+        break
+    if in_apps and re.match(r"^\s*-\s", line):
+        apps.append({})
+    m = re.match(r"^[\s-]+(stack|standard):\s*([^\s#]+)", line)
+    if in_apps and apps and m:
+        apps[-1][m.group(1)] = m.group(2)
+for a in apps:
+    print(f"{a.get('stack', '')}\t{a.get('standard', '')}")
+PY
+)
 
 echo "Skills:"
 mkdir -p "$DEST/.claude/skills"
@@ -151,19 +142,32 @@ for d in "$SRC"/skills/*/; do
 done
 
 if $UPGRADE; then
-  # Skill đã bỏ hoặc đã gộp (catalog "retired"): xoá để Claude Code không nạp cả bản cũ lẫn bản mới.
+  # Skill của bản 1.2–1.5 (catalog "retired"): xoá để Claude Code không nạp skill không còn trong quy trình.
   for name in $(python3 -I -c 'import json,sys; print(" ".join(json.load(open(sys.argv[1])).get("retired", {})))' "$SRC/skills/catalog.json"); do
     if [ -d "$DEST/.claude/skills/$name" ]; then
       rm -rf "$DEST/.claude/skills/$name"
-      echo "  - .claude/skills/$name/ (đã gộp, xem CHANGELOG)"
+      echo "  - .claude/skills/$name/ (không còn trong quy trình 1.0, xem CHANGELOG)"
     fi
+  done
+fi
+
+if $UPGRADE; then
+  # File lõi của bản 1.2–1.5 không còn trong quy trình 1.0 (workflow và tài liệu do script này cài trước đây).
+  for rel in .github/workflows/wata-status-guard.yml .github/workflows/wata-sla-reminder.yml \
+             .github/workflows/wata-pr-merged.yml .github/workflows/wata-mention.yml \
+             docs/agents/raci.md docs/agents/risk-tiers.md docs/agents/sprint-0.md \
+             docs/agents/definition-of-done.md docs/agents/glossary.md docs/agents/roles \
+             docs/agents/en/raci.md docs/agents/en/risk-tiers.md docs/agents/en/sprint-0.md \
+             docs/agents/en/definition-of-done.md docs/agents/en/glossary.md docs/agents/en/roles \
+             docs/agents/en/coding-standards; do
+    if [ -e "$DEST/$rel" ]; then rm -rf "${DEST:?}/$rel"; echo "  - $rel (không còn trong quy trình 1.0)"; fi
   done
 fi
 
 echo "Contract và tài liệu quy trình (docs/agents/):"
 while IFS= read -r -d '' f; do
   rel="${f#$SRC/docs/}"
-  case "$rel" in coding-standards/*|index.md|en/index.md|public/*|.vitepress/*) continue ;; esac
+  case "$rel" in coding-standards/*|en/coding-standards/*|index.md|en/index.md|public/*|.vitepress/*) continue ;; esac
   place "$f" "$DEST/docs/agents/$rel" core
 done < <(find "$SRC/docs" -path "$SRC/docs/.vitepress" -prune -o -type f -name '*.md' -print0)
 printf '%s\n' "$VERSION" > "$DEST/docs/agents/VERSION"

@@ -1,6 +1,50 @@
 # Changelog
 
-## Chưa phát hành
+## 1.0.0 — 2026-11-17 (khôi phục quy trình 1.0)
+
+**Đưa quy trình về đúng bản 1.0 (PDF 16-10-2026).** Nội dung quy trình, tên skill, tên label và luồng trạng
+thái giữ nguyên theo hai tài liệu gốc: "Quy trình phát triển dự án sử dụng AI Agent" và "Quy trình Scrum ứng dụng
+AI Agent" (bản có design system, tổng effort 100 → 68). Toàn bộ thay đổi quy trình của 1.1–1.5 được gỡ bỏ.
+Số phiên bản đặt lại 1.0.0 để khớp phiên bản tài liệu (1.0); các mục 1.1–1.5 bên dưới là lịch sử của bản đã bỏ.
+
+- `docs/process.md`, `docs/scrum.md` (và bản tiếng Anh): chép lại đúng nội dung PDF.
+- **8 skill theo PDF:** `github-issue-create`, `github-issue-triage`, `github-issue-implement`, `github-pr-review`,
+  `qa-test-cases`, `e2e-playwright`, `figma-to-code`, `dev-pipeline`. Bỏ `refine`, `design-brief`, `merge-gate`,
+  `uat`, `hotfix`, `sprint` và các chế độ `--approve`, `--fix`, `--design`, `--manual`, `--merge`, `--run`, `--batch`.
+- **8 label trạng thái theo PDF:** `Backlog`, `Fail to dev`, `Ready to dev`, `In progress`, `In review`, `QA`,
+  `QA passed`, `QA failed`. Label loại công việc `feature`, `bug`, `chore`; label app theo tên app. Bỏ `status:*`,
+  `type:*`, `risk:*`, `priority:*`, `size:*`, `round:*`, `human-code`.
+- Bỏ cổng G1–G5, R11 (DoR về 10 tiêu chí), test design trước code, UAT, hotfix, phân loại rủi ro, RACI theo
+  trạng thái, trang vai trò, Sprint 0 checklist S1–S15, Definition of Done riêng, thuật ngữ.
+- Review theo checklist **8 tiêu chí**; request changes → `In progress` → AI sửa → `In review` (tối đa 3 vòng).
+  Test case viết sau review (Bước 5), automation Playwright ở Bước 6. PR dùng `Closes #số`, issue tự đóng khi merge.
+- **Coding standard đặt trong thư mục của mỗi app:** `apps/<app>/CODING_STANDARD.md`, nguồn
+  `docs/coding-standards/{nextjs,nestjs,flutter}-coding-standard.md`; `install.sh` copy theo `stack` của từng app.
+- Workflow: giữ `wata-agent` (định tuyến theo 8 label), thêm `wata-intake` (gắn Backlog và label app khi mở issue;
+  issue Fail to dev được sửa thì chuyển lại Backlog). Bỏ `wata-status-guard`, `wata-sla-reminder`,
+  `wata-pr-merged`, `wata-mention`; bỏ issue form epic, hotfix.
+- `install.sh --check` rút gọn (C1–C6); `check-consistency.py` kiểm tra tên skill, label và nội dung theo bản 1.0.
+
+**Cần làm khi nâng cấp từ 1.x.** `install.sh --upgrade` tự xoá các thư mục skill cũ trong `.claude/skills/`, các
+workflow `wata-status-guard`, `wata-sla-reminder`, `wata-pr-merged`, `wata-mention` và các trang cũ trong
+`docs/agents/` (raci, risk-tiers, sprint-0, definition-of-done, glossary, roles). Lớp cấu hình không bao giờ bị
+ghi đè, nên phải **sửa tay** (so với `template/` của bản này):
+
+1. `.github/ISSUE_TEMPLATE/feature.yml`, `bug.yml`, `chore.yml`: đổi `labels: ["type:<loại>", "status:backlog"]`
+   thành `labels: ["<loại>", "Backlog"]`. Nếu không, issue mới sẽ không kích hoạt triage.
+2. Xoá `.github/ISSUE_TEMPLATE/epic.yml` và `hotfix.yml`.
+3. `.github/pull_request_template.md`: đổi `Refs #<số issue>` thành `Closes #<số issue>` để issue tự đóng khi merge.
+4. `CLAUDE.md`: thay bằng `template/CLAUDE.md` (bản cũ nhắc `/issue-create`, `status:*`, cổng con người).
+5. `.claude/project.yml`: đổi `process_version` thành `"1.0.0"`; `apps[].standard` thành
+   `apps/<app>/CODING_STANDARD.md`; bỏ các khoá không còn dùng (`tracker`, `mobile`, `design_system`, `sprint`,
+   `sla_hours`, `high_risk_paths`, `limits.wip_*`, `people.ba/pm/ai_enablement/security`). Rồi chạy lại
+   `install.sh --upgrade` để copy coding standard vào thư mục từng app; chuyển phần đã chỉnh từ
+   `docs/coding-standards/*.md` sang đó.
+6. Label trên GitHub: chạy `scripts/setup-labels.sh`; chuyển issue đang mở sang label mới (ví dụ
+   `status:in-review` → `In review`; `status:test-design` → `Ready to dev`; `status:uat`, `status:done` → đóng
+   issue); rồi xoá label `status:*`, `type:*`, `risk:*`, `priority:*`, `size:*`, `round:*`, `human-code`, `app:*`.
+
+## Chưa phát hành (trước khi khôi phục 1.0)
 
 - **Cài bằng một lệnh:** vào thư mục project, chạy `curl -fsSL https://raw.githubusercontent.com/phoenixit99/wata-ai-process/main/scripts/bootstrap.sh | bash`
   (`-s -- --upgrade`, `-s -- --check`; ghim phiên bản bằng `WATA_REF=<tag>`). Không cần clone repo quy trình.

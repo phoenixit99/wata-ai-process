@@ -1,9 +1,8 @@
 # Cấu hình project cho bộ quy trình WATA AI Agent.
-# Schema đầy đủ: docs/agents/contract.md mục 9. Tech Lead và PM điền trước khi bật agent.
+# Schema: docs/agents/contract.md mục 9. Tech Lead điền trước khi bật agent.
 
-process_version: "1.5.0"
+process_version: "1.0.0"
 language: vi
-tracker: github
 repo: <owner>/<repo>
 default_branch: main
 
@@ -11,7 +10,7 @@ apps:
   - name: web
     path: apps/web
     stack: nextjs
-    standard: docs/coding-standards/nextjs.md
+    standard: apps/web/CODING_STANDARD.md        # nextjs-coding-standard
     commands:
       lint: "pnpm --filter web lint"
       typecheck: "pnpm --filter web typecheck"
@@ -20,7 +19,7 @@ apps:
   - name: admin
     path: apps/admin
     stack: nextjs
-    standard: docs/coding-standards/nextjs.md
+    standard: apps/admin/CODING_STANDARD.md      # nextjs-coding-standard
     commands:
       lint: "pnpm --filter admin lint"
       typecheck: "pnpm --filter admin typecheck"
@@ -29,7 +28,7 @@ apps:
   - name: api
     path: apps/api
     stack: nestjs
-    standard: docs/coding-standards/nestjs.md
+    standard: apps/api/CODING_STANDARD.md        # nestjs-coding-standard
     commands:
       lint: "pnpm --filter api lint"
       typecheck: "pnpm --filter api typecheck"
@@ -38,7 +37,7 @@ apps:
   - name: mobile
     path: apps/mobile
     stack: flutter
-    standard: docs/coding-standards/flutter.md
+    standard: apps/mobile/CODING_STANDARD.md     # flutter-coding-standard
     commands:
       lint: "cd apps/mobile && flutter analyze"
       typecheck: "cd apps/mobile && flutter analyze"
@@ -49,43 +48,13 @@ shared_contract: packages/shared
 e2e:
   path: e2e
   command: "pnpm --filter e2e test"
-mobile:
-  supported_app_versions: 2
 
 people:            # GitHub login, không có @
   po: []
-  ba: []
-  pm: []
   tech_lead: []
   qa: []
   designer: []
-  ai_enablement: []  # mặc định: Tech Lead (phía kỹ thuật) + PO (phía yêu cầu); process owner ở cấp project
-  security: []
 
-design_system: docs/design-system.md   # đầu vào bắt buộc để AI tạo brief/Figma
-
-sprint:            # ĐỀ XUẤT — team chốt
-  length_days: 10                       # sprint 2 tuần
-  review_slots: ["10:00", "15:00"]      # khung giờ cố định duyệt PR mỗi ngày
-  design_approval_days: 2               # khách duyệt thiết kế trong 1–2 ngày đầu sprint
-
-limits:            # ĐỀ XUẤT — team chốt trước pilot
-  max_fix_rounds: 3
-  wip_in_progress: 3          # issue AI đang code cùng lúc
-  wip_in_review: 4            # PR chờ người review (nút thắt mới theo quy trình Scrum)
-  wip_qa: 4                   # issue chờ QA
+limits:
+  max_fix_rounds: 3          # giới hạn 3 vòng cho review và automation (quy trình mục 9)
   max_turns_per_run: 60
-
-sla_hours:         # ĐỀ XUẤT — team chốt trước pilot (giờ làm việc)
-  fail_to_dev: 24
-  plan_approval: 8
-  review: 8                   # PR mở → người approve (mục tiêu "Review wait < 1 ngày làm việc")
-  needs_human: 8
-  merge_decision: 8
-  uat: 48
-
-high_risk_paths:
-  - "**/auth/**"
-  - "**/payment*/**"
-  - "**/migrations/**"
-  - "packages/shared/**"

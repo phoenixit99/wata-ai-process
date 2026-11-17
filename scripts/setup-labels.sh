@@ -21,7 +21,7 @@ EOF
   echo "  ✓ $name"
 done
 
-# Label app:<name> lấy từ apps[].name trong project.yml.
+# Label app (web, admin, api, mobile...) lấy từ apps[].name trong project.yml.
 if [ -f "$PROJECT_YML" ]; then
   python3 -I - "$PROJECT_YML" <<'EOF' | while read -r app; do
 import re, sys
@@ -36,9 +36,9 @@ for line in open(sys.argv[1], encoding="utf-8"):
     if in_apps and m:
         print(m.group(1))
 EOF
-    gh label create "app:$app" --repo "$REPO" --color "0052cc" --description "App $app" --force >/dev/null
-    echo "  ✓ app:$app"
+    gh label create "$app" --repo "$REPO" --color "0052cc" --description "App $app" --force >/dev/null
+    echo "  ✓ $app"
   done
 else
-  echo "Không thấy $PROJECT_YML; bỏ qua label app:*."
+  echo "Không thấy $PROJECT_YML; bỏ qua label app."
 fi

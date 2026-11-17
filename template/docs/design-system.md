@@ -1,8 +1,8 @@
 # Design system — <TÊN PROJECT>
 
-> Designer điền ở Sprint 0. Đây là **đầu vào bắt buộc** để AI soạn brief UI, tạo/tinh chỉnh Figma và code giao
-> diện (`design-brief`, `implement --figma`, `pr-review --design`). Viết cụ thể để máy đọc được: giá trị, tên token,
-> quy tắc. Quản lý phiên bản như code.
+> Designer điền ở Sprint 0 (Quy trình Scrum mục 4 và 6.1). Đây là **đầu vào bắt buộc** để AI tạo Figma, và là
+> nguồn token khi AI code giao diện (`figma-to-code`). Viết cụ thể để máy đọc được: giá trị, tên token, quy tắc.
+> Quản lý phiên bản như code.
 
 Phiên bản: 0.1 · Figma library: <link> · Người duyệt: <Designer>
 

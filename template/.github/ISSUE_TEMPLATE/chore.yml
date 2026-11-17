@@ -1,7 +1,7 @@
 name: Việc kỹ thuật
 description: Refactor, nâng thư viện, cấu hình... không thay đổi hành vi người dùng thấy.
 title: "[chore] <việc gì>"
-labels: ["type:chore", "status:backlog"]
+labels: ["chore", "Backlog"]
 body:
   - type: textarea
     id: description

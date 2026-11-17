@@ -1,25 +1,21 @@
-Refs #<số issue>
+Closes #<số issue>
 
 ## Thay đổi
 
-<!-- Một đoạn ngắn: thay đổi gì, vì sao. Chi tiết nằm ở `## Build write-up` trên issue. -->
+<!-- Một đoạn ngắn: thay đổi gì, vì sao. -->
 
-## Acceptance Criteria → code → test
+## Acceptance Criteria → thay đổi code → test
 
-| AC | Thay đổi | Test case |
+| AC | Thay đổi code | Test |
 |---|---|---|
-| AC1 | `<file>` | TC-<số>-01 |
+| AC1 | `<file>` | `<unit test>` |
 
 ## Checklist
 
-- [ ] Code theo coding standard của app bị ảnh hưởng
-- [ ] Unit test cho logic mới; với bug: test đỏ trước khi sửa, xanh sau khi sửa
-- [ ] Lint, typecheck, test, build qua trên commit cuối
-- [ ] Đổi API: response cũ vẫn đọc được với bản app mobile cũ (`mobile.supported_app_versions`)
-- [ ] Đổi UI: có `data-testid` cho automation; khớp frame Figma
-- [ ] Không có secret, token, dữ liệu cá nhân trong code/log
-- [ ] Không có thay đổi ngoài phạm vi issue
-
-## Chưa làm được / còn nợ
-
-<!-- Test chưa chạy được, việc cần làm trước release (env var, migration, index...). -->
+- [ ] Branch theo quy ước (`feat|fix|chore/<số>-<slug>`), commit theo Conventional Commits
+- [ ] Code theo coding standard của app bị ảnh hưởng (`apps/<app>/CODING_STANDARD.md`)
+- [ ] Code theo thứ tự: contract dùng chung → API → web/admin → mobile
+- [ ] Có unit test cho logic mới; có `data-testid` cho automation
+- [ ] Lint, kiểm tra kiểu, unit test, build đều qua
+- [ ] Đổi UI: khớp frame Figma
+- [ ] Không có secret trong code/log

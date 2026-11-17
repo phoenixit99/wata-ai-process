@@ -1,4 +1,4 @@
-# Người duyệt bắt buộc (cổng G4). Bật "Require review from Code Owners" trong branch protection.
+# Người duyệt bắt buộc trước khi merge (Tech Lead / Reviewer). Bật "Require review from Code Owners" trong branch protection.
 # Thay @org/team bằng team hoặc login thật.
 
 *                         @<org>/<project>-tech-leads

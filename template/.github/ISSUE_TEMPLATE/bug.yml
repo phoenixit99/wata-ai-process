@@ -1,7 +1,7 @@
 name: Lỗi
 description: Báo một lỗi. Cần bước tái hiện, kết quả mong đợi và kết quả thực tế.
 title: "[bug] <hiện tượng, ở đâu>"
-labels: ["type:bug", "status:backlog"]
+labels: ["bug", "Backlog"]
 body:
   - type: textarea
     id: description

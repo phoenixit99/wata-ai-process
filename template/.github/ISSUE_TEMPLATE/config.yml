@@ -2,4 +2,4 @@ blank_issues_enabled: false
 contact_links:
   - name: Hướng dẫn quy trình
     url: https://github.com/phoenixit99/wata-ai-process/blob/main/docs/process.md
-    about: Đọc quy trình và hướng dẫn theo vai trò trước khi tạo issue.
+    about: Đọc quy trình trước khi tạo issue.

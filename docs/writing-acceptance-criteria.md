@@ -32,7 +32,7 @@ Dạng Given/When/Then cũng được: **Cho** <bối cảnh>, **khi** <hành đ
 AC của bug thường là: **làm lại đúng các bước tái hiện thì thấy kết quả mong đợi**, cộng một AC giữ
 hành vi liền kề không đổi.
 
-## Tự kiểm trước khi gắn `status:backlog`
+## Tự kiểm trước khi tạo issue (vào Backlog)
 
 - [ ] Mỗi AC có hành động và kết quả cụ thể
 - [ ] Không có từ: nhanh, đẹp, dễ, tốt, hợp lý, linh hoạt, tối ưu

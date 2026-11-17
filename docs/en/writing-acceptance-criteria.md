@@ -33,7 +33,7 @@ Given/When/Then works too: **Given** <context>, **when** <action>, **then** <res
 A bug's criteria are usually: **repeating the reproduction steps shows the expected result**, plus one
 criterion that neighbouring behaviour stays unchanged.
 
-## Self-check before applying `status:backlog`
+## Self-check before creating the issue (into Backlog)
 
 - [ ] Every criterion has an action and a concrete result
 - [ ] None of: fast, nice, easy, good, reasonable, flexible, optimal
